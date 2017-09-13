@@ -1,0 +1,515 @@
+﻿<script src="~/Scripts/myscript/accept-numbers-only.js"></script>
+<script type="text/javascript" src="~/MyScripts/reviewer/manage-supplier.js"></script>
+
+
+
+
+<div class="jumbotron" style="margin-top: 100px;">
+<div ng-controller="myCtrl as ctrl" ng-init="initialize()">
+    <div class="page-title">
+        <div class="title_left"> <!-- SUPPLIERS | LISTS -->
+            <h3>
+                Suppliers | <small> Lists </small>
+            </h3>
+        </div>
+        <div class="title_right">
+            <div class="col-md-7 col-sm-7 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input ng-model="searchText" type="text" class="form-control" placeholder="Search here...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_content">
+                 <!-- content starts here -->
+                    <button ng-click="showSupplierProvider()" class="btn btn-success btn-sm pull-right"><i class="glyphicon glyphicon-plus"></i>&nbsp; New Supplier</button>
+                    <table class="table table-striped table-bordered" id="tableid">
+                        <thead class="t">
+                            <tr>
+                                <th ng-click="predicate='SupplierID'; reverse=!reverse">Supplier ID</th>
+                                <th ng-click="predicate='TinNo'; reverse=!reverse">Tin Number</th>
+                                <th ng-click="predicate='SupplierName'; reverse=!reverse">Supplier Name</th>
+                                <th ng-click="predicate='Address'; reverse=!reverse">Address<br><br></th>
+                                <th ng-click="predicate='ContactPerson'; reverse=!reverse">Contact Person</th>
+                                <th ng-click="predicate='ContactNo'; reverse=!reverse"> Contact Number</th>
+                                <th ng-click="predicate='Email'; reverse=!reverse">Email<br><br></th>
+                                <th>Action<br><br></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="supplier in suppliers | orderBy:predicate:reverse | filter: searchText">
+                                <td>
+                                    <span ng-bind="supplier.SupplierID"></span>
+                                </td>
+                                <td>
+                                    <span ng-bind="supplier.TinNumber"></span>
+                                </td>
+                                <td>
+                                    <span ng-bind="supplier.SupplierName"></span>
+                                </td>
+                                <td>
+                                    <span ng-bind="supplier.Address"></span>
+                                </td>
+                                <td>
+                                    <span ng-bind="supplier.ContactPerson"></span>
+                                </td>
+                                <td>
+                                    <span ng-bind="supplier.ContactNo"></span>
+                                </td>
+                                <td>
+                                    <span ng-bind="supplier.Email"></span>
+                                </td>
+                                <td id="locationAction" align="center">
+                                    <button ng-click="showSupplierInformation(supplier)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-eye-open"></i> View Details</button>
+                                    <button ng-click="updateSupplierDetailsModal(supplier)" class="btn btn-info btn-sm"><i class="glyphicon glyphicon-edit"></i> Update Details</button>
+                                </td>
+
+                            </tr>
+                            <tr ng-show="(suppliers | filter:searchText).length == 0">
+                                <td colspan="8" id="locationAction" align="center">No results found...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    @Html.Partial("~/Views/Shared/_Pagination.cshtml")
+                    <!--Supplier provider modal-->
+                    <div id="provideSupplierModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="width: 100% !important;left: 0% !important;">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h2 class="modal-title">NEW SUPPLIER</h2>
+                                </div>
+                                <div class="modal-body">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Tax Identification Number: </strong></td>
+                                                <td><input ng-model="tinNumber" type="text" class="form-control" id="newItem" placeholder="Enter tin number" style="width:300px;height:35px;margin-bottom:5px;"></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Supplier Name:</strong></td>
+                                                <td><input ng-model="supplierName" type="text" class="form-control" id="newItem" placeholder="Enter supplier name" style="width:300px;height:35px;margin-bottom:5px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Address: </strong></td>
+                                                <td><input ng-model="address" type="text" class="form-control" id="newItem" placeholder="Enter supplier address" style="width:300px;height:35px;margin-bottom:5px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Contact Person:</strong></td>
+                                                <td><input ng-model="contactPerson" type="text" class="form-control" id="newItem" placeholder="Enter person to contact" style="width:300px;height:35px;margin-bottom:5px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Contact Number:</strong></td>
+                                                <td><input ng-model="contactNo" type="text" class="form-control" id="newItem" placeholder="Enter person contact number" style="width:300px;height:35px;margin-bottom:5px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Email:</strong></td>
+                                                <td><input ng-model="email" type="text" class="form-control" id="newItem" placeholder="Enter email" style="width:300px;height:35px;margin-bottom:5px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>This supplier is VATable?:</strong></td>
+                                                <td>
+                                                    <div class="radio" ng-init="hasVAT=false">
+
+                                                        <label>
+                                                            <input type="radio" ng-model="hasVAT" name="optionsRadios" id="optionsRadios2" ng-value="false">
+                                                            No
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" ng-model="hasVAT" name="optionsRadios" id="optionsRadios1" ng-value="true" checked="">
+                                                            Yes
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br />
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-danger btn-sm" ng-click="closeSupplierProvider()"><i class="glyphicon glyphicon-remove"></i> Close</button>
+                                    <button class="btn btn-success btn-sm" ng-click="addSupplierProvider(tinNumber,supplierName,address,contactPerson,contactNo,email,hasVAT)"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Supplier information modal-->
+                    <div id="supplierInfoModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="width: 100% !important;left: 0% !important; overflow-y: scroll; height:600px;  ">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h2 class="modal-title">SUPPLIER DETAILS</h2>
+                                </div>
+                                <div class="modal-body">
+                                    <center>
+                                        <h3>{{supplierInfo.SupplierName}}</h3>
+                                    </center>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Tax Identification Number</strong></td>
+                                                <td>:&nbsp;&nbsp;</td>
+                                                <td>{{supplierInfo.TinNumber}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Addres:</strong></td>
+                                                <td>:&nbsp;&nbsp;</td>
+                                                <td>{{supplierInfo.Address}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Contact Person</strong></td>
+                                                <td>:&nbsp;&nbsp;</td>
+                                                <td>{{supplierInfo.ContactPerson}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Contact Number</strong></td>
+                                                <td>:&nbsp;&nbsp;</td>
+                                                <td>{{supplierInfo.ContactNo}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Email</strong></td>
+                                                <td>:&nbsp;&nbsp;</td>
+                                                <td>{{supplierInfo.Email}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Tax Type</strong></td>
+                                                <td>:&nbsp;&nbsp;</td>
+                                                <td>
+                                                    <span ng-show="supplierInfo.Vatable == true">12% VAT</span>
+                                                    <span ng-hide="supplierInfo.Vatable == true">ZERO RATED</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br />
+
+                                    <!--TRY LANG PO. WAG KA PO MAG ERROR PLEASE SEARCH BUTTON-->
+                                    <div class="title_right">
+                                        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                                            <div class="input-group">
+                                                <input ng-model="searchTexts" type="text" class="form-control" placeholder="Search here...">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="button">Go!</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br /><br /><br />
+                                    <!--MARAMI PONG SALAMAT-->
+                                    <!--PANIBAGONG TRY SEARCH BUTTON-->
+                                    <span>
+                                        <label style="font-size:15px"><strong>Supplier Items</strong></label><br />
+                                        <button ng-click="showAddNewItem()" class="btn btn-success btn-xs pull-right"><i class="glyphicon glyphicon-plus"></i>&nbsp; New Item</button>
+                                        <button ng-click="showUpdateUnitPriceModal(supplierItems)" class="btn btn-primary btn-xs pull-right"><i class="glyphicon glyphicon-edit"></i>&nbsp; Update Unit Price</button>
+                                    </span><br /><br />
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th ng-click="predicate='InventoryItemID'; reverse=!reverse">Item No.</th>
+                                                <th ng-click="predicate='ItemName'; reverse=!reverse">Item Name</th>
+                                                <th ng-click="predicate='UomDescription'; reverse=!reverse">Unit Of Measurement</th>
+                                                <th ng-click="predicate='UnitPrice'; reverse=!reverse">Unit Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="supplierItem in supplierItems | orderBy:predicate:reverse | filter: searchTexts">
+                                                <td>
+                                                    <span ng-bind="supplierItem.InventoryItemID"></span>
+                                                </td>
+                                                <td>
+                                                    <span ng-bind="supplierItem.ItemName"></span>
+                                                </td>
+                                                <td>
+                                                    <span ng-bind="supplierItem.UomDescription"></span>
+                                                </td>
+                                                <td>
+                                                    <span ng-bind="supplierItem.RoundedUnitPrice"></span>
+                                                </td>
+                                            </tr>
+
+                                            <tr ng-show="(supplierItems | filter:searchTexts).length == 0">
+                                                <td colspan="5" align="center">No results found...</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br />
+                                    <div class="modal-footer">
+                                        <button class="btn btn-danger btn-sm" ng-click="closeSupplierInformation(supplier)"><i class="glyphicon glyphicon-remove"></i> Close</button>
+                                        <br />
+                                        @Html.Partial("~/Views/Shared/_Pagination.cshtml")
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @*<table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Item No.</th>
+                                    <th>Item Name</th>
+                                    <th>Unit Of Measurement</th>
+                                    <th>UnitPrice</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="supplierItem in supplierItems">
+                                    <td ng-bind="supplierItem.InventoryItemID"></td>
+                                    <td ng-bind="supplierItem.ItemName"></td>
+                                    <td ng-bind="supplierItem.UomDescription"></td>
+                                    <td>
+                                        &#8369; <span ng-bind="supplierItem.RoundedUnitPrice"></span>
+                                    </td>
+                                </tr>
+                                <tr ng-show="(supplierItems | filter:searchString).length == 0">
+                                    <td colspan="5" id="locationAction" align="center">No results found...</td>
+                                </tr>
+                            </tbody>
+                        </table>*@
+
+
+                    <!--Update Supplier Info modal-->
+                    <div id="updateSupplierDetailsModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="width: 100% !important;left: 0% !important;">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h2 class="modal-title">UPDATE SUPPLIER DETAILS</h2>
+                                </div>
+                                <div class="modal-body">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Tax Identification Number: </strong></td>
+                                                <td><input ng-model="supplierDetails.TinNumber" type="text" class="form-control" id="newItem" placeholder="Enter tin number" style="width:300px;height:35px;margin-bottom:5px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Supplier Name:</strong></td>
+                                                <td><input ng-model="supplierDetails.SupplierName" type="text" class="form-control" id="newItem" placeholder="Enter supplier name" style="width:300px;height:35px;margin-bottom:5px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Address: </strong></td>
+                                                <td><input ng-model="supplierDetails.Address" type="text" class="form-control" id="newItem" placeholder="Enter supplier address" style="width:300px;height:35px;margin-bottom:5px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Contact Person:</strong></td>
+                                                <td><input ng-model="supplierDetails.ContactPerson" type="text" class="form-control" id="newItem" placeholder="Enter person to contact" style="width:300px;height:35px;margin-bottom:5px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Contact Number:</strong></td>
+                                                <td><input ng-model="supplierDetails.ContactNo" type="text" class="form-control" id="newItem" placeholder="Enter person contact number" style="width:300px;height:35px;margin-bottom:5px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Email:</strong></td>
+                                                <td><input ng-model="supplierDetails.Email" type="text" class="form-control" id="newItem" placeholder="Enter email" style="width:300px;height:35px;margin-bottom:5px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>This supplier is VATable?:</strong></td>
+                                                <td>
+                                                    <div class="radio">
+
+                                                        <label>
+                                                            <input type="radio" ng-model="supplierDetails.Vatable" name="optionsRadios" id="optionsRadios2" ng-value="false">
+                                                            No
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" ng-model="supplierDetails.Vatable" name="optionsRadios" id="optionsRadios1" ng-value="true" checked="">
+                                                            Yes
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br />
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-danger btn-sm" ng-click="closeUpdateSupplierDetailsModal()"><i class="glyphicon glyphicon-remove"></i> Close</button>
+                                    <button class="btn btn-success btn-sm" ng-click="updateSupplierDetails(supplierDetails)"><i class="glyphicon glyphicon-ok"></i> Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Add Supplier item modal-->
+                    <div id="addSupplierItemModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h2 class="modal-title">NEW SUPPLIER ITEM</h2>
+                                </div>
+                                <div class="modal-body">
+                                    @*<button ng-click="addNewItem()" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-plus"></i>&nbsp; Add Item</button>*@
+                                    <table class="table table-hover">
+                                        <thead style="background:rgb(221, 221, 221)">
+                                            <tr>
+                                                <th>Item Name</th>
+                                                <th>Unit of Description</th>
+                                                <th>Unit Price</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in items track by $index">
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td valign="middle">
+                                                                <ui-select ng-model="item.InventoryItemId" ng-keyup="key($select.search)" theme="selectize" ng-disabled="ctrl.disabled" style="width: 270px; height:36px;" title="Choose an item"
+                                                                           on-select="setItemUOM(item,$select.selected.UnitOfMeasurement)">
+                                                                    <ui-select-match placeholder="Select or search an item"><span ng-bind="$select.selected.ItemName"></span></ui-select-match>
+                                                                    <ui-select-choices repeat="existingItemx.InventoryItemID as existingItemx in ctrl.existingItemsx | filter: $select.search">
+                                                                        <small ng-bind-html="existingItemx.InventoryItemID | highlight: $select.search"> - </small>
+                                                                        <span style="text-transform:capitalize;" ng-bind-html="existingItemx.ItemName |lowercase | highlight: $select.search"></span>
+                                                                        <span ng-bind-html="existingItemx.UnitOfMeasurement | highlight: $select.search"></span>
+                                                                    </ui-select-choices>
+                                                                </ui-select>
+                                                            </td>
+                                                            <td valign="middle">
+                                                                <a href="#" class="btn btn-success btn-sm glyphicon glyphicon-plus"
+                                                                   ng-show="isItemExist ==false || item.InventoryItemID == 0" ng-click="showAddItemModal()"></a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td valign="middle">
+                                                    <span ng-model="item.UnitOfMeasurement" ng-bind="item.UnitOfMeasurement " name="" placeholder="Unit Of Measurement"></span>
+                                                </td>
+                                                <td valign="middle">
+                                                    <input type="number" ng-model="item.UnitPrice" class="form-control" min="0" onkeypress="return isNumberKey(event)" name="Quantity">
+                                                </td>
+                                                <td class="form-group" style="vertical-align:middle">
+                                                    <button ng-click="removeItem($index)" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></button>@*ng-show="$last"*@
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br />
+                                </div>
+                                <div class="modal-footer">
+                                    @*<button class="btn btn-danger btn-sm" ng-click="closeAddSupplierItem()"><i class="glyphicon glyphicon-remove"></i> Close</button>*@
+                                    @*   <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Close</button>*@
+                                    <button class="btn btn-success btn-sm" ng-click="addNewSupplierItem()"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Update Item Unit Price modal-->
+                    <div id="updateUnitPriceModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h2 class="modal-title ">UPDATE UNIT PRICE</h2>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Item Name</th>
+                                                <th>Unit of Description</th>
+                                                <th>Unit Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in updateUnitPriceItems track by $index">
+                                                <td>
+                                                    <span ng-model="item.ItemName" ng-bind="item.ItemName " name="" placeholder="Unit Of Measurement"></span>
+                                                </td>
+                                                <td valign="middle">
+                                                    <span ng-model="item.UomDescription" ng-bind="item.UomDescription" name="" placeholder="Unit Of Measurement"></span>
+                                                </td>
+                                                <td valign="middle">
+                                                    <table>
+                                                        <tr>
+                                                            <td>&#8369; &nbsp;</td>
+                                                            <td><input type="number" ng-model="item.UnitPrice" class="form-control" value="{{item.UnitPrice}}" min="0" onkeypress="return isNumberKey(event)" name="Quantity"></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br />
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-danger btn-sm" ng-click="closeUpdateUnitPrice()"><i class="glyphicon glyphicon-remove"></i> Close</button>
+                                    <button class="btn btn-success btn-sm" ng-click="updateUnitPrice(updateUnitPriceItems)"><i class="glyphicon glyphicon-ok"></i> Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Add Item modal-->
+                    <div id="addItemModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <form name="addItemForm">
+                                <div class="modal-content" style="width: 100% !important;left: 0% !important;">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h2 class="modal-title">ADD NEW ITEM</h2>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <!--ITEM NAME-->
+                                            <label>Item Name</label>
+                                            <input ng-model="newItemName" type="text" class="form-control" id="newItemName" name="newItemName" placeholder="New item name" style="width:300px;height:35px;margin-bottom:30px;" >
+                                            <label>Item Code</label>
+                                            <input ng-model="newItemCode" type="text" class="form-control" id="newItemCode" name="newItemCode" placeholder="New item code" style="width:300px;height:35px;margin-bottom:30px;" >
+                                        </div>
+                                        <label>Unit of Measurement</label>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <ui-select ng-model="ctrl.UnitOfmeasurementID"
+                                                                   ng-keyup="searchUOM($select.search)"
+                                                                   on-select="isUomSelected()"
+                                                                   theme="selectize"
+                                                                   style="width: 300px; height:36px;"
+                                                                   ng-disabled="ctrl.disabled"
+                                                                   title="Choose Unit of Measurement">
+                                                            <ui-select-match placeholder="Select item unit of measurement">{{$select.selected.Description}}</ui-select-match>
+                                                            <ui-select-choices repeat="existingUOMx.UnitOfMeasurementID as existingUOMx in ctrl.existingUOMsx | filter: $select.search">
+                                                                <small ng-bind-html="existingUOMx.UnitOfMeasurementID | highlight: $select.search"> - </small>
+                                                                <span ng-bind-html="existingUOMx.Description | highlight: $select.search"></span>
+                                                            </ui-select-choices>
+                                                        </ui-select>
+                                                    </td>
+                                                    <td valign="middle">
+                                                        <a href="#" class="btn btn-success btn-sm glyphicon glyphicon-plus"
+                                                           ng-show="forCheckUOM==false || ctrl.UnitOfmeasurementID == 0" ng-click="addNewUOM()"></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-danger btn-sm" ng-click="closeAddItemModal()"><i class="glyphicon glyphicon-remove"></i>Close</button>
+                                        <button class="btn btn-success btn-sm" ng-disabled="!addItemForm.newItemName.$valid" ng-click="addInventoryItem(newItemName,ctrl.UnitOfmeasurementID,newItemCode)"><i class="glyphicon glyphicon-ok"></i>Add</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                 <!-- content ends here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,327 @@
+﻿<table class="table table-striped table-bordered" id="tableid">
+    <thead class="t">
+        <tr>
+            <th ng-click="predicate='Id'; reverse=!reverse">Reference No.</th>
+            <th ng-click="predicate='RequisitionType'; reverse=!reverse"> Type of Requisition</th>
+            <th ng-click="predicate='Name'; reverse=!reverse">Requestor</th>
+            <th ng-click="predicate='Location'; reverse=!reverse"> Location</th>
+            <th ng-click="predicate='RequisitionDate'; reverse=!reverse">Date Requested</th>
+            <th ng-click="predicate='RequiredDate'; reverse=!reverse">Required Date</th>
+            <th ng-click="predicate='RequisitionType'; reverse=!reverse"> Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="requisition in requisitions | orderBy:predicate:reverse | filter: searchText">
+            <td>
+                <span ng-bind="requisition.RequisitionID"></span>
+            </td>
+
+            <td>
+                <span ng-bind="requisition.RequisitionType"></span>
+            </td>
+            <td>
+                <span ng-bind="requisition.FullName"></span>
+            </td>
+            <td>
+                <span ng-bind="requisition.LocationName"></span>
+            </td>
+            <td>
+                <span ng-bind="requisition.RequisitionDateString"></span>
+            </td>
+            <td>
+                <span ng-bind="requisition.RequiredDateString"></span>
+            </td>
+            <td>
+                <span ng-bind="requisition.Status"></span>
+            </td>
+            <td id="locationAction" align="center">
+                <button ng-click="showViewModal(requisition)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-eye-open"></i> View</button>
+            </td>
+
+        </tr>
+        <tr ng-show="(requisitions | filter:searchText).length == 0">
+            <td colspan="9" id="locationAction" align="center">No results found...</td>
+        </tr>
+    </tbody>
+</table>
+
+<!--View modal-->
+<div id="viewModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h2 class="modal-title text-uppercase">{{requisition.RequisitionType}} REQUISITION</h2>
+            </div>
+            <div class="modal-body">
+                <p class="text-left lead text-danger has-error">Reference No : {{requisition.RequisitionID}} </p>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><strong>Requisitioned By</strong></td>
+                            <td> :&nbsp;&nbsp;</td>
+                            <td ng-bind="requisition.FullName"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Department</strong> </td>
+                            <td> :&nbsp;&nbsp;</td>
+                            <td ng-bind="requisition.Department">&nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phone No.</strong></td>
+                            <td> : &nbsp;&nbsp;</td>
+                            <td ng-bind="requisition.Contact">&nbsp;&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email </strong></td>
+                            <td> : &nbsp;&nbsp;</td>
+                            <td ng-bind="requisition.Email">&nbsp;&nbsp;</td>
+                        </tr>
+                        @*<tr>
+                                <td><strong>Supplier </strong></td>
+                                <td> : &nbsp;&nbsp;</td>
+                                <td>
+                                    <a ng-hide="requisition.SupplierID ==0" href="#" ng-bind="requisitionItems[0].SupplierName" ng-click="SupplierInformation(requisitionItems[0])"></a>
+                                    <span ng-show="requisition.SupplierID ==0">None</span>&nbsp;&nbsp;
+                                </td>
+
+                            </tr>*@
+                        <tr>
+                            <td> <p></p></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Requisition Date </strong></td>
+                            <td> : &nbsp;&nbsp;</td>
+                            <td ng-bind="requisition.RequisitionDateString">&nbsp;&nbsp;</td>
+
+                            <td><strong>&nbsp;&nbsp;&nbsp;&nbsp;Required Date </strong></td>
+                            <td> :&nbsp;&nbsp; </td>
+                            <td>
+                                <span ng-bind="requisition.RequiredDateString"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> <p></p></td>
+                        </tr>
+                        <tr>
+                            <td> <p></p></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-striped table-bordered" id="tableid">
+                    <thead>
+                        <tr>
+                            <th ng-click="predicate='Id'; reverse=!reverse">ID</th>
+                            <th ng-click="predicate='Id'; reverse=!reverse">Item</th>
+                            <th ng-click="predicate='Id'; reverse=!reverse">Quantity</th>
+                            <th ng-click="predicate='Id'; reverse=!reverse">Unit of Measurement</th>
+                            <th ng-click="predicate='Id'; reverse=!reverse">Description</th>
+                            @*<th ng-click="predicate='Id'; reverse=!reverse">Unit Price</th>
+                                <th ng-click="predicate='Id'; reverse=!reverse">Total</th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in requisitionItems | orderBy:predicate:reverse | filter: searchText">
+                            <td>
+                                <span ng-bind="item.InventoryItemID"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="item.ItemName"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="item.Quantity"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="item.UnitOfMeasurement"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="item.Description"></span>
+                            </td>
+                            @*<td>
+                                    <span ng-bind="item.UnitPrice"></span>
+                                </td>
+                                <td>
+                                    <span ng-bind="item.Quantity * item.UnitPrice "></span>
+                                </td>*@
+                    </tbody>
+                </table>
+
+                <table class="table table-striped table-responsive" id="tableid">
+                    <thead>
+                        <tr>
+                            <td><strong>Reason of Disapproval</strong></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td><fieldset><span ng-bind="requisition.Reason"></span></fieldset></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger btn-sm" ng-click="closeViewModal()"><i class="glyphicon glyphicon-remove"></i> Close</button>
+                <button class="btn btn-info btn-sm" ng-click="showUpdateModal(requisition.RequiredDateString,requisitionItems)"><i class="glyphicon glyphicon-edit"></i> Update</button>
+                <button class="btn btn-success btn-sm" ng-click="acceptFunction(requisition.RequisitionID,requisitionItems)"><i class="glyphicon glyphicon-ok"></i> Resend</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Update modal-->
+<div id="updateModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h2 class="modal-title text-uppercase">UPDATE REQUISITION</h2>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Required Date : </td>
+                            <td>
+                                <div class="row" style="margin-top:10px">
+                                    <div class="col-md-12">
+                                        <p class="input-group">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   uib-datepicker-popup
+                                                   ng-model="requiredDate"
+                                                   is-open="popup1.opened"
+                                                   datepicker-options="dateOptions"
+                                                   ng-required="true"
+                                                   close-text="Close" />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-striped table-hover ">
+                    <thead>
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Unit of Measurement</th>
+                            <th>Quantity</th>
+                            <th>Description</th>
+                        </tr>
+                    <thead>
+                    <tbody>
+                        <tr data-ng-repeat="item in items">
+                            <td class="form-group" style="vertical-align:middle">
+                                <label>{{item.ItemName}}</label>
+                            </td>
+                            <td class="form-group" style="vertical-align:middle">
+                                <input type="text" ng-model="item.UnitOfMeasurement" class="form-control" name="" placeholder="Unit Of Measurement" disabled>
+                            </td>
+                            <td class="form-group" style="vertical-align:middle">
+                                <input type="number" ng-model="item.Quantity" class="form-control" min="0" onkeypress="return isNumberKey(event)" name="Quantity">
+                            </td>
+
+                            <td class="form-group" style="vertical-align:middle">
+                                <textarea ng-model="item.Description" class="form-control" rows="2" name="" placeholder="Description"></textarea>
+                            </td>
+
+                            @*<td class="form-group" style="vertical-align:middle">
+                                    <input type="number" ng-model="item.UnitPrice" class="form-control" value="0" min="0" onkeypress="return isNumberKey(event)" name="Quantity">
+                                </td>
+                                <td style="vertical-align:middle">
+                                    <label><strong>P {{item.Quantity * item.UnitPrice }}</strong></label>
+                                </td>*@
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger btn-sm" ng-click="closeUpdateModal()"><i class="glyphicon glyphicon-remove"></i> Cancel</button>
+                <button class="btn btn-success btn-sm" ng-click="updateRequisitionFunction(requisition.RequisitionID)"><i class="glyphicon glyphicon-ok"></i> Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Decline modal-->
+<div id="declineModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <form name="declineForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h2 class="modal-title text-uppercase">DECLINE REQUISITION</h2>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-stripped" id="tableid">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <h4>Reason for declining this requisition</h4>
+                                    <div class="form-group">
+                                        <div style="width:100% !important">
+                                            <textarea ng-model="reason" name="reason" class="form-control" rows="7" id="textArea"></textarea>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger btn-sm" ng-click="closeDeclineModal()"><i class="glyphicon glyphicon-remove"></i>Cancel</button>
+                    <button class="btn btn-success btn-sm" ng-disabled="!declindeForm.reason.$valid" ng-click="declineFunction(requisition.RequisitionID,reason)"><i class="glyphicon glyphicon-ok"></i>Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--Supplier information modal-->
+<div id="supplierInfoModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 100% !important;left: 0% !important;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h2 class="modal-title">Supplier Information</h2>
+            </div>
+            <div class="modal-body">
+                <center>
+                    <h3>{{supplierInfo.SupplierName}}</h3>
+                </center>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><strong>Address:</strong></td>
+                            <td>{{supplierInfo.Address}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Person to contact:</strong></td>
+                            <td>{{supplierInfo.ContactPerson}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Contact Number:</strong></td>
+                            <td>{{supplierInfo.ContactNo}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email:</strong></td>
+                            <td>{{supplierInfo.Email}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger btn-sm" ng-click="closeSupplierInfo()"><i class="glyphicon glyphicon-remove"></i>Close</button>
+            </div>
+        </div>
+    </div>
+</div>

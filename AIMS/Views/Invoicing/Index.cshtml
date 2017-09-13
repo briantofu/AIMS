@@ -1,0 +1,176 @@
+﻿<script type="text/javascript" src="~/MyScripts/invoicing/display-invoice.js"></script>
+<div class="x_title">
+    <h2>Invoicing | <small>View</small></h2>
+    <ul class="nav navbar-right panel_toolbox">
+        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+    </ul>
+    <div class="clearfix"></div>
+</div>
+<div class="x_content">
+    <!-- content starts here -->
+    @{
+        var date = String.Format("{0:yyyy}", DateTime.Now);
+    }
+    <div ng-controller="myCtrl as ctrl" ng-init="initialize()">
+        <!--REVIEW-->
+        <table class="table table-striped table-bordered" id="tableid">
+            <thead>
+                <tr>
+                    <th ng-click="predicate='Id'; reverse=!reverse">ID</th>
+                    <th ng-click="predicate='Name'; reverse=!reverse">Client Name</th>
+                    <th ng-click="predicate='Name'; reverse=!reverse"> Address</th>
+                    <th ng-click="predicate='Name'; reverse=!reverse"> Invoice Date</th>
+                    <th ng-click="predicate='Name'; reverse=!reverse"> Due Date</th>
+                    <th ng-click="predicate='Name'; reverse=!reverse"> Invoice Period</th>
+                    <th> Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="invoice in invoices | orderBy:predicate:reverse | filter: searchText">
+                    <td>
+                        <span ng-bind="invoice.InvoiceID"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="invoice.ClientName"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="invoice.Address"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="invoice.InvoiceDateString"></span>
+                        <input type="hidden" ng-bind="invoice.InvoiceDate" />
+                    </td>
+                    <td>
+                        <span ng-bind="invoice.DueDateString"></span>
+                        <input type="hidden" ng-bind="invoice.DueDate" />
+                    </td>
+                    <td>
+                        <span ng-bind="invoice.InvoicePeriod"></span>
+
+                    </td>
+
+                    <td>
+                        <button ng-click="viewInvoice(invoice)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-eye-open"></i>View </button>
+                        <button ng-click="download2(invoice)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-save"></i>Download </button>
+                    </td>
+                </tr>
+                <tr ng-show="(invoices | filter:searchText).length == 0">
+                    <td colspan="6" id="locationAction" align="center">No results found...</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!--Add location modal-->
+        <div id="viewInvoiceModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content" style="width: 150% !important;left: -25% !important;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h2 class="modal-title">Invoice Information</h2>
+                    </div>
+                    <div class="modal-body">
+                        <h2 class="pull-right">INVOICE #@date-{{invoiceInfo.InvoiceID}}</h2>
+                        <br /><br />
+                        <h2>Bill To</h2>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-2"><strong>Customer</strong></div>
+                            <div class="col-md-3"><span>{{invoiceInfo.ClientName}}</span></div>
+                            <div class="col-lg-2"><strong>Customer ID</strong></div>
+                            <div class="col-lg-5"><span>{{invoiceInfo.ClientID}}</span></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2"><strong>Address</strong></div>
+                            <div class="col-md-3"><span>{{invoiceInfo.Address}}</span></div>
+                            <div class="col-lg-2"><strong>Tin Number</strong></div>
+                            <div class="col-lg-5"><span>{{invoiceInfo.TinNo}}</span></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2"><strong>Phone</strong></div>
+                            <div class="col-md-3"><span>{{invoiceInfo.ContactNo}}</span></div>
+                        </div>
+                        <br /><br />
+                        <div class="row">
+                            <div class="col-lg-2"><strong>Invoice Date</strong></div>
+                            <div class="col-md-3"><span>{{invoiceInfo.InvoiceDateString}}</span></div>
+                            <input type="hidden" ng-bind="invoiceInfo.InvoiceDate" />
+                            <div class="col-lg-2"><strong>Invoice Period</strong></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2"><strong>Due Date</strong></div>
+                            <div class="col-md-3"><span>{{invoiceInfo.DueDateString}}</span></div>
+                            <input type="hidden" ng-bind="invoiceInfo.DueDate" />
+                            <div class="col-lg-5"><strong>{{invoiceInfo.InvoicePeriod}}</strong></div>
+                        </div>
+                        <br />
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Quantity</th>
+                                    <th>Item #</th>
+                                    <th>Description</th>
+                                    <th>Unit Price</th>
+                                    <th>Discount</th>
+                                    <th>Line Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in invoiceInfo.ClientItemList">
+                                    <td><span>{{item.Quantity}}</span></td>
+                                    <td><span>{{item.ItemNo}}</span></td>
+                                    <td><span>{{item.Description}}</span></td>
+                                    <td><span>{{item.UnitPrice}}</span></td>
+                                    <td><span>{{item.Discount}}</span></td>
+                                    <td><span>{{item.LineTotal}}</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" align="right">Subtotal:</td>
+                                    <td><span ng-model="subtotal">{{subtotal}}</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" align="right">
+                                        Sales Tax:
+                                    </td>
+                                    <td><span ng-model="salestax"> {{salestax}} </span></td>
+                                </tr>
+                                <tr style="background-color:rgb(101, 146, 254)">
+                                    <td colspan="5" align="right"><strong>Total:</strong></td>
+                                    <td>
+                                        <strong ng-model="total"><span>{{total}}</span></strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        <i>For Payments:</i>
+                        <div class="row">
+                            <div class="col-lg-2">Account Name</div>
+                            <div class="col-md-6"><strong><span>{{invoiceInfo.AccountName}}</span></strong></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3" style="width:169px!important; ">USD Account Number</div>
+                            <div class="col-md-6" style="width:160px!important;padding:0px!important;margin-left:-13px;!important"><strong><span>{{invoiceInfo.USDAccountNo}}</span></strong></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2">Bank Name</div>
+                            <div class="col-md-6"><strong><span>{{invoiceInfo.BankName}}</span></strong></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2">Bank Address</div>
+                            <div class="col-md-8"><span>{{invoiceInfo.BankAddress}}</span></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2">SWIFT Code</div>
+                            <div class="col-md-6"><strong><span>{{invoiceInfo.SwiftCode}}</span></strong></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger btn-sm" ng-click="closeViewInvoiceModal()"><i class="glyphicon glyphicon-remove"></i>Close</button>
+                        <button class="btn btn-success btn-sm" ng-click="download(invoiceInfo)"><i class="glyphicon glyphicon-plus"></i>Download</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- content ends here -->
+</div>

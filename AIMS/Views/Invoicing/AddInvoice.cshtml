@@ -1,0 +1,208 @@
+﻿
+@*<script src="~/Scripts/app.js"></script>*@
+<script src="~/Scripts/myscript/accept-numbers-only.js"></script>
+<script src="~/MyScripts/invoicing/add-invoice.js"></script>
+
+<div class="x_title">
+    <h2>Invoicing | <small>Add Invoice</small></h2>
+    <ul class="nav navbar-right panel_toolbox">
+        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+    </ul>
+    <div class="clearfix"></div>
+</div>
+<div class="x_content">
+    <!-- content starts here -->
+    <div ng-submit="submitPost()" ng-controller="myCtrl as ctrl" ng-init="initialize()">
+        <fieldset>
+            <legend>Bill To</legend>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-1">Customer</div>
+                    <div class="col-md-5"><input ng-model="customerName" name="CustomerName" type="text" class="form-control" /></div>
+                    <div class="col-lg-1">Customer ID</div>
+                    <div class="col-lg-5"><input ng-model="customerID" name="CustomerID" type="text" class="form-control" /></div>
+                </div>
+
+                <div class="row" style="margin-top:5px">
+                    <div class="col-lg-1">Address</div>
+                    <div class="col-md-5"><input ng-model="address" type="text" class="form-control" /></div>
+                    <div class="col-lg-1">TIN Number</div>
+                    <div class="col-lg-5"><input ng-model="tinNo" type="text" class="form-control" /></div>
+                </div>
+                <div class="row" style="margin-top:5px">
+                    <div class="col-lg-1">Phone</div>
+                    <div class="col-md-5"><input ng-model="phone" type="text" class="form-control" /></div>
+                    <div class="col-lg-1">Invoice Period</div>
+                    <div class="col-md-5"><input ng-model="invoicePeriod" type="text" class="form-control" /></div>
+                </div>
+                <div class="row" style="margin-top:5px">
+                    <div class="col-lg-1">Invoice Date</div>
+                    <div class="col-md-2">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="input-group">
+                                    <input type="text"
+                                           class="form-control"
+                                           readonly
+                                           uib-datepicker-popup="MMMM dd, yyyy"
+                                           ng-model="invoiceDate"
+                                           is-open="popup1.opened"
+                                           datepicker-options="dateOptions"
+                                           ng-required="true"
+                                           close-text="Close" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-warning" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1">Due Date</div>
+                    <div class="col-md-2">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="input-group">
+                                    <input type="text"
+                                           class="form-control"
+                                           readonly
+                                           uib-datepicker-popup="MMMM dd, yyyy"
+                                           ng-model="dueDate"
+                                           is-open="popup2.opened"
+                                           datepicker-options="dateOptions"
+                                           ng-required="true"
+                                           close-text="Close" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-warning" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                </div>
+            </div>
+        </fieldset>
+        <div class="panel-body">
+            <button ng-click="addNewItem()" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-plus"></i> Add an item</button>
+            <table class="table table-condensed">
+                <thead>
+                    <tr style="background-color:rgba(181, 181, 181, 0.40)">
+                        <th>Action</th>
+                        <th>Quantity</th>
+                        <th>Item#</th>
+                        <th>Description</th>
+                        <th>Unit Price</th>
+                        <th>Discount</th>
+                        <th>Line Total</th>
+                    </tr>
+                <thead>
+                <tbody>
+                    <tr data-ng-repeat="item in items">
+                        <td class="form-group" style="vertical-align:middle">
+                            <button ng-show="$last" ng-click="removeItem()" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></button>
+                        </td>
+
+                        <td style="vertical-align:middle">
+                            <input type="number" ng-model="item.Quantity" ng-keyup="compute()" class="form-control" min="0" onkeypress="return isNumberKey(event)" name="Quantity">
+                        </td>
+
+                        <td class="form-group" style="vertical-align:middle">
+                            <input type="number" ng-model="item.ItemNo" class="form-control" min="0" onkeypress="return isNumberKey(event)" name="Quantity">
+                        </td>
+                        <td class="form-group" style="vertical-align:middle">
+                            <textarea ng-model="item.Description" class="form-control" rows="2" name="" placeholder="Description"></textarea>
+                        </td>
+
+                        <td class="form-group" style="vertical-align:middle">
+                            <input type="number" ng-model="item.UnitPrice" ng-keyup="compute()" class="form-control" value="0" min="0" onkeypress="return isNumberKey(event)" name="Quantity">
+                        </td>
+                        <td style="vertical-align:middle">
+                            <input type="number" ng-model="item.Discount" ng-keyup="compute()" class="form-control" value="0" min="0" onkeypress="return isNumberKey(event)" name="Quantity">
+                        </td>
+                        <td style="vertical-align:middle" align="right">
+                            <label>P <span ng-bind="item.LineTotal =(item.Quantity * item.UnitPrice) - item.Discount">100000.00</span></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" align="right">Subtotal:</td>
+                        <td align="right"><span ng-model="subtotal">{{subtotal}}</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" align="right">
+                            Sales Tax:
+                        </td>
+                        <td align="right"><span ng-model="salestax"> {{salestax}} </span></td>
+                    </tr>
+                    <tr style="background-color:rgb(101, 146, 254)">
+                        <td colspan="6" align="right"><strong>Total:</strong></td>
+                        <td align="right">
+                            <strong ng-model="total"><span>{{total}}</span></strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <fieldset>
+            <legend>For Payments:</legend>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-2">Account Name</div>
+                    <div class="col-md-5"><input ng-model="accountName" type="text" class="form-control" /></div>
+                </div>
+                <div class="row" style="margin-top:5px;">
+                    <div class="col-lg-2">USD Account Number</div>
+                    <div class="col-md-5"><input ng-model="usdAccountNo" type="text" class="form-control" /></div>
+                </div>
+                <div class="row" style="margin-top:5px">
+                    <div class="col-lg-2">Bank Name</div>
+                    <div class="col-md-5"><input ng-model="bankName" type="text" class="form-control" /></div>
+                </div>
+                <div class="row" style="margin-top:5px">
+                    <div class="col-lg-2">Bank Address</div>
+                    <div class="col-md-5"><input ng-model="bankAddress" type="text" class="form-control" /></div>
+                </div>
+                <div class="row" style="margin-top:5px">
+                    <div class="col-lg-2">SWIFT Code</div>
+                    <div class="col-md-5"><input ng-model="swiftCode" type="text" class="form-control" /></div>
+                </div>
+            </div>
+        </fieldset>
+        @*<input type="submit" id="submit" value="Submit" class="btn btn-success pull-right" />
+            <button ng-click="submitInvoice(customerName,customerID,address,tinNo,phone,invoicePeriod,invoiceDate,dueDate,items,accountName,usdAccountNo,bankName,bankAddress,swiftCode)"
+                    class="btn btn-success pull-right">
+                <i class="glyphicon glyphicon-ok"></i>Submit
+            </button>*@
+        <button ng-click="showConfirmModal()"
+                class="btn btn-success pull-right">
+            <i class="glyphicon glyphicon-ok"></i>Submit
+        </button>
+        <br /><br />
+
+        <!--Confirmation Modal modal-->
+        <div id="confirmModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content" style="width: 100% !important;left: 0% !important;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h2 class="modal-title text-uppercase">Confirmation</h2>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Choose an action</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-info btn-sm" ng-click="SaveInvoice(customerName,customerID,address,tinNo,phone,invoicePeriod,invoiceDate,dueDate,items,accountName,usdAccountNo,bankName,bankAddress,swiftCode)">
+                            <i class="glyphicon glyphicon-ok"></i>Save
+                        </button>
+                        <button class="btn btn-success btn-sm" ng-click="SaveDownloadInvoice(customerName,customerID,address,tinNo,phone,invoicePeriod,invoiceDate,dueDate,items,accountName,usdAccountNo,bankName,bankAddress,swiftCode)">
+                            <i class="glyphicon glyphicon-save"></i>Save / Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- content ends here -->
+</div>

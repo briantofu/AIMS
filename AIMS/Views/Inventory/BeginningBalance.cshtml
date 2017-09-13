@@ -1,0 +1,74 @@
+﻿<script type="text/javascript" src="~/MyScripts/inventory/stocks.js"></script>
+
+
+<div class="jumbotron" style="margin-top: 100px;">
+    <div ng-controller="myCtrl" ng-init="initialize()">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    Inventory |<small> Beginning Balance</small>
+                </h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-7 col-sm-7 col-xs-12 form-group pull-right tohahahp_search">
+                </div>
+            </div>
+        </div>
+        <!-- Quantity Monitoring -->
+
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_content">
+                        <!-- content starts here -->
+                        <style type="text/css">
+                            .red {
+                                color: red;
+                            }
+
+                            .black {
+                                color: black !important;
+                            }
+                        </style>
+                        <div>
+                            <!--REVIEW-->
+                            <table class="table table-bordered table-hover" id="tableid">
+                                <thead class="t">
+                                    <tr>
+                                        <th ng-click="predicate='InventoryItemID'; reverse=!reverse">Beginning Balance ID<br><br></th>
+                                        <th ng-click="predicate='InventoryItemIDn'; reverse=!reverse">Inventory Item Id<br><br></th>
+                                        <th ng-click="predicate='RemainingQuantity'; reverse=!reverse">Quantity<br><br></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in itemStocks | orderBy:predicate:reverse | filter: searchText">
+                                        <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
+                                            <span ng-bind="item.InventoryItemID"></span>
+                                        </td>
+                                        <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
+                                            <span ng-bind="item.InventoryItemID"></span>
+                                        </td>
+                                        <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
+                                            <span ng-bind="item.RemainingQuantity"></span>
+                                        </td>
+                                    </tr>
+                                    <tr ng-show="(itemStocks | filter:searchText).length == 0">
+                                        <td colspan="6" id="locationAction" align="center">No results found...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- content ends here -->
+                    </div>
+                    @Html.Partial("~/Views/Shared/_Pagination.cshtml")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

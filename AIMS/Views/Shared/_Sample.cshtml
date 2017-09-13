@@ -1,0 +1,43 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>MvcRazorToPdf</title>
+    @*<style>
+        html {
+            font-family: Cambria;
+        }
+
+        h1 {
+            color: blue;
+        }
+
+        table {
+            border: 1px solid black;
+            border-spacing: 0px;
+        }
+
+            table tr th {
+                background-color: gray;
+                color: white;
+                padding: 2px;
+            }
+
+            table tr td {
+                margin: 0px;
+                padding: 2px;
+            }
+    </style>*@
+    <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" type="text/css" />
+    @RenderSection("Styles", false)
+</head>
+<body class="container body-content">
+    @RenderBody()
+</body>
+</html>
+

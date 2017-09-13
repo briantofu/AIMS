@@ -1,0 +1,65 @@
+﻿
+<style>
+    .btn-lg, .btn-group-lg > .btn
+    {
+        min-width: 200px !important;
+    }
+</style>
+<script type="text/javascript" src="~/Scripts/myscript/number-words-converter.js"></script>
+
+<div class="x_title">
+    <h2>Home <small>Dashboard</small></h2>
+    <ul class="nav navbar-right panel_toolbox">
+        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+    </ul>
+    <div class="clearfix"></div>
+</div>
+<div class="x_content">
+    <!-- content starts here -->
+       <div ng-controller="myCtrl">
+        <input type="text" name="number" ng-model="a"placeholder="Number OR Amount" ng-keyup="convert(a)" />
+            {{words}}
+        <center>
+            <h2>Inventory</h2>
+            <table>
+                <tr>
+                    <td>
+                        <a href="/Inventory/Stocks" class="btn btn-primary btn-lg">INVENTORY</a>
+                        <a href="/Location/AddLocation" class="btn btn-primary btn-lg">LOCATION</a>
+                        <a href="/Requisition/AddRequisition" class="btn btn-primary btn-lg">REQUISITION</a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <a href="/Request/ViewRequest" class="btn btn-primary btn-lg">REQUESTS</a>
+                        <a href="/Client/ViewClient" class="btn btn-primary btn-lg">CLIENTS</a>
+                        <a href="#" class="btn btn-primary btn-lg">REPORTS</a>
+                    </td>
+                </tr>
+                <tr></tr>
+            </table>
+        </center>
+        <center>
+            <h2>Accounting</h2>
+            <table>
+                <tr>
+                    <td>
+                        <a href="/Voucher/Index" class="btn btn-primary btn-lg">CREATE VOUCHER</a>
+                        <a href="/Invoicing/Index" class="btn btn-primary btn-lg">INVOICING</a>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+    <!-- content ends here -->
+</div>
+
+<script>
+    var app = angular.module('myApp', []);
+    app.controller("myCtrl", function ($scope, $http) {
+        $scope.convert = function (a) {
+            $scope.words = withDecimal(a);
+        };
+    });
+</script>

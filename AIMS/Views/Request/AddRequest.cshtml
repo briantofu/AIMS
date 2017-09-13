@@ -1,0 +1,143 @@
+﻿@*<script src="~/Scripts/app.js"></script>*@
+<script src="~/MyScripts/request/add-request.js"></script>
+<script src="~/Scripts/myscript/accept-numbers-only.js"></script>
+
+
+<div class="jumbotron" style="margin-top: 100px;">
+    <div ng-controller="myCtrl as ctrl" ng-init="initialize()">
+        <div class="page-title">
+            <div class="title_left"> <!-- REQUESTS | ADD REQUEST -->
+                <h3>
+                    Requests | <small>Add Request</small>
+                </h3>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_content">
+
+         <!-- content starts here -->
+                        <div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>&nbsp;&nbsp;&nbsp;&nbsp;Location</td>
+                                                <td> : &nbsp;</td>
+                                                <td>
+                                                    <ui-select ng-model="ctrl.locationId" theme="selectize" title="Choose a locaiton" style="min-width: 250px;">
+                                                        <ui-select-match placeholder="Select or search location"><span ng-bind="$select.selected.LocationName"></span></ui-select-match>
+                                                        <ui-select-choices repeat="location.LocationID as location in ctrl.existingLocations | filter: $select.search" null-option="--No supplier--">
+                                                            <small ng-bind-html="location.LocationID| highlight: $select.search"> - </small>
+                                                            <span ng-bind-html="location.LocationName| highlight: $select.search"> - </span>
+                                                        </ui-select-choices>
+                                                    </ui-select>
+                                                </td>
+                                                <td style="vertical-align:middle">&nbsp;&nbsp;Required Date  &nbsp;</td>
+                                                <td style="vertical-align:middle"> : &nbsp;</td>
+                                                <td>
+                                                    <div class="row" style="margin-top:10px">
+                                                        <div class="col-md-12">
+                                                            <p class="input-group">
+                                                                <input type="text"
+                                                                       class="form-control"
+                                                                       readonly
+                                                                       uib-datepicker-popup="MMMM dd, yyyy"
+                                                                       ng-model="requiredDate"
+                                                                       is-open="popup2.opened"
+                                                                       datepicker-options="dateOptions"
+                                                                       ng-required="true"
+                                                                       close-text="Close" />
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-warning" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="panel-body">
+                                    <table class="table table-striped table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th>Item Name<br><br></th>
+                                                <th>Quantity<br><br></th>
+                                                <th>&nbsp;&nbsp;Unit of &nbsp;&nbsp;<br>Measurement<br></th>
+                                                <th>&nbsp;&nbsp;Description<br><br></th>
+                                                <th>Action<br><br></th>
+                                            </tr>
+                                        <thead>
+                                        <tbody>
+                                            <tr data-ng-repeat="item in items track by $index">
+                                                <td style="vertical-align:middle">
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <ui-select ng-model="item.InventoryItemID" ng-keyup="key($select.search)" theme="selectize" ng-disabled="ctrl.disabled" style="width: 200px; height:36px;" title="Choose an item"
+                                                                               on-select="setItemUOM(item, $select.selected.UnitOfMeasurement)">
+                                                                        <ui-select-match placeholder="Select or search an item...">{{$select.selected.ItemName}}</ui-select-match>
+                                                                        <ui-select-choices repeat="existingItemx.InventoryItemID as existingItemx in ctrl.existingItemsx | filter: $select.search" ng-o->
+                                                                            <small ng-bind-html="existingItemx.InventoryItemID | highlight: $select.search"> - </small>
+                                                                            <span ng-bind-html="existingItemx.ItemName | highlight: $select.search"></span>
+                                                                            <span ng-bind-html="existingItemx.UnitOfMeasurement | highlight: $select.search"></span>
+                                                                        </ui-select-choices>
+                                                                    </ui-select>
+                                                                </td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                                <td class="form-group" style="vertical-align:middle">
+                                                    <input type="number" ng-model="item.Quantity" class="form-control" min="0" onkeypress="return isNumberKey(event)" name="Quantity">
+                                                </td>
+                                                <td class="form-group" style="vertical-align:middle">
+                                                    <input type="text" ng-model="item.UnitOfMeasurement" class="form-control" name="" placeholder="Unit Of Measurement" disabled>
+                                                </td>
+                                                <td class="form-group" style="vertical-align:middle">
+                                                    <textarea ng-model="item.Description" class="form-control" rows="2" name="" placeholder="Description"></textarea>
+                                                </td>
+                                                <td class="form-group" style="vertical-align:middle">
+                                                    <button ng-click="removeItem(RequestID)" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></button>@*ng-show="$last"*@
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <button ng-click="addNewItem()" class="btn btn-success btn-sm "><i class="glyphicon glyphicon-plus"></i> Add Item</button>
+                                </div>
+                            </div>
+
+                            <table style="width:100%">
+                                <tbody>
+                                    <tr>
+                                        <td class="form-group">
+                                            <h3>Special Instruction</h3>
+                                            <textarea ng-model="specialInstruction" id="specialInstruction" class="form-control" rows="5" name="specialInstruction" placeholder="Specify your special instruction here..."></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="form-group">
+                                            <span><br></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            @*requiredDate,specialInstruction,items,ctrl.location*@
+                            <button ng-click="submitRequest(ctrl.locationId)" class="btn btn-success "><i class="glyphicon glyphicon-ok"></i> Submit Request</button>
+                            <br>
+                            <br>
+                        </div>
+         <!-- content ends here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

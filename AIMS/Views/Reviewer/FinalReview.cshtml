@@ -1,0 +1,17 @@
+﻿<script src="~/MyScripts/reviewer/final-review.js"></script>
+<div class="x_title">
+    <h2>Final Requests | <small>Review</small></h2>
+    <ul class="nav navbar-right panel_toolbox">
+        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+    </ul>
+    <div class="clearfix"></div>
+</div>
+<div class="x_content">
+    <!-- content starts here -->
+    <div ng-controller="myCtrl" ng-init="initialize()">
+        <!--REVIEW-->
+        @Html.Partial("~/Views/Shared/_ReviewRequest.cshtml")
+
+    </div>
+    <!-- content ends here -->
+</div>

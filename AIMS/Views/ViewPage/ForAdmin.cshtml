@@ -1,0 +1,321 @@
+﻿
+@{
+    ViewBag.Title = "ForAdmin";
+}
+
+<style>
+    .container {
+        width: 85%;
+    }
+
+    #action {
+        text-align: center;
+        width: 250px;
+    }
+</style>
+
+<h2>User List</h2>
+<div ng-app="myApp" ng-controller="myCtrl" ng-init="initialize()">
+
+    <button onclick="addfunction()" type="button" class="btn btn-primary btn-sm pull-right" ng-click="adduserfunction()"><i class="glyphicon glyphicon-plus"></i> Add</button>
+    <br /><br />
+    <div class="container">
+        <table class="table table-bordered" id="tableid">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Lastname</th>
+                    <th>Firstname</th>
+                    <th>Middlename</th>
+                    <th>Department</th>
+                    <th>Contact</th>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="account in accounts">
+                    <td>
+                        <span ng-bind="account.UserID"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="account.Username"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="account.Lastname"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="account.Firstname"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="account.Middlename"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="account.Department"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="account.Contact"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="account.Email"></span>
+                    </td>
+                    <td>
+                        <span ng-bind="account.Roles"></span>
+                    </td>
+                    <td id="action">
+                        <button ng-click="showEditModal(account,account.Roles)" class="edit btn btn-info btn-sm"><i class="glyphicon glyphicon-edit"></i> Edit</button>
+                        <a href="/Home/view/{{exam.examid}}" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-ban-circle"></i> Block</a>
+                        <button ng-click="deletefunction(account.UserID)" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Create Modal -->
+    <ng-form id="myForm" name="myForm">
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" ng-click="closefunction()">&times;</button>
+                        <h4 class="modal-title">Register</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label>Username:</label>
+                        <input type="text" name="username" ng-model="username" class="form-control" required />
+                        <label>Lastname:</label>
+                        <input type="text" name="lastname" ng-model="lastname" class="form-control" required />
+                        <label>Firstname:</label>
+                        <input type="text" name="firstname" ng-model="firstname" class="form-control" required />
+                        <label>Middlename:</label>
+                        <input type="text" name="middlename" ng-model="middlename" class="form-control" />
+                        <label>Department:</label>
+                        <input type="text" name="department" ng-model="department" class="form-control" required />
+                        <label>Contact Number:</label>
+                        <input type="text" name="contact" ng-model="contact" class="form-control" required />
+                        <label>Email:</label>
+                        <input type="email" name="email" ng-model="email" class="form-control" required />
+                        <span style="color:red" ng-show="myForm.email.$invalid">
+                            <span ng-show="myForm.email.$error.email">Invalid email address.</span>
+                        </span>
+                        <div class="checkbox">
+                            <label ng-repeat="role in roles">
+                                <input type="checkbox" name="role[]" ng-model="list" value={{role.RoleID}} ng-change="change(list,role.RoleID)"> {{role.RoleName}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </label>
+
+                        </div>
+                        {{list}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closefunction()">Close</button>
+                        <button class="btn btn-primary" ng-click="clickfunction()" ng-disabled="myForm.email.$invalid">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-form>
+
+    <!--Edit modal-->
+    <div id="myModal2" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="closefunction()">&times;</button>
+                    <h4 class="modal-title">Edit</h4>
+                </div>
+                <div class="modal-body">
+                    <label>Username:</label>
+                    <input type="text" name="username" ng-model="account.Username" class="form-control" required />
+                    <label>Lastname:</label>
+                    <input type="text" name="lastname" ng-model="account.Lastname" class="form-control" required />
+                    <label>Firstname:</label>
+                    <input type="text" name="firstname" ng-model="account.Firstname" class="form-control" required />
+                    <label>Middlename:</label>
+                    <input type="text" name="middlename" ng-model="account.Middlename" class="form-control" />
+                    <label>Department:</label>
+                    <input type="text" name="department" ng-model="account.Department" class="form-control" required />
+                    <label>Contact Number:</label>
+                    <input type="text" name="contact" ng-model="account.Contact" class="form-control" required />
+                    <label>Email:</label>
+                    <input type="email" name="email" ng-model="account.Email" class="form-control" required />
+                    <span style="color:red" ng-show="myForm.email.$invalid">
+                        <span ng-show="myForm.email.$error.email">Invalid email address.</span>
+                    </span>
+                    <div class="checkbox">
+                        <label ng-repeat="role in roles">
+                            <input type="checkbox" name="role[]" ng-model="list" value={{role.RoleID}} ng-init="initroles(role.RoleStatus,role.RoleID)" ng-click="change(list,role.RoleID)" ng-checked={{role.RoleStatus}} /> {{role.RoleName}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </label>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closefunction()">Close</button>
+                    <button class="btn btn-primary" ng-click="editfunction()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{list}}
+    <script>
+        $(document).ready(function () {
+
+        });
+
+        function addfunction() {
+
+            $("#myModal").modal("show");
+        }
+
+        var app = angular.module("myApp", []);
+        app.controller("myCtrl", function ($scope, $http) {
+            //======DISPLAY ALL USERS========
+            $scope.account;
+            $scope.initialize = function () {
+                $http.post('/ViewPage/LoadData')
+                    .then(
+                function successCallback(response) {
+                    $scope.accounts = response.data;
+                },
+                function errorCallback(response) {
+
+                });
+            }
+            //======REMOVES DATA IN INPUT========
+            $scope.closefunction = function () {
+                $scope.username = '';
+                $scope.lastname = '';
+                $scope.firstname = '';
+                $scope.middlename = '';
+                $scope.department = '';
+                $scope.contact = '';
+                $scope.email = '';
+                $scope.list = [];
+                $("#myModal").modal("hide");
+            }
+
+            //======OPENS THE MODAL AND LOAD ALL ROLES========
+            $scope.adduserfunction = function () {
+                $http.post('/ViewPage/LoadRoles')
+                        .then(
+                    function successCallback(response) {
+                        $scope.roles = response.data;
+                    },
+                    function errorCallback(response) {
+
+                    });
+            }
+
+
+            //======INITIALIZED THE VALUE OF CHECKED CHECKBOX=======
+            $scope.list = [];
+
+            $scope.initroles = function (check, value) {
+                if (check) {
+                    $scope.list.push(value);
+                }
+            };
+
+            //======GETS THE VALUE OF CHECKED CHECKBOX=======
+            $scope.change = function (check, value) {
+                if (check) {
+                    $scope.list.push(value);
+                } else {
+                    for (var i = $scope.list.length - 1; i >= 0; i--) {
+                        if ($scope.list[i] === value) {
+                            $scope.list.splice(i, 1);
+                        }
+                    }
+                    //$scope.list.splice(value);
+                }
+
+            };
+
+
+            //======ADD USER TO DATABASE========
+            $scope.clickfunction = function () {
+                    var data = {
+                        username: $scope.username,
+                        lastname: $scope.lastname,
+                        firstname: $scope.firstname,
+                        middlename: $scope.middlename,
+                        department: $scope.department,
+                        contact: $scope.contact,
+                        email: $scope.email,
+                        roles: $scope.list
+                    };
+                $http.post('/ViewPage/AddUser', data)
+                    .then(
+                function successCallback(response) {
+                    if (response.data.length === 0) {
+                        $scope.initialize();
+                    }
+                    $scope.username = '';
+                    $scope.lastname = '';
+                    $scope.firstname = '';
+                    $scope.middlename = '';
+                    $scope.department = '';
+                    $scope.contact = '';
+                    $scope.email = '';
+                    $scope.list = [];
+                    $("#myModal").modal("hide");
+                },
+                function errorCallback(response) {
+
+                });
+            }
+            //======DELETE USER TO DATABASE========
+            $scope.deletefunction = function (id) {
+                var data = {
+                    id: id
+                };
+                $http.post("/ViewPage/DeleteUser", data).then(
+                    function successCallback(response) {
+                        $scope.initialize();
+                    },
+                    function errorCallback(response) {
+
+                    }
+                );
+            }
+
+            //======EDIT USER TO DATABASE========
+            $scope.editfunction = function () {
+                var data = {
+                    account: $scope.account
+                };
+                $http.post("/ViewPage/EditUser", data).then(
+                    function successCallback(response) {
+                        $scope.initialize();
+                        $scope.list = [];
+                        $("#myModal2").modal("hide");
+                    },
+                    function errorCallback(response) {
+                    }
+                );
+            }
+
+            $scope.showEditModal = function (account,roles) {
+                $scope.account = angular.copy(account);
+                var data = {
+                    roles: roles
+                };
+                $http.post('/ViewPage/LoadRolesEdit',data)
+                        .then(
+                    function successCallback(response) {
+                        $scope.roles = response.data;
+                    },
+                    function errorCallback(response) {
+
+                });
+                $("#myModal2").modal("show");
+            }
+        });
+    </script>
+
+</div>
+
+
+

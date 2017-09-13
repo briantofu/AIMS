@@ -1,0 +1,97 @@
+﻿
+<script type="text/javascript" src="~/MyScripts/inventory/stocks.js"></script>
+
+<div class="jumbotron" style="margin-top: 100px;">
+    <div ng-controller="myCtrl" ng-init="initialize()">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    Inventory |<small> All Item Stocks</small>
+                </h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-7 col-sm-7 col-xs-12 form-group pull-right tohahahp_search">
+                    <div class="input-group">
+                        <input ng-model="searchText" type="text" class="form-control" placeholder="Search here...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+                     <!-- Quantity Monitoring -->
+        <div>                         
+            <p><span class="badge bg-blue">&nbsp</span><small><small>&nbsp;&nbsp; Items whose quantity are more than 10 </small></small></p>
+            <p><span class="badge bg-red">&nbsp</span><small><small>&nbsp;&nbsp; Items whose quantity are less than 10 </small></small></p>   
+        </div>
+
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <!-- content starts here -->
+                                      <style type="text/css">
+                                    .red
+                                    {
+                                        color: red;
+                                    }
+
+                                    .black
+                                    {
+                                        color: black !important;
+                                    }
+                                </style>
+                                    <div>
+                                    <!--REVIEW-->
+                                      <table class="table table-bordered table-hover" id="tableid">
+                                        <thead class="t">
+                                            <tr>
+                                                <th ng-click="predicate='InventoryItemID'; reverse=!reverse">Item No.<br><br></th>
+                                                <th ng-click="predicate='ItemCode'; reverse=!reverse">Item Code<br><br></th>
+                                                <th ng-click="predicate='UnitOfDescription'; reverse=!reverse">Unit Of Description<br><br></th>
+                                                <th ng-click="predicate='ItemName'; reverse=!reverse">Item Name<br><br><br></th>
+                                                <th ng-click="predicate='TotalStock'; reverse=!reverse">Total Purchased<br>Quantity</th>
+                                                <th ng-click="predicate='RequestedQuantity'; reverse=!reverse">Total Requested<br>Quantity</th>
+                                                <th ng-click="predicate='RemainingQuantity'; reverse=!reverse">Remaining Quantity<br><br></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in itemStocks | orderBy:predicate:reverse | filter: searchText">
+                                                <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
+                                                    <span ng-bind="item.InventoryItemID"></span>
+                                                </td>
+                                                <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
+                                                    <span ng-bind="item.ItemCode"></span>
+                                                </td>
+                                                <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
+                                                    <span ng-bind="item.UnitOfDescription"></span>
+                                                </td>
+                                                <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
+                                                    <span ng-bind="item.ItemName"></span>
+                                                </td>
+                                                <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
+                                                    <span ng-bind="item.TotalStock"></span>
+                                                </td>
+                                                <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
+                                                    <span ng-bind="item.RequestedQuantity"></span>
+                                                </td>
+                                                <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
+                                                    <span ng-bind="item.RemainingQuantity"></span>
+                                                </td>
+                                            </tr>
+                                            <tr ng-show="(itemStocks | filter:searchText).length == 0">
+                                                <td colspan="6" id="locationAction" align="center">No results found...</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                <!-- content ends here -->
+                            </div>
+                            @Html.Partial("~/Views/Shared/_Pagination.cshtml")
+                        </div>
+                    </div>
+                </div>
+    </div>
+        </div>

@@ -1,0 +1,5 @@
+﻿<div style="float:right">
+    <ul ng-repeat="page in pages" class="pagination">
+        <li ng-class="{'active':page.PageStatus == true}"><a href="#" ng-click="pageChange(page)" ng-bind="page.PageNumber"></a></li>
+    </ul>
+</div>

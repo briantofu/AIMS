@@ -1,0 +1,38 @@
+﻿<script type="text/javascript" src="~/MyScripts/reviewer/requisition.js"></script>
+
+<div class="jumbotron" style="margin-top: 100px;">
+    <div ng-controller="myCtrl" ng-init="initialize()">
+        <div class="page-title">
+            <div class="title_left"> <!-- PURDCHASE ORDER | ALL REQUISITIONS -->
+                <h3>
+                    Purchase Order | <small> All Requisitions </small>
+                </h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-7 col-sm-7 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input ng-model="searchText" type="text" class="form-control" placeholder="Search here...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_content">
+                        <!-- content starts here -->
+                        <div>
+                            <!--REVIEW-->
+                            @Html.Partial("~/Views/Shared/_ReviewRequest.cshtml")
+                        </div>
+                        <!-- content ends here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

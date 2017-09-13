@@ -1,0 +1,299 @@
+﻿<script type="text/javascript" src="~/MyScripts/requisition/partial-delivery.js"></script>
+<script type="text/javascript" src="~/MyScripts/others/accept-numbers-only.js"></script>
+
+
+
+<div class="jumbotron" style="margin-top: 100px;">
+<div ng-controller="myCtrl as ctrl" ng-init="initialize()">
+    <div class="page-title">
+        <div class="title_left"> <!-- REQUISITION | PARTIAL/INCOMPLETE DELIVERIES -->
+            <h3>
+                Requisition | <small>Partial/Incomplete Deliveries</small>
+            </h3>
+        </div>
+        <div class="title_right">
+            <div class="col-md-7 col-sm-7 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input ng-model="searchText" type="text" class="form-control" placeholder="Search here...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+
+                <div class="x_content">
+                    <!-- content starts here -->
+                    <div>
+                        <table class="table table-striped table-bordered" id="tableid">
+                            <thead class="t">
+                                <tr>
+                                    <th ng-click="predicate='RequisitionID'; reverse=!reverse">Reference No.</th>
+                                    <th ng-click="predicate='RequisitionType'; reverse=!reverse"> Type of Requisition</th>
+                                    <th ng-click="predicate='FullName'; reverse=!reverse">Requestor<br><br></th>
+                                    <th ng-click="predicate='LocationName'; reverse=!reverse"> Location<br><br></th>
+                                    <th ng-click="predicate='RequisitionDateString'; reverse=!reverse">Date Requested</th>
+                                    <th ng-click="predicate='RequiredDateString'; reverse=!reverse"> Required Date</th>
+                                    <th ng-click="predicate='Status'; reverse=!reverse"> Status<br><br></th>
+                                    <th>Action<br><br></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="requisition in requisitions | orderBy:predicate:reverse | filter: searchText">
+                                    <td>
+                                        <span ng-bind="requisition.RequisitionID"></span>
+                                    </td>
+                                    <td>
+                                        <span ng-bind="requisition.RequisitionType"></span>
+                                    </td>
+                                    <td>
+                                        <span ng-bind="requisition.FullName"></span>
+                                    </td>
+                                    <td>
+                                        <span ng-bind="requisition.LocationName"></span>
+                                    </td>
+                                    <td>
+                                        <span ng-bind="requisition.RequisitionDateString"></span>
+                                    </td>
+                                    <td>
+                                        <span ng-bind="requisition.RequiredDateString"></span>
+                                    </td>
+                                    <td>
+                                        <span ng-bind="requisition.Status"></span>
+                                    </td>
+                                    <td id="locationAction" align="center">
+                                        <button ng-click="showViewModal(requisition)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-eye-open"></i> View</button>
+                                    </td>
+
+                                </tr>
+                                <tr ng-show="(requisitions | filter:searchText).length == 0">
+                                    <td colspan="9" id="locationAction" align="center">No results found...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        @Html.Partial("~/Views/Shared/_Pagination.cshtml")
+                        <!--View modal-->
+                        <div id="viewModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h2 class="modal-title text-uppercase">Update Purchase Requisition</h2>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="text-left lead text-danger has-error">Reference No : {{requisition.RequisitionID}} </p>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td><strong>Requisitioned By</strong></td>
+                                                    <td> :&nbsp;&nbsp;</td>
+                                                    <td width="300px" ng-bind="requisition.FullName"></td>
+                                                    <td><strong>Phone No.</strong></td>
+                                                    <td> : &nbsp;&nbsp;</td>
+                                                    <td ng-bind="requisition.Contact">&nbsp;&nbsp;</td>
+
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td><strong>Department</strong> </td>
+                                                    <td> :&nbsp;&nbsp;</td>
+                                                    <td ng-bind="requisition.Department">&nbsp;&nbsp;</td>
+                                                    <td><strong>Email </strong></td>
+                                                    <td> : &nbsp;&nbsp;</td>
+                                                    <td ng-bind="requisition.Email">&nbsp;&nbsp;</td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Requisitioned Date </strong></td>
+                                                    <td> : &nbsp;&nbsp;</td>
+                                                    <td ng-bind="requisition.RequisitionDateString">&nbsp;&nbsp;</td>
+                                                    <td valign="top"><strong>Required Date </strong></td>
+                                                    <td valign="top"> :&nbsp;&nbsp; </td>
+                                                    <td valign="top" ng-bind="requisition.RequiredDateString"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Supplier </strong></td>
+                                                    <td> : &nbsp;&nbsp;</td>
+                                                    <td>
+                                                        <ui-select ng-model="ctrl.SupplierID" theme="selectize" title="Choose a supplier" style="width:200px;"
+                                                                   ng-keyup="isSupplierExist($select.search)"
+                                                                   on-select="isSupplierSelect(ctrl.SupplierID)">
+                                                            <ui-select-match placeholder="Select or search a supplier"><span ng-bind="$select.selected.SupplierName"></span></ui-select-match>
+                                                            <ui-select-choices repeat="existingSupplier.SupplierID as existingSupplier in ctrl.existingSuppliers | filter: $select.search" null-option="--No supplier--">
+                                                                <small ng-bind-html="existingSupplier.SupplierID| highlight: $select.search"> - </small>
+                                                                <span style="text-transform:capitalize;" ng-bind-html="existingSupplier.SupplierName| lowercase | highlight: $select.search"></span>
+                                                            </ui-select-choices>
+                                                        </ui-select>
+                                                    </td>
+                                                    <td><strong>Supplier Invoice No. </strong></td>
+                                                    <td> :&nbsp;&nbsp;</td>
+                                                    <td><input ng-model="supplierInvoiceNo" type="text" class="form-control" id="newItem" style="width:220px;height:35px;"></td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Delivered Date </strong></td>
+                                                    <td> :&nbsp;&nbsp;</td>
+                                                    <td width="200px">
+                                                        <div class="row" style="margin-top:10px;">
+                                                            <div class="col-md-12">
+                                                                <p class="input-group" style="width:223px!important;">
+                                                                    <input type="text"
+                                                                           class="form-control"
+                                                                           readonly
+                                                                           uib-datepicker-popup="MMMM dd, yyyy"
+                                                                           ng-model="requiredDate"
+                                                                           is-open="popup2.opened"
+                                                                           datepicker-options="dateOptions"
+                                                                           ng-required="true"
+                                                                           close-text="Close" />
+                                                                    <span class="input-group-btn">
+                                                                        <button type="button" class="btn btn-warning" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                                    </span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td><strong>Delivery Receipt No.</strong></td>
+                                                    <td> :&nbsp;&nbsp;</td>
+                                                    <td><input ng-model="deliveryReceiptNo" type="text" class="form-control" id="newItem" style="width:220px;height:35px;"></td>
+                                                </tr>
+
+                                                @*<tr>
+                                                        <td><strong>Delivery Type</strong></td>
+                                                        <td> :&nbsp;&nbsp;</td>
+                                                        <td>
+                                                            <div class="radio" ng-init="deliveryType='Delivered'">
+                                                                <label>
+                                                                    <input type="radio" ng-model="deliveryType" name="optionsRadios" id="rbtnFull" value="Delivered" checked="">
+                                                                    Full Delivery
+                                                                </label>
+                                                                <label>
+                                                                    <input type="radio" ng-model="deliveryType" name="optionsRadios" id="rbtnParital" value="PartialDelivery">
+                                                                    Partial Delivery
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>*@
+                                            </tbody>
+                                        </table>
+                                        <br />
+                                        <table class="table table-striped table-bordered" id="tableid">
+                                            <thead class="t">
+                                                <tr>
+                                                    <th>
+                                                        <input type="checkbox" ng-click="toggleAll()" ng-model="allSelected">
+                                                        <span>Select All</span>
+                                                    </th>
+                                                    <th ng-click="predicate='InventoryItemID'; reverse=!reverse">Item ID</th>
+                                                    <th ng-click="predicate='ItemName'; reverse=!reverse">Item / Description<br><br></th>
+                                                    <th ng-click="predicate='Quantity'; reverse=!reverse">Quantity Ordered</th>
+                                                    <th ng-click="predicate='UnitOfMeasurement'; reverse=!reverse">Unit of Measurement</th>
+                                                    <th ng-click="predicate='BalanceQuantity'; reverse=!reverse"> Balance Quantity</th>
+                                                    <th> Quantity Receieved<br><br></th>
+
+                                                    @*<th ng-click="predicate='Id'; reverse=!reverse">Unit Price</th>
+                                                        <th ng-click="predicate='Id'; reverse=!reverse">Line Total</th>*@
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in requisitionItems | orderBy:predicate:reverse | filter: searchText">
+                                                    <td>
+                                                        <input ng-disabled="item.BalanceQuantity==0" type="checkbox" ng-click="cbChecked()" ng-model="item.isItemSelected" />
+                                                    </td>
+                                                    <td ng-disabled="item.BalanceQuantity != 0" ng-class="{red : item.DeliveredQuantity == 0}"><span ng-bind="item.InventoryItemID"></span></td>
+                                                    <td ng-disabled="item.BalanceQuantity != 0" ng-class="{red : item.DeliveredQuantity == 0}"><span ng-bind="item.ItemName"></span></td>
+                                                    <td ng-disabled="item.BalanceQuantity != 0" ng-class="{red : item.DeliveredQuantity == 0}"><span ng-bind="item.Quantity"></span></td>
+                                                    <td ng-disabled="item.BalanceQuantity != 0" ng-class="{red : item.DeliveredQuantity == 0}"><span ng-bind="item.UnitOfMeasurement"></span></td>
+                                                    <td ng-disabled="item.BalanceQuantity != 0" ng-class="{red : item.DeliveredQuantity == 0}"><span ng-bind="item.BalanceQuantity"></span></td>
+                                                    <td>
+                                                        <input ng-disabled="item.BalanceQuantity==0" type="number" ng-model="item.DeliveredQuantity" class="form-control" min="0" onkeypress="return isNumberKey(event)" name="Quantity">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-danger btn-sm" ng-click="closeViewModal()"><i class="glyphicon glyphicon-remove"></i> Close</button>
+                                        <button class="btn btn-success btn-sm" ng-click="acceptFunction(requisition.RequisitionID,requiredDate,supplierInvoiceNo,deliveryReceiptNo,ctrl.SupplierID)"><i class="glyphicon glyphicon-ok"></i> Delivered</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Supplier information modal-->
+                        <div id="supplierInfoModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="width: 100% !important;left: 0% !important;">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h2 class="modal-title">Supplier Information</h2>
+                                    </div>
+                                    <div class="modal-body">
+                                        <center>
+                                            <h3>{{supplierInfo.SupplierName}}</h3>
+                                        </center>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td><strong>Address:</strong></td>
+                                                    <td>{{supplierInfo.Address}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Person to contact:</strong></td>
+                                                    <td>{{supplierInfo.ContactPerson}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Contact Number:</strong></td>
+                                                    <td>{{supplierInfo.ContactNo}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Email:</strong></td>
+                                                    <td>{{supplierInfo.Email}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <br />
+                                        <span>
+                                            <label style="font-size:18px">Supplier Items</label>
+                                        </span>
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item ID</th>
+                                                    <th>Item Name</th>
+                                                    <th>Unit Of Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="supplierItem in supplierItems">
+                                                    <td ng-bind="supplierItem.InventoryItemID"></td>
+                                                    <td ng-bind="supplierItem.ItemName"></td>
+                                                    <td ng-bind="supplierItem.UomDescription"></td>
+                                                </tr>
+                                                <tr ng-show="(supplierItems | filter:searchString).length == 0">
+                                                    <td colspan="5" id="locationAction" align="center">No results found...</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <br />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-danger btn-sm" ng-click="closeSupplierInfo()"><i class="glyphicon glyphicon-remove"></i>Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- content ends here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
