@@ -59,10 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InventoryDbContext.cs" />
-    <Compile Include="Migrations\201706060934393_init.cs" />
-    <Compile Include="Migrations\201706060934393_init.Designer.cs">
-      <DependentUpon>201706060934393_init.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -75,11 +71,6 @@
       <Project>{59a4d1f0-c418-4134-99ee-cf03934b42a8}</Project>
       <Name>InventoryEntity</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201706060934393_init.resx">
-      <DependentUpon>201706060934393_init.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
