@@ -18,6 +18,10 @@ namespace AIMS.Controllers
     {
        
         private IFUser _iFUser;
+        public RequisitionController()
+        {
+            _iFUser = new FUser();
+        }
         // GET: Requisition/AddRequisition
         [CustomAuthorize(AllowedRoles = new string[] { "Receptionist" })]
         public ActionResult AddRequisition()
