@@ -18,6 +18,10 @@ namespace AIMS.Controllers
 
         // GET: Reviewer/InitialReview
         private IFUser _iFUser;
+        public ReviewerController()
+        {
+            _iFUser = new FUser();
+        }
         [CustomAuthorize(AllowedRoles = new string[] { "PurchasingOfficer" })]
         public ActionResult Requisition()
         {
@@ -147,7 +151,6 @@ namespace AIMS.Controllers
             };
 
         }
-
         //public JsonResult ViewAllRequisition(string Status)
         //{
         //    try
@@ -176,6 +179,7 @@ namespace AIMS.Controllers
         //                               UserID = req.UserId.Value
         //                           }).ToList();
         //        }
+
 
         //        using (var context = new AccountDbContext())//Use dbAccount
         //        {
