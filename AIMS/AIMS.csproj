@@ -27,6 +27,7 @@
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,11 +47,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AccountContext, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="AccountEntity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="AccountsWebAuthentication, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="BaseData, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="AccountsContext">
+      <HintPath>..\..\DLL\Release\Accounts\AccountsContext.dll</HintPath>
+    </Reference>
+    <Reference Include="AccountsEntity">
+      <HintPath>..\..\DLL\Release\Accounts\AccountsEntity.dll</HintPath>
+    </Reference>
+    <Reference Include="AccountsFunction">
+      <HintPath>..\..\DLL\Release\Accounts\AccountsFunction.dll</HintPath>
+    </Reference>
+    <Reference Include="AccountsModel">
+      <HintPath>..\..\DLL\Release\Accounts\AccountsModel.dll</HintPath>
+    </Reference>
+    <Reference Include="AccountsWebAuthentication">
+      <HintPath>..\..\DLL\Release\Accounts\AccountsWebAuthentication.dll</HintPath>
+    </Reference>
+    <Reference Include="BaseData">
+      <HintPath>..\..\DLL\Release\Base\BaseData.dll</HintPath>
+    </Reference>
     <Reference Include="BaseEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="BaseModel">
+      <HintPath>..\..\DLL\Release\Accounts\BaseModel.dll</HintPath>
+    </Reference>
     <Reference Include="DataGen.Extensions, Version=1.9.2.35878, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DataGen.Extensions.1.9.2\lib\net46\DataGen.Extensions.dll</HintPath>
       <Private>True</Private>

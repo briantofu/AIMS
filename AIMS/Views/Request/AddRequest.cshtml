@@ -31,7 +31,7 @@
                                                     <ui-select ng-model="ctrl.locationId" theme="selectize" title="Choose a locaiton" style="min-width: 250px;">
                                                         <ui-select-match placeholder="Select or search location"><span ng-bind="$select.selected.LocationName"></span></ui-select-match>
                                                         <ui-select-choices repeat="location.LocationID as location in ctrl.existingLocations | filter: $select.search" null-option="--No supplier--">
-                                                            <small ng-bind-html="location.LocationID| highlight: $select.search"> - </small>
+                                                            @*<small ng-bind-html="location.LocationID| highlight: $select.search"> - </small>*@
                                                             <span ng-bind-html="location.LocationName| highlight: $select.search"> - </span>
                                                         </ui-select-choices>
                                                     </ui-select>
@@ -84,7 +84,7 @@
                                                                                on-select="setItemUOM(item, $select.selected.UnitOfMeasurement)">
                                                                         <ui-select-match placeholder="Select or search an item...">{{$select.selected.ItemName}}</ui-select-match>
                                                                         <ui-select-choices repeat="existingItemx.InventoryItemID as existingItemx in ctrl.existingItemsx | filter: $select.search" ng-o->
-                                                                            <small ng-bind-html="existingItemx.InventoryItemID | highlight: $select.search"> - </small>
+                                                                            @*<small ng-bind-html="existingItemx.InventoryItemID | highlight: $select.search"> - </small>*@
                                                                             <span ng-bind-html="existingItemx.ItemName | highlight: $select.search"></span>
                                                                             <span ng-bind-html="existingItemx.UnitOfMeasurement | highlight: $select.search"></span>
                                                                         </ui-select-choices>

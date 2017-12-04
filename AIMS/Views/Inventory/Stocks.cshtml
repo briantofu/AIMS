@@ -51,7 +51,7 @@
                                                 <th ng-click="predicate='InventoryItemID'; reverse=!reverse">Item No.<br><br></th>
                                                 <th ng-click="predicate='ItemCode'; reverse=!reverse">Item Code<br><br></th>
                                                 <th ng-click="predicate='UnitOfDescription'; reverse=!reverse">Unit Of Description<br><br></th>
-                                                <th ng-click="predicate='ItemName'; reverse=!reverse">Item Name<br><br><br></th>
+                                                <th ng-click="predicate='ItemName'; reverse=!reverse">Item Name<br><br></th>
                                                 <th ng-click="predicate='TotalStock'; reverse=!reverse">Total Purchased<br>Quantity</th>
                                                 <th ng-click="predicate='RequestedQuantity'; reverse=!reverse">Total Requested<br>Quantity</th>
                                                 <th ng-click="predicate='RemainingQuantity'; reverse=!reverse">Remaining Quantity<br><br></th>
@@ -82,7 +82,7 @@
                                                 </td>
                                             </tr>
                                             <tr ng-show="(itemStocks | filter:searchText).length == 0">
-                                                <td colspan="6" id="locationAction" align="center">No results found...</td>
+                                                <td colspan="7" id="locationAction" align="center">No results found...</td>
                                             </tr>
                                         </tbody>
                                     </table>

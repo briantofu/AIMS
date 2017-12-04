@@ -1,4 +1,5 @@
-﻿using AccountContext;
+﻿using AccountsContext;
+using AccountsFunction;
 using AccountsWebAuthentication.Helper;
 using AIMS.Classes;
 using AIMS.Models;
@@ -15,7 +16,13 @@ namespace AIMS.Controllers
 {
     public class RequisitionController : BaseController
     {
+        private IFUser _iFUser;
+
         // GET: Requisition/AddRequisition
+        public RequisitionController()
+        {
+            _iFUser = new FUser();
+        }
         [CustomAuthorize(AllowedRoles = new string[] { "Receptionist" })]
         public ActionResult AddRequisition()
         {
@@ -247,7 +254,7 @@ namespace AIMS.Controllers
         public JsonResult LoadPageData(Page page)
         {
             int beginning = page.itemPerPage * (page.PageNumber - 1);
-            List<Account> account = new List<Account>();//account = Account model
+            //List<Account> account = new List<Account>();//account = Account model
             List<Requisition> requisition = new List<Requisition>();//requisitions = Requisitions model
             try
             {
@@ -275,38 +282,39 @@ namespace AIMS.Controllers
                                    }).ToList();
                 }
 
-                using (var context = new AccountDbContext())//Use dbAccount
-                {
-                    var userIDs = requisition.Select(b => b.UserID);
-                    //SELECT ALL USER FROM DbAccount
-                    account = (from user in context.Users
-                               where userIDs.Contains(user.UserId)
-                               select new Account
-                               {
-                                   UserID = user.UserId,
-                                   Firstname = user.Firstname,
-                                   Middlename = user.Middlename,
-                                   Lastname = user.Lastname,
-                                   Department = user.Department,
-                                   Contact = user.Contact,
-                                   Email = user.Email,
-                               }).ToList();
-                }
+                var users = _iFUser.Read();
+                //using (var context = new AccountDbContext())//Use dbAccount
+                //{
+                //    var userIDs = requisition.Select(b => b.UserID);
+                //    //SELECT ALL USER FROM DbAccount
+                //    account = (from user in context.Users
+                //               where userIDs.Contains(user.UserId)
+                //               select new Account
+                //               {
+                //                   UserID = user.UserId,
+                //                   Firstname = user.Firstname,
+                //                   Middlename = user.Middlename,
+                //                   Lastname = user.Lastname,
+                //                   Department = user.Department,
+                //                   Contact = user.Contact,
+                //                   Email = user.Email,
+                //               }).ToList();
+                //}
 
                 //Join all data (account and requisition)
                 requisition = (from req in requisition
-                               join acc in account
-                                    on req.UserID equals acc.UserID
+                               join acc in users
+                                    on req.UserID equals acc.UserId
                                select new Requisition
                                {
                                    RequisitionID = req.RequisitionID,
 
-                                   Firstname = acc.Firstname,
-                                   Middlename = acc.Middlename,
-                                   Lastname = acc.Lastname,
-                                   Department = acc.Department,
-                                   Contact = acc.Contact,
-                                   Email = acc.Email,
+                                   Firstname = acc.Username,
+                                   //Middlename = acc.Middlename,
+                                   //Lastname = acc.Lastname,
+                                   //Department = acc.Department,
+                                   //Contact = acc.Contact,
+                                   //Email = acc.Email,
 
                                    SpecialInstruction = req.SpecialInstruction,
                                    RequisitionDateString = String.Format("{0: MMMM dd, yyyy}", req.RequisitionDate),
@@ -870,10 +878,11 @@ namespace AIMS.Controllers
                 //Use for selecting dbInventory
                 using (var context = new InventoryDbContext())
                 {
+                   
                     //Insert into tblRequisition
                     ERequisition eRequisiiton = new ERequisition()
                     {
-                        UserId = UserID,
+                        UserId = UserId,
                         RequiredDate = requisition.RequiredDate,
                         RequisitionType = requisition.RequisitionType,
                         SpecialInstruction = requisition.SpecialInstruction,
