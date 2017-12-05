@@ -90,6 +90,21 @@ namespace AIMS.Controllers
                 //               }).ToList();
                 //}
 
+                //    //SELECT ALL USER FROM DbAccount
+                //    account = (from user in context.Users
+                //               where userIDs.Contains(user.UserId)
+                //               select new Account
+                //               {
+                //                   UserID = user.UserId,
+                //                   Firstname = user.Firstname,
+                //                   Middlename = user.Middlename,
+                //                   Lastname = user.Lastname,
+                //                   Department = user.Department,
+                //                   Contact = user.Contact,
+                //                   Email = user.Email,
+                //               }).ToList();
+                //}
+
                 //JOIN TABLE USER AND TABLE REQUEST
                 requests = (from req in requests
                             join acc in users

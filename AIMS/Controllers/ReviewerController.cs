@@ -151,7 +151,6 @@ namespace AIMS.Controllers
             };
 
         }
-
         //public JsonResult ViewAllRequisition(string Status)
         //{
         //    try
@@ -180,6 +179,7 @@ namespace AIMS.Controllers
         //                               UserID = req.UserId.Value
         //                           }).ToList();
         //        }
+
 
         //        using (var context = new AccountDbContext())//Use dbAccount
         //        {
