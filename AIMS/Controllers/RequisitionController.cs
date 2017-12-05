@@ -16,13 +16,13 @@ namespace AIMS.Controllers
 {
     public class RequisitionController : BaseController
     {
-       
         private IFUser _iFUser;
+
+        // GET: Requisition/AddRequisition
         public RequisitionController()
         {
             _iFUser = new FUser();
         }
-        // GET: Requisition/AddRequisition
         [CustomAuthorize(AllowedRoles = new string[] { "Receptionist" })]
         public ActionResult AddRequisition()
         {
@@ -878,6 +878,7 @@ namespace AIMS.Controllers
                 //Use for selecting dbInventory
                 using (var context = new InventoryDbContext())
                 {
+                   
                     //Insert into tblRequisition
                     ERequisition eRequisiiton = new ERequisition()
                     {

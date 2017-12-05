@@ -10,6 +10,7 @@ namespace AIMS.Controllers
 {
     public class BaseController : BaseAccountsController
     {
-       
+        //DbManager dbManager = new DbManager();
+
     }
 }

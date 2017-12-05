@@ -121,7 +121,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <button ng-click="addNewItem()" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-plus"></i> Add an item</button>
+                                            <button ng-click="addNewItem()" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-plus"></i> Add an item</button>
                             </div>
                         </div>
                         <table style="width:100%">
@@ -167,7 +167,7 @@
                                                                        title="Choose Unit of Measurement">
                                                                 <ui-select-match placeholder="Select item unit of measurement">{{$select.selected.Description}}</ui-select-match>
                                                                 <ui-select-choices repeat="existingUOMx.UnitOfMeasurementID as existingUOMx in ctrl.existingUOMsx | filter: $select.search">
-                                                                    <small ng-bind-html="existingUOMx.UnitOfMeasurementID | highlight: $select.search"> - </small>
+                                                                    @*<small ng-bind-html="existingUOMx.UnitOfMeasurementID | highlight: $select.search"> - </small>*@
                                                                     <span ng-bind-html="existingUOMx.Description | highlight: $select.search"></span>
                                                                 </ui-select-choices>
                                                             </ui-select>
@@ -181,8 +181,8 @@
                                             </table>
                                         </div>
                                         <div class="modal-footer">
-                                            <button class="btn btn-danger btn-sm" ng-click="closeAddItemModal()"><i class="glyphicon glyphicon-remove"></i>Close</button>
                                             <button class="btn btn-success btn-sm" ng-disabled="!addItemForm.newItemName.$valid" ng-click="addInventoryItem(newItemName,ctrl.UnitOfmeasurementID)"><i class="glyphicon glyphicon-ok"></i>Add</button>
+                                            <button class="btn btn-danger btn-sm" ng-click="closeAddItemModal()"><i class="glyphicon glyphicon-remove"></i>Close</button>
                                         </div>
                                     </div>
                                 </form>

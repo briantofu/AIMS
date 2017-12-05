@@ -34,14 +34,14 @@
                   <li><a class="navbar-brand" href="/Home/LandingPage"><img src="~/Content/Images/inventory.png" width="360" height="45" /></a></li>
                     <li ng-if="userRoles.indexOf('Receptionist') !== -1 || userRoles.indexOf('Employee') !== -1 || userRoles.indexOf('PurchasingOfficer') !== -1">
 
-                       @*@if (WindowsUser.HasUserRoles(new string[] { "Receptionist" }))
+                        @*@if (WindowsUser.HasUserRoles(new string[] { "Receptionist" }))
                          {*@
                             <li><a href="/Home/LandingPage"><i class="fa fa-home"></i> Home </a></li>
                          @*}*@
                         @if (WindowsUser.HasUserRoles(new string[] { "Employee" }))
                          {
                             <li><a href="/Home/LandingPage"><i class="fa fa-home"></i> Home </a></li>
-                         }
+                        }
                        @if (WindowsUser.HasUserRoles(new string[] { "PurchasingOfficer" }))
                         {
                             <li><a href="/Home/LandingPage"><i class="fa fa-home"></i> Home </a></li>

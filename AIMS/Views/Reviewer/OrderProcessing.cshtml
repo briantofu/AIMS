@@ -135,7 +135,7 @@
                                                                        on-select="isSupplierSelect(ctrl.SupplierID)">
                                                                 <ui-select-match placeholder="Select or search a supplier"><span ng-bind="$select.selected.SupplierName"></span></ui-select-match>
                                                                 <ui-select-choices repeat="existingSupplier.SupplierID as existingSupplier in ctrl.existingSuppliers | filter: $select.search" null-option="--No supplier--">
-                                                                    <small ng-bind-html="existingSupplier.SupplierID| highlight: $select.search"> - </small>
+                                                                    @*<small ng-bind-html="existingSupplier.SupplierID| highlight: $select.search"> - </small>*@
                                                                     <span style="text-transform:capitalize;" ng-bind-html="existingSupplier.SupplierName| lowercase | highlight: $select.search"></span>
                                                                 </ui-select-choices>
                                                             </ui-select>
@@ -185,9 +185,9 @@
                                         </div>
                                         <div class="modal-footer">
                                             @*  <button class="btn btn-info btn-sm pull-left" ng-click="showUpdateUnitPriceModal(requisitionItems)"><i class="glyphicon glyphicon-plus"></i>&nbsp; Add Unit Price</button>*@
-                                            <button class="btn btn-danger btn-sm" ng-click="showDeclineModal()"><i class="glyphicon glyphicon-remove"></i>&nbsp;Decline</button>
-                                            <button class="btn btn-primary btn-sm" ng-click="downloadPdf(ctrl.SupplierID)"><i class="fa fa-download"></i>&nbsp; Download  </button>
                                             <button class="btn btn-success btn-sm" ng-click="submitFunction(requisition.RequisitionID,requisitionItems,deliveryCharge)"><i class="glyphicon glyphicon-ok"></i>&nbsp;Submit</button>
+                                            <button class="btn btn-primary btn-sm" ng-click="downloadPdf(ctrl.SupplierID)"><i class="fa fa-download"></i>&nbsp; Download  </button>
+                                            <button class="btn btn-danger btn-sm" ng-click="showDeclineModal()"><i class="glyphicon glyphicon-remove"></i>&nbsp;Decline</button>
                                         </div>
                                     </div>
                                 </div>

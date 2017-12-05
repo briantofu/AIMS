@@ -35,12 +35,12 @@
                                 <tr>
                                     <th ng-click="predicate='RequisitionID'; reverse=!reverse">Reference No.</th>
                                     <th ng-click="predicate='RequisitionType'; reverse=!reverse"> Type of Requisition</th>
-                                    <th ng-click="predicate='FullName'; reverse=!reverse">Requestor<br><br></th>
-                                    <th ng-click="predicate='LocationName'; reverse=!reverse"> Location<br><br></th>
+                                    <th ng-click="predicate='FullName'; reverse=!reverse">Requestor</th>
+                                    <th ng-click="predicate='LocationName'; reverse=!reverse"> Location</th>
                                     <th ng-click="predicate='RequisitionDateString'; reverse=!reverse">Date Requested</th>
                                     <th ng-click="predicate='RequiredDateString'; reverse=!reverse"> Required Date</th>
-                                    <th ng-click="predicate='Status'; reverse=!reverse"> Status<br><br></th>
-                                    <th>Action<br><br></th>
+                                    <th ng-click="predicate='Status'; reverse=!reverse"> Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -127,14 +127,14 @@
                                                                    on-select="isSupplierSelect(ctrl.SupplierID)">
                                                             <ui-select-match placeholder="Select or search a supplier"><span ng-bind="$select.selected.SupplierName"></span></ui-select-match>
                                                             <ui-select-choices repeat="existingSupplier.SupplierID as existingSupplier in ctrl.existingSuppliers | filter: $select.search" null-option="--No supplier--">
-                                                                <small ng-bind-html="existingSupplier.SupplierID| highlight: $select.search"> - </small>
+                                                                @*<small ng-bind-html="existingSupplier.SupplierID| highlight: $select.search"> - </small>*@
                                                                 <span style="text-transform:capitalize;" ng-bind-html="existingSupplier.SupplierName| lowercase | highlight: $select.search"></span>
                                                             </ui-select-choices>
                                                         </ui-select>
                                                     </td>
                                                     <td><strong>Supplier Invoice No. </strong></td>
                                                     <td> :&nbsp;&nbsp;</td>
-                                                    <td><input ng-model="supplierInvoiceNo" type="text" class="form-control" id="newItem" style="width:220px;height:35px;"></td>
+                                                    <td><input ng-model="supplierInvoiceNo" type="number" class="form-control" id="newItem" style="width:220px;height:35px;"></td>
 
                                                 </tr>
                                                 <tr>
@@ -162,7 +162,7 @@
                                                     </td>
                                                     <td><strong>Delivery Receipt No.</strong></td>
                                                     <td> :&nbsp;&nbsp;</td>
-                                                    <td><input ng-model="deliveryReceiptNo" type="text" class="form-control" id="newItem" style="width:220px;height:35px;"></td>
+                                                    <td><input ng-model="deliveryReceiptNo" type="number" class="form-control" id="newItem" style="width:220px;height:35px;"></td>
                                                 </tr>
 
                                                 @*<tr>
@@ -220,8 +220,8 @@
                                         </table>
                                     </div>
                                     <div class="modal-footer">
-                                        <button class="btn btn-danger btn-sm" ng-click="closeViewModal()"><i class="glyphicon glyphicon-remove"></i> Close</button>
                                         <button class="btn btn-success btn-sm" ng-click="acceptFunction(requisition.RequisitionID,requiredDate,supplierInvoiceNo,deliveryReceiptNo,ctrl.SupplierID)"><i class="glyphicon glyphicon-ok"></i> Delivered</button>
+                                        <button class="btn btn-danger btn-sm" ng-click="closeViewModal()"><i class="glyphicon glyphicon-remove"></i> Close</button>
                                     </div>
                                 </div>
                             </div>

@@ -15,12 +15,12 @@ namespace AIMS.Controllers
     public class RequestController : BaseController
     {
         private IFUser _iFUser;
-    
         public RequestController()
         {
             _iFUser = new FUser();
         }
         // GET: Request
+
         [CustomAuthorize(AllowedRoles = new string[] { "Receptionist" })]
         public ActionResult ViewRequest()
         {
@@ -69,12 +69,26 @@ namespace AIMS.Controllers
                                 }).ToList();
 
                 }
-
                 var users = _iFUser.Read();
 
                 //using (var context = new AccountDbContext())//Use dbAccount
                 //{
                 //    var userIDs = requests.Select(b => b.UserID);
+
+                //    //SELECT ALL USER FROM DbAccount
+                //    account = (from user in context.Users
+                //               where userIDs.Contains(user.UserId)
+                //               select new Account
+                //               {
+                //                   UserID = user.UserId,
+                //                   Firstname = user.Firstname,
+                //                   Middlename = user.Middlename,
+                //                   Lastname = user.Lastname,
+                //                   Department = user.Department,
+                //                   Contact = user.Contact,
+                //                   Email = user.Email,
+                //               }).ToList();
+                //}
 
                 //    //SELECT ALL USER FROM DbAccount
                 //    account = (from user in context.Users
@@ -101,11 +115,11 @@ namespace AIMS.Controllers
                                 RequestID = req.RequestID,
 
                                 Firstname = acc.Username,
-                                // Middlename = acc.Middlename,
-                                // Lastname = acc.Lastname,
-                                // Department = acc.Department,
-                                // Contact = acc.Contact,
-                                // Email = acc.Email,
+                                //Middlename = acc.Middlename,
+                                //Lastname = acc.Lastname,
+                                //Department = acc.Department,
+                                //Contact = acc.Contact,
+                                //Email = acc.Email,
 
                                 SpecialInstruction = req.SpecialInstruction,
                                 RequisitionDateString = req.RequisitionDate.ToString(),
@@ -153,8 +167,8 @@ namespace AIMS.Controllers
                                 }).ToList();
 
                 }
-
                 var users = _iFUser.Read();
+
                 //using (var context = new AccountDbContext())//Use dbAccount
                 //{
                 //    var userIDs = requests.Select(b => b.UserID);
@@ -173,7 +187,6 @@ namespace AIMS.Controllers
                 //                   Email = user.Email,
                 //               }).ToList();
                 //}
-
 
                 //JOIN TABLE USER AND TABLE REQUEST
                 requests = (from req in requests
@@ -322,6 +335,7 @@ namespace AIMS.Controllers
             {
                 using (var context = new InventoryDbContext())//Use DbInventory
                 {
+                  
                     ERequest eRequest = new ERequest()
                     {
                         UserId = UserId,

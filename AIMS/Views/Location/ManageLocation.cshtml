@@ -31,7 +31,7 @@
                             <table class="table table-striped table-bordered" id="tableid">
                                 <thead class="t">
                                     <tr>
-                                        <th ng-click="predicate='Id'; reverse=!reverse">Location ID</th>
+                                        <th ng-click="predicate='Id'; reverse=!reverse">Location ID<br><br></th>
                                         <th ng-click="predicate='Name'; reverse=!reverse">Name<br><br></th>
                                         <th ng-click="predicate='Name'; reverse=!reverse">Address<br><br></th>
                                         <th> Action<br><br></th>
@@ -81,8 +81,8 @@
                                                 <br />
                                             </div>
                                             <div class="modal-footer">
-                                                <button class="btn btn-danger btn-sm" ng-click="closeAddLocationModal()"><i class="glyphicon glyphicon-remove"></i>Close</button>
                                                 <button class="btn btn-success btn-sm" ng-disabled="!locationForm.locationName.$valid || !locationForm.locationName.$valid " ng-click="addLocation()"><i class="glyphicon glyphicon-plus"></i>Add</button>
+                                                <button class="btn btn-danger btn-sm" ng-click="closeAddLocationModal()"><i class="glyphicon glyphicon-remove"></i>Cancel</button>
                                             </div>
                                         </div>
                                     </form>
@@ -128,8 +128,8 @@
                                                 <br />
                                             </div>
                                             <div class="modal-footer">
-                                                <button class="btn btn-danger btn-sm" ng-click="closeEditLocationModal()"><i class="glyphicon glyphicon-remove"></i>Close</button>
                                                 <button class="btn btn-primary btn-sm" ng-disabled="!editForm.newLocationName.$valid" ng-click="editLocation(locationCopy.LocationID)"><i class="glyphicon glyphicon-pencil"></i>Update</button>
+                                                <button class="btn btn-danger btn-sm" ng-click="closeEditLocationModal()"><i class="glyphicon glyphicon-remove"></i>Cancel</button>
                                             </div>
                                         </div>
                                     </form>

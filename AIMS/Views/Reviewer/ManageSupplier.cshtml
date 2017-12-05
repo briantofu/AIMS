@@ -36,11 +36,11 @@
                                 <th ng-click="predicate='SupplierID'; reverse=!reverse">Supplier ID</th>
                                 <th ng-click="predicate='TinNo'; reverse=!reverse">Tin Number</th>
                                 <th ng-click="predicate='SupplierName'; reverse=!reverse">Supplier Name</th>
-                                <th ng-click="predicate='Address'; reverse=!reverse">Address<br><br></th>
+                                <th ng-click="predicate='Address'; reverse=!reverse">Address</th>
                                 <th ng-click="predicate='ContactPerson'; reverse=!reverse">Contact Person</th>
                                 <th ng-click="predicate='ContactNo'; reverse=!reverse"> Contact Number</th>
-                                <th ng-click="predicate='Email'; reverse=!reverse">Email<br><br></th>
-                                <th>Action<br><br></th>
+                                <th ng-click="predicate='Email'; reverse=!reverse">Email</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -91,7 +91,7 @@
                                         <tbody>
                                             <tr>
                                                 <td><strong>Tax Identification Number: </strong></td>
-                                                <td><input ng-model="tinNumber" type="text" class="form-control" id="newItem" placeholder="Enter tin number" style="width:300px;height:35px;margin-bottom:5px;"></td>
+                                                <td><input ng-model="tinNumber" type="number" class="form-control" id="newItem" placeholder="Enter tin number" style="width:300px;height:35px;margin-bottom:5px;"></td>
 
                                             </tr>
                                             <tr>
@@ -108,11 +108,11 @@
                                             </tr>
                                             <tr>
                                                 <td><strong>Contact Number:</strong></td>
-                                                <td><input ng-model="contactNo" type="text" class="form-control" id="newItem" placeholder="Enter person contact number" style="width:300px;height:35px;margin-bottom:5px;"></td>
+                                                <td><input ng-model="contactNo" type="number" class="form-control" id="newItem" placeholder="Enter person contact number" style="width:300px;height:35px;margin-bottom:5px;"></td>
                                             </tr>
                                             <tr>
                                                 <td><strong>Email:</strong></td>
-                                                <td><input ng-model="email" type="text" class="form-control" id="newItem" placeholder="Enter email" style="width:300px;height:35px;margin-bottom:5px;"></td>
+                                                <td><input ng-model="email" type="email" class="form-control" id="newItem" placeholder="Enter email" style="width:300px;height:35px;margin-bottom:5px;"></td>
                                             </tr>
                                             <tr>
                                                 <td><strong>This supplier is VATable?:</strong></td>
@@ -135,8 +135,8 @@
                                     <br />
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-danger btn-sm" ng-click="closeSupplierProvider()"><i class="glyphicon glyphicon-remove"></i> Close</button>
                                     <button class="btn btn-success btn-sm" ng-click="addSupplierProvider(tinNumber,supplierName,address,contactPerson,contactNo,email,hasVAT)"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    <button class="btn btn-danger btn-sm" ng-click="closeSupplierProvider()"><i class="glyphicon glyphicon-remove"></i> Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -243,10 +243,13 @@
                                         </tbody>
                                     </table>
                                     <br />
+                                        @Html.Partial("~/Views/Shared/_Pagination.cshtml")
+                                    <br/>
+                                    <br/>
+                                    <br/>
                                     <div class="modal-footer">
                                         <button class="btn btn-danger btn-sm" ng-click="closeSupplierInformation(supplier)"><i class="glyphicon glyphicon-remove"></i> Close</button>
                                         <br />
-                                        @Html.Partial("~/Views/Shared/_Pagination.cshtml")
                                     </div>
 
                                 </div>
@@ -293,7 +296,7 @@
                                         <tbody>
                                             <tr>
                                                 <td><strong>Tax Identification Number: </strong></td>
-                                                <td><input ng-model="supplierDetails.TinNumber" type="text" class="form-control" id="newItem" placeholder="Enter tin number" style="width:300px;height:35px;margin-bottom:5px;"></td>
+                                                <td><input ng-model="supplierDetails.TinNumber" type="number" class="form-control" id="newItem" placeholder="Enter tin number" style="width:300px;height:35px;margin-bottom:5px;"></td>
                                             </tr>
                                             <tr>
                                                 <td><strong>Supplier Name:</strong></td>
@@ -309,11 +312,11 @@
                                             </tr>
                                             <tr>
                                                 <td><strong>Contact Number:</strong></td>
-                                                <td><input ng-model="supplierDetails.ContactNo" type="text" class="form-control" id="newItem" placeholder="Enter person contact number" style="width:300px;height:35px;margin-bottom:5px;"></td>
+                                                <td><input ng-model="supplierDetails.ContactNo" type="number" class="form-control" id="newItem" placeholder="Enter person contact number" style="width:300px;height:35px;margin-bottom:5px;"></td>
                                             </tr>
                                             <tr>
                                                 <td><strong>Email:</strong></td>
-                                                <td><input ng-model="supplierDetails.Email" type="text" class="form-control" id="newItem" placeholder="Enter email" style="width:300px;height:35px;margin-bottom:5px;"></td>
+                                                <td><input ng-model="supplierDetails.Email" type="email" class="form-control" id="newItem" placeholder="Enter email" style="width:300px;height:35px;margin-bottom:5px;"></td>
                                             </tr>
                                             <tr>
                                                 <td><strong>This supplier is VATable?:</strong></td>
@@ -336,8 +339,8 @@
                                     <br />
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-danger btn-sm" ng-click="closeUpdateSupplierDetailsModal()"><i class="glyphicon glyphicon-remove"></i> Close</button>
                                     <button class="btn btn-success btn-sm" ng-click="updateSupplierDetails(supplierDetails)"><i class="glyphicon glyphicon-ok"></i> Save</button>
+                                    <button class="btn btn-danger btn-sm" ng-click="closeUpdateSupplierDetailsModal()"><i class="glyphicon glyphicon-remove"></i> Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -372,7 +375,7 @@
                                                                            on-select="setItemUOM(item,$select.selected.UnitOfMeasurement)">
                                                                     <ui-select-match placeholder="Select or search an item"><span ng-bind="$select.selected.ItemName"></span></ui-select-match>
                                                                     <ui-select-choices repeat="existingItemx.InventoryItemID as existingItemx in ctrl.existingItemsx | filter: $select.search">
-                                                                        <small ng-bind-html="existingItemx.InventoryItemID | highlight: $select.search"> - </small>
+                                                                        @*<small ng-bind-html="existingItemx.InventoryItemID | highlight: $select.search"> - </small>*@
                                                                         <span style="text-transform:capitalize;" ng-bind-html="existingItemx.ItemName |lowercase | highlight: $select.search"></span>
                                                                         <span ng-bind-html="existingItemx.UnitOfMeasurement | highlight: $select.search"></span>
                                                                     </ui-select-choices>
@@ -447,8 +450,8 @@
                                     <br />
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-danger btn-sm" ng-click="closeUpdateUnitPrice()"><i class="glyphicon glyphicon-remove"></i> Close</button>
                                     <button class="btn btn-success btn-sm" ng-click="updateUnitPrice(updateUnitPriceItems)"><i class="glyphicon glyphicon-ok"></i> Save</button>
+                                    <button class="btn btn-danger btn-sm" ng-click="closeUpdateUnitPrice()"><i class="glyphicon glyphicon-remove"></i> Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -485,7 +488,7 @@
                                                                    title="Choose Unit of Measurement">
                                                             <ui-select-match placeholder="Select item unit of measurement">{{$select.selected.Description}}</ui-select-match>
                                                             <ui-select-choices repeat="existingUOMx.UnitOfMeasurementID as existingUOMx in ctrl.existingUOMsx | filter: $select.search">
-                                                                <small ng-bind-html="existingUOMx.UnitOfMeasurementID | highlight: $select.search"> - </small>
+                                                                @*<small ng-bind-html="existingUOMx.UnitOfMeasurementID | highlight: $select.search"> - </small>*@
                                                                 <span ng-bind-html="existingUOMx.Description | highlight: $select.search"></span>
                                                             </ui-select-choices>
                                                         </ui-select>
@@ -499,8 +502,8 @@
                                         </table>
                                     </div>
                                     <div class="modal-footer">
-                                        <button class="btn btn-danger btn-sm" ng-click="closeAddItemModal()"><i class="glyphicon glyphicon-remove"></i>Close</button>
-                                        <button class="btn btn-success btn-sm" ng-disabled="!addItemForm.newItemName.$valid" ng-click="addInventoryItem(newItemName,ctrl.UnitOfmeasurementID,newItemCode)"><i class="glyphicon glyphicon-ok"></i>Add</button>
+                                       <button class="btn btn-success btn-sm" ng-disabled="!addItemForm.newItemName.$valid" ng-click="addInventoryItem(newItemName,ctrl.UnitOfmeasurementID,newItemCode)"><i class="glyphicon glyphicon-ok"></i>Add</button>
+                                        <button class="btn btn-danger btn-sm" ng-click="closeAddItemModal()"><i class="glyphicon glyphicon-remove"></i>Cancel</button>
                                     </div>
                                 </div>
                             </form>
