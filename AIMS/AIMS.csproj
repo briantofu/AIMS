@@ -47,20 +47,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AccountsContext">
-      <HintPath>..\..\DLL\Release\Accounts\AccountsContext.dll</HintPath>
-    </Reference>
-    <Reference Include="AccountsEntity">
-      <HintPath>..\..\DLL\Release\Accounts\AccountsEntity.dll</HintPath>
-    </Reference>
-    <Reference Include="AccountsFunction, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="AccountsModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="AccountsWebAuthentication">
-      <HintPath>..\..\DLL\Release\Accounts\AccountsWebAuthentication.dll</HintPath>
-    </Reference>
+    <Reference Include="AccountContext, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="AccountEntity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="AccountsWebAuthentication, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="BaseData, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="BaseEntity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
-    <Reference Include="BaseModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="DataGen.Extensions, Version=1.9.2.35878, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DataGen.Extensions.1.9.2\lib\net46\DataGen.Extensions.dll</HintPath>
       <Private>True</Private>
