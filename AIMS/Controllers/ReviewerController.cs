@@ -22,6 +22,7 @@ namespace AIMS.Controllers
             _iFUser = new FUser();
         }
         // GET: Reviewer/InitialReview
+
         [CustomAuthorize(AllowedRoles = new string[] { "PurchasingOfficer" })]
         public ActionResult Requisition()
         {
@@ -325,6 +326,24 @@ namespace AIMS.Controllers
                 //               }).ToList();
                 //}
 
+                using (var context = new AccountDbContext())//Use dbAccount
+                {
+                    var userIDs = requisition.Select(b => b.UserID);
+                    //SELECT ALL USER FROM DbAccount
+                    account = (from user in context.Users
+                               where userIDs.Contains(user.UserId)
+                               select new Account
+                               {
+                                   UserID = user.UserId,
+                                   Firstname = user.Firstname,
+                                   Middlename = user.Middlename,
+                                   Lastname = user.Lastname,
+                                   Department = user.Department,
+                                   Contact = user.Contact,
+                                   Email = user.Email,
+                               }).ToList();
+                }
+
                 //Join all data (account and requisition)
 
                 requisition = (from req in requisition
@@ -439,24 +458,23 @@ namespace AIMS.Controllers
                                    }).ToList();
                 }
 
-                var users = _iFUser.Read();
-                //using (var context = new AccountDbContext())//Use dbAccount
-                //{
-                //    var userIDs = requisition.Select(b => b.UserID);
-                //    //SELECT ALL USER FROM DbAccount
-                //    account = (from user in context.Users
-                //               where userIDs.Contains(user.UserId)
-                //               select new Account
-                //               {
-                //                   UserID = user.UserId,
-                //                   Firstname = user.Firstname,
-                //                   Middlename = user.Middlename,
-                //                   Lastname = user.Lastname,
-                //                   Department = user.Department,
-                //                   Contact = user.Contact,
-                //                   Email = user.Email,
-                //               }).ToList();
-                //}
+                using (var context = new AccountDbContext())//Use dbAccount
+                {
+                    var userIDs = requisition.Select(b => b.UserID);
+                    //SELECT ALL USER FROM DbAccount
+                    account = (from user in context.Users
+                               where userIDs.Contains(user.UserId)
+                               select new Account
+                               {
+                                   UserID = user.UserId,
+                                   Firstname = user.Firstname,
+                                   Middlename = user.Middlename,
+                                   Lastname = user.Lastname,
+                                   Department = user.Department,
+                                   Contact = user.Contact,
+                                   Email = user.Email,
+                               }).ToList();
+                }
 
                 //Join all data (account and requisition)
 
