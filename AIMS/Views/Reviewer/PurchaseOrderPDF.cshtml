@@ -169,7 +169,7 @@
                                 <td width="40px">
                                     <strong>Location: </strong> <!--With Location Label-->
                                 </td>
-                                <td colspan="1" style="height:40px!important;">
+                                <td colspan="7" style="height:40px!important;">
                                     @Model.SupplierAddress <!--Babaguhin-->
                                 </td>
                             </tr>
@@ -177,14 +177,14 @@
                                 <td width="40px">
                                     <strong>Attention :</strong>
                                 </td>
-                                <td>
+                                <td width="40px">
                                     @Model.ContactPerson <!--babaguhin -->
                                 </td>
 
                             </tr>
                             <tr>
                                 <td></td>
-                                <td>
+                                <td >
                                     Supplier <!--Babaguhin-->
                                 </td>
                             </tr>
@@ -206,32 +206,32 @@
                         <!-- Changed-->
                         <table class="font-size no-table-border">
                             <tr>
-                                <td width="40px">
+                                <td width="700px">
                                     <strong>Location: </strong> <!--With Location Label-->
                                 </td>
-                                <td colspan="1" style="height:40px!important;">
+                                <td colspan="7" style="height:40px!important;">
                                     @Model.LocationAddress <!--babaguhin -->
                                 </td>
                             </tr>
                             <tr>
-                                <td width="40px">
+                                <td width="450px">
                                     <!-- changed positioning-->
                                     <strong>Attention :</strong>
                                 </td>
-                                <td>
+                                <td width="700px">
                                     Catherine Villavelez <!--babaguhin -->
                                 </td>
 
                             </tr>
                             <tr>
                                 <td></td>
-                                <td>
+                                <td width="700px">
                                     Admin Assistant <!--babaguhin -->
                                 </td>
                             </tr>
                             <tr>
                                 <td><strong>Tel No.:</strong></td>
-                                <td>
+                                <td width="700px">
                                     0917 5684 322 <!--babaguhin -->
                                 </td>
                             </tr>
@@ -295,10 +295,10 @@
                         else
                         {
                             <td align="center">@item.RoundedUnitPrice</td><!--Replaced alignment-->
-                                <td align="center"  >@item.LineTotal</td><!--Replaced alignment-->
+                                <td align="center">@item.LineTotal</td><!--Replaced alignment-->
                         }
                         counter++;
-}
+                            }
                         </tr>
                     }
                     total += Double.Parse(item.LineTotal);

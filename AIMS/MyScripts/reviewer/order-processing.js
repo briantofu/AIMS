@@ -207,7 +207,7 @@
         //    validation = (item['UnitPrice'] != 0);
         //}
         if (validation) {
-            if ($scope.tempSupplierId == undefined) {
+            if ($scope.tempSupplierId === undefined) {
                 var conf = confirm('Approve this requisition without supplier?');
                 if (conf) {
                     var data = {
@@ -220,7 +220,7 @@
                     $http.post("/Reviewer/AcceptRequisition", data).then(
                         function successCallback(response) {
                             $scope.isSuccess = response.data;
-                            if ($scope.isSuccess == "success") {
+                            if ($scope.isSuccess === "success") {
                                 $scope.initialize();
                                 toastr.success("The requsition will sent back to the requestor for some process.", "Requisition has been approved");
                                 $("#viewModal").modal("hide");
@@ -247,7 +247,7 @@
                         function successCallback(response) {
                       
                             $scope.isSuccess = response.data;
-                            if ($scope.isSuccess == "success") {
+                            if ($scope.isSuccess === "success") {
                                 $scope.initialize();
                                 toastr.success("The requsition will sent back to the requestor for some process.", "Requisition has been approved");
                                 $("#viewModal").modal("hide");
@@ -275,7 +275,7 @@
         $scope.items = [];//Initialize default item
         for (var i in items) {
             var item = items[i];
-            if (item['UnitPrice'] == 0) {
+            if (item['UnitPrice'] === 0) {
                 $scope.items.push({
                     RequisitionItemID: item['RequisitionItemID'],
                     InventoryItemID: item['InventoryItemID'],
@@ -326,7 +326,7 @@
            .then(
        function successCallback(response) {
            //NAG EEROR KAPAG LENGTH === 0 (TAMA NAMAN)
-           if (tempid != id)
+           if (tempid !== id)
                $scope.items = [{ Quantity: 1, Description: "", UnitOfMeasurement: "Select from items" }];//Initialize default item
            tempid = id;
            vm.existingItemsx = [];//initialize  array of InventoryItem
@@ -359,15 +359,15 @@
                     $scope.supplierx = response.data;
                     $scope.overTotal = 0;
                     for (var x = 0; x < $scope.requisitionItems.length; x++) {
-                        if ($scope.requisitionItems[x].PurchaseOrderId == 0) {
+                        if ($scope.requisitionItems[x].PurchaseOrderId === 0) {
                             $scope.requisitionItems[x].UnitPrice = 0;
                         }
                     }
 
                     for (var x = 0; x < $scope.requisitionItems.length ; x++) {
                         for (var i = 0; i < $scope.supplierx[0].supplierItemList.length; i++) {
-                            if ($scope.requisitionItems[x].isItemSelected == true) {
-                                if ($scope.supplierx[0].supplierItemList[i].InventoryItemID == $scope.requisitionItems[x].InventoryItemID) {
+                            if ($scope.requisitionItems[x].isItemSelected === true) {
+                                if ($scope.supplierx[0].supplierItemList[i].InventoryItemID === $scope.requisitionItems[x].InventoryItemID) {
                                     $scope.requisitionItems[x].UnitPrice = $scope.supplierx[0].supplierItemList[i].UnitPrice;
                                     break;
                                 }
@@ -376,7 +376,7 @@
                     }
 
                     for (var i = 0; i < $scope.requisitionItems.length; i++) {
-                        if ($scope.requisitionItems[i].UnitPrice == 0) {
+                        if ($scope.requisitionItems[i].UnitPrice === 0) {
                             $scope.requisitionItems[i].isItemSelected = false;
                         } else {
                             $scope.overTotal += ($scope.requisitionItems[i].Quantity * $scop$scope.requisition.RequisitionIDe.requisitionItems[i].UnitPrice);
@@ -392,7 +392,7 @@
     //Download a pdf
     $scope.downloadPdf = function (supplierId) {
         var isOkay = true;
-        if (supplierId != undefined) {
+        if (supplierId !== undefined) {
             //for (var i = 0; i < $scope.requisitionItems.length; i++) {
             //    if ($scope.requisitionItems[i].UnitPrice == 0) {
             //        isOkay = false;
@@ -448,7 +448,7 @@
             bool = false;
         }
         angular.forEach($scope.requisitionItems, function (v, k) {
-            if (v.PurchaseOrderId == 0) {
+            if (v.PurchaseOrderId === 0) {
                 v.isItemSelected = !bool;
                 $scope.allSelected = !bool;
             }

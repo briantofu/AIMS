@@ -1,7 +1,13 @@
 ﻿app.controller("myCtrl", function ($scope, $http) {
     var vm = this;
     $scope.isItemExist;
+    
 
+    vm.existingRequestTypes = [
+        { name: 'VATable' },
+        { name: 'Non-VATable' },
+        { name: 'Zero Rated'}
+    ];
     $scope.initialize = function () {
         $scope.page;
         $scope.loadpage(1, true);
@@ -10,7 +16,6 @@
             UnitPrice: 0
         }];//Initialize default item/
     }
-
     $scope.pageChange = function (page) {
         $scope.page = page;
         $scope.loadpage(page.PageNumber, page.PageStatus);
@@ -72,7 +77,11 @@
     $scope.removeItem = function (index) {
         $scope.items.splice(index, 1);
     };
-
+    //remove items
+    $scope.removeSpecificItems = function (removerItem) {
+        $scope.supplierItems.splice(removerItem, 1);
+    };
+   
     //Display supplier info modal
     $scope.showSupplierInformation = function (supplier) {
         $scope.supplierInfo = angular.copy(supplier);
@@ -93,6 +102,7 @@
             );
 
     }
+ 
     //Close supplier info modal
     $scope.closeSupplierInformation = function () {
         $("#supplierInfoModal").modal("hide");
@@ -107,8 +117,8 @@
         $("#provideSupplierModal").modal("hide");
     }
     //Add new Supplier
-    $scope.addSupplierProvider = function (tinNumber, supplierName, address, contactPerson, contactNo, email, hasVAT) {
-        if ($scope.tinNumber == undefined || $scope.supplierName == undefined || $scope.address == undefined || $scope.contactPerson == undefined || $scope.contactNo == undefined || $scope.email == undefined) {
+    $scope.addSupplierProvider = function (tinNumber, supplierName, address, contactPerson, contactNo, email, requestType) {
+        if ($scope.tinNumber === undefined || $scope.supplierName === undefined || $scope.address === undefined || $scope.contactPerson === undefined || $scope.contactNo === undefined || $scope.email === undefined) {
             toastr.warning("There must be no empty fileds all are important.", "You must fill out all the fileds");
         } else {
             var data =
@@ -119,7 +129,7 @@
              ContactPerson: contactPerson,
              ContactNo: contactNo,
              Email: email,
-             Vatable: hasVAT
+             Vatable: requestType
              //requisitionID: $scope.requisition.RequisitionID
          };
             $http.post("/Reviewer/AddSupplier", data).then(
@@ -232,12 +242,12 @@
             var data = {
                 newItemName: newItemName,
                 newItemCode: newItemCode,
-                unitOfMeasurementID: (unitOfMeasurementID == null ? 0 : unitOfMeasurementID)
+                unitOfMeasurementID: (unitOfMeasurementID === null ? 0 : unitOfMeasurementID)
             };
             $http.post('/Requisition/AddNewItem', data)
                 .then(
             function successCallback(response) {
-                if (response.data == "ItemExist") {
+                if (response.data === "ItemExist") {
                     $scope.newItemName = '';
                     $scope.newItemCode = '';
                     toastr.warning("There must be no the same item it must be unique.", "Item is already Exists");
@@ -284,7 +294,7 @@
         var validation = true;
         for (var i in $scope.items) {
             var item = $scope.items[i];
-            validation = (item['Quantity'] != 0 && item['UnitOfMeasurement'] != "");
+            validation = (item['Quantity'] !== 0 && item['UnitOfMeasurement'] !== "");
         }
 
         if (!validation) {

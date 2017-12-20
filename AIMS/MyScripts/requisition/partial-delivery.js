@@ -117,16 +117,16 @@
     //Accept requisition
     $scope.acceptFunction = function (requisitionId, requiredDate, supplierInvoiceNo, deliveryReceiptNo, supplierId) {
         var isValid;
-        isValid = requiredDate != undefined && supplierInvoiceNo != undefined && deliveryReceiptNo != undefined && supplierId != undefined;
-        if (isValid) {
-            for (var i = 0; i < $scope.requisitionItems.length; i++) {
-                isValid = $scope.requisitionItems[i].BalanceQuantity >= $scope.requisitionItems[i].DeliveredQuantity;
-                if (!isValid) break;
-            }
-            if (!isValid) toastr.warning("Please input valid delivered quantity.", "Invalid input");
-        } else {
-            toastr.warning("Please fill out all data.", "Could not be delivered.");
-        }
+        isValid = requiredDate != undefined && supplierInvoiceNo != undefined && deliveryReceiptNo != undefined && supplierId != undefined ;
+        //if (isValid) {
+        //    for (var i = 0; i < $scope.requisitionItems.length; i++) {
+        //        isValid = $scope.requisitionItems[i].BalanceQuantity >= $scope.requisitionItems[i].DeliveredQuantity && item.DeliveredQuantity!=0;
+        //        if (!isValid) break;
+        //    }
+        //    if (!isValid) toastr.warning("Please input valid delivered quantity.", "Invalid input");
+        //} else {
+        //    toastr.warning("Please fill out all data.", "Could not be delivered.");
+        //}
 
         if (isValid) {
             var data =

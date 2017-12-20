@@ -115,9 +115,8 @@
 
     //Accept requisition
     $scope.acceptFunction = function (requisitionId, requiredDate, supplierInvoiceNo, deliveryReceiptNo, supplierId) {
-       
         var isValid;
-     
+
         isValid = requiredDate != undefined && supplierInvoiceNo != undefined && deliveryReceiptNo != undefined && supplierId != undefined;
         //if (isValid) {
         //    for (var i = 0; i < $scope.requisitionItems.length; i++) {
@@ -130,9 +129,9 @@
         // else {
         //    toastr.warning("Please fill out all data.", "Could not be delivered.");
         //}
-       
 
-       
+
+
         if (isValid) {
             var conf = confirm('Are you sure to submit this requsition?');
             if ($scope.deliveryType == 'Delivered') {
@@ -153,7 +152,7 @@
                         $scope.initialize();
                         $scope.requisitionItems = response.data;
                         toastr.success("You've susccessfull send your requisition.", "Requisition Sent"),
-                        $("#viewModal").modal("hide");
+                            $("#viewModal").modal("hide");
                     },
                     function errorCallback(response) {
                     }
@@ -169,14 +168,14 @@
                         SupplierInvoiceNo: supplierInvoiceNo,
                         DeliveryReceiptNo: deliveryReceiptNo,
                         SupplierID: supplierId,
-                        
+
                     };
                     $http.post("/Requisition/DeliverRequisition", data).then(
                         function successCallback(response) {
                             $scope.initialize();
                             $scope.requisitionItems = response.data;
                             toastr.success("You've susccessfull send your requisition.", "Requisition Sent"),
-                            $("#viewModal").modal("hide");
+                                $("#viewModal").modal("hide");
                         },
                         function errorCallback(response) {
                         }
@@ -229,7 +228,7 @@
             }
 
         );
-      
+
     }
 
     //Display supplier info modal
@@ -385,7 +384,7 @@
                 for (var i = 0; i < $scope.requisitionItems.length; i++) {
                     if ($scope.requisitionItems[i].DeliveredQuantity == 0) {
                         $scope.requisitionItems[i].isItemSelected = false;
-                    } 
+                    }
                 }
 
             },
