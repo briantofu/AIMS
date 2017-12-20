@@ -54,6 +54,9 @@
             height: 20px;
         }
 
+        .underlined-text{
+            text-decoration:underline;
+        } /*Underlined Text Added*/
         .item-table tr td {
             font-size: 12px !important;
             border-left: 1px;
@@ -169,7 +172,7 @@
                                 <td width="40px">
                                     <strong>Location: </strong> <!--With Location Label-->
                                 </td>
-                                <td colspan="1" style="height:40px!important;">
+                                <td colspan="7" style="height:40px!important;">
                                     @Model.SupplierAddress <!--Babaguhin-->
                                 </td>
                             </tr>
@@ -177,14 +180,14 @@
                                 <td width="40px">
                                     <strong>Attention :</strong>
                                 </td>
-                                <td>
+                                <td width="40px">
                                     @Model.ContactPerson <!--babaguhin -->
                                 </td>
 
                             </tr>
                             <tr>
                                 <td></td>
-                                <td>
+                                <td >
                                     Supplier <!--Babaguhin-->
                                 </td>
                             </tr>
@@ -206,32 +209,32 @@
                         <!-- Changed-->
                         <table class="font-size no-table-border">
                             <tr>
-                                <td width="40px">
+                                <td width="700px">
                                     <strong>Location: </strong> <!--With Location Label-->
                                 </td>
-                                <td colspan="1" style="height:40px!important;">
+                                <td colspan="7" style="height:40px!important;">
                                     @Model.LocationAddress <!--babaguhin -->
                                 </td>
                             </tr>
                             <tr>
-                                <td width="40px">
+                                <td width="450px">
                                     <!-- changed positioning-->
                                     <strong>Attention :</strong>
                                 </td>
-                                <td>
+                                <td width="700px">
                                     Catherine Villavelez <!--babaguhin -->
                                 </td>
 
                             </tr>
                             <tr>
                                 <td></td>
-                                <td>
+                                <td width="700px">
                                     Admin Assistant <!--babaguhin -->
                                 </td>
                             </tr>
                             <tr>
                                 <td><strong>Tel No.:</strong></td>
-                                <td>
+                                <td width="700px">
                                     0917 5684 322 <!--babaguhin -->
                                 </td>
                             </tr>
@@ -295,24 +298,16 @@
                         else
                         {
                             <td align="center">@item.RoundedUnitPrice</td><!--Replaced alignment-->
-                                <td align="center"  >@item.LineTotal</td><!--Replaced alignment-->
+                                <td align="center">@item.LineTotal</td><!--Replaced alignment-->
                         }
                         counter++;
-}
+                            }
                         </tr>
                     }
                     total += Double.Parse(item.LineTotal);
                 }
             </table>
-            @{ if (Model.Vatable)
-             {
-                <table class="font-size vat-table" width="100%">
-                    <tr>
-                        <td align="center" colspan="1"></td>
-                    </tr><!--Babaguhin-->
-                </table>
-             }
-            }
+           
             <!--COMPUTATION-->
             <!-- Spacing -->
             <br />
@@ -321,7 +316,9 @@
             <table class="font-size" width="100%">
                 <tr class="item-footer">
                     <td width="52%">
+                        <p align="justify">
                         <table style="font-size:10px;">
+                            
                             <tr>
                                 <td>
                                     1. Please send two copies of your invoice
@@ -357,7 +354,9 @@
                                     (0917) 568 4322 or email catherinev@andersongroup.uk.com
                                 </td>
                             </tr>
+                          
                         </table>
+                            </p>
                     </td>
                     <td width="31%">
                         @{
@@ -425,17 +424,17 @@
                     <td>
                         <table style="font-size:11px;">
                             <tr>
-                                <td width="80px">
-                                    <strong>Prepared by:</strong>
-                                </td>
+                                <td width="80px"></td>
                                 <td>
-                                    <strong>Catherine Villavelez</strong><!--Babaguhin-->
+                                    <strong>Prepared by:</strong><br /><br /><br /><br />
+
+                                    <strong class="underlined-text">Catherine Villavelez</strong><!--Underlined Text-->
                                 </td>
                                 <td width="70px"></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td colspan="3"><br /> <br /> <br /><hr /></td><!-- Spacing in signature-->
+
 
                             </tr>
                             <tr>
@@ -444,24 +443,23 @@
                                     <strong>Administrative Assistant </strong><!--Babaguhin-->
                                 </td>
                             </tr>
+                            
                         </table>
                     </td>
                     <td>
                         <table style="font-size:11px;">
                             <tr>
-                                <td width="80px">
-                                    <strong>Approved by:</strong>
-                                </td>
+                                <td width="80px"></td>
                                 <td>
-                                    <strong>Grace Abigail C. Bagatsing</strong><!--Babaguhin-->
+                                    <strong>Approved by:</strong><br /><br /><br /><br />
+                                    <strong class="underlined-text">Grace Abigail C. Bagatsing</strong><!--Babaguhin-->
                                 </td>
                                 <td width="70px"></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <br />
-                                <br />
-                                <td colspan="3"><br /> <br /> <br /><hr /></td><!-- Spacing in signature-->
+
+
 
                             </tr>
                             <tr>
@@ -470,6 +468,7 @@
                                     <strong>Country Director</strong><!--Babaguhin-->
                                 </td>
                             </tr>
+                            
                         </table>
                     </td>
                 </tr>

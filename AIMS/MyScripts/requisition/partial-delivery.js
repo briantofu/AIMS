@@ -2,6 +2,7 @@
     var vm = this;
     $scope.requisition;
 
+    
     $scope.initialize = function () {
         $scope.page;
         $scope.loadpage(1, true);
@@ -118,39 +119,57 @@
     $scope.acceptFunction = function (requisitionId, requiredDate, supplierInvoiceNo, deliveryReceiptNo, supplierId) {
         var isValid;
         isValid = requiredDate != undefined && supplierInvoiceNo != undefined && deliveryReceiptNo != undefined && supplierId != undefined;
+        //if (isValid) {
+        //    for (var i = 0; i < $scope.requisitionItems.length; i++) {
+        //        isValid = $scope.requisitionItems[i].BalanceQuantity >= $scope.requisitionItems[i].DeliveredQuantity;
+        //        if (!isValid) break;
+        //    }
+        //    if (!isValid) toastr.warning("Please input valid delivered quantity.", "Invalid input");
+        //} else {
+        //    toastr.warning("Please fill out all data.", "Could not be delivered.");
+        //}
+
         if (isValid) {
             for (var i = 0; i < $scope.requisitionItems.length; i++) {
                 isValid = $scope.requisitionItems[i].BalanceQuantity >= $scope.requisitionItems[i].DeliveredQuantity;
                 if (!isValid) break;
             }
             if (!isValid) toastr.warning("Please input valid delivered quantity.", "Invalid input");
-        } else {
+           
+            //added confirmation dialog
+            var con = confirm('Are you sure to submit this updated requsition?'); 
+
+            if (con) {
+       
+                var data =
+                    {
+                        requisitionID: requisitionId,
+                        Status: "Partial Delivery",
+                        RequisitionItems: $scope.requisitionItems,
+                        DeliveryDate: requiredDate,
+                        SupplierInvoiceNo: supplierInvoiceNo,
+                        SupplierID: supplierId,
+                        DeliveryReceiptNo: deliveryReceiptNo
+                    };
+                $http.post("/Requisition/DeliverRequisition", data).then(
+                    function successCallback(response) {
+                        $scope.initialize();
+                        $scope.requisitionItems = response.data;
+                        //added toastr success dialog
+                        toastr.success("You've successfully sent your updated requisition.", "Requisition Sent"),
+                            $("#viewModal").modal("hide");
+                    },
+                    function errorCallback(response) {
+
+                    }
+                );
+            }
+        }
+        else {
             toastr.warning("Please fill out all data.", "Could not be delivered.");
         }
-
-        if (isValid) {
-            var data =
-                {
-                    requisitionID: requisitionId,
-                    Status: "Partial Delivery",
-                    RequisitionItems: $scope.requisitionItems,
-                    DeliveryDate: requiredDate,
-                    SupplierInvoiceNo: supplierInvoiceNo,
-                    SupplierID: supplierId,
-                    DeliveryReceiptNo: deliveryReceiptNo
-                };
-            $http.post("/Requisition/DeliverRequisition", data).then(
-               function successCallback(response) {
-                   $scope.initialize();
-                   $scope.requisitionItems = response.data;
-                   $("#viewModal").modal("hide");
-                   alert("Successfully delivered!.")
-               },
-               function errorCallback(response) {
-               }
-           );
         }
-    }
+    
 
     $scope.isSupplierSelect = function (supplierId) {
 
@@ -246,6 +265,8 @@
         $scope.allSelected = true;
         angular.forEach($scope.requisitionItems, function (v, k) {
             if (!v.isItemSelected) {
+                
+            
                 $scope.allSelected = false;
                 $scope.isSupplierSelect($scope.tempSupplierId);
             } else {

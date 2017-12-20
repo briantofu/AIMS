@@ -41,7 +41,7 @@
         if (validation) {
             for (var i in $scope.items) {
                 var item = $scope.items[i];
-                validation = (item['Quantity'] != 0 && item['Description'] != null);
+                validation = (item['Quantity'] != null && item['Description'] != 0);
             }
         }
         if (validation) {
