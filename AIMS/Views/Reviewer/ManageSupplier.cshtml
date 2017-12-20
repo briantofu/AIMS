@@ -115,19 +115,28 @@
                                                 <td><input ng-model="email" type="email" class="form-control" id="newItem" placeholder="Enter email" style="width:300px;height:35px;margin-bottom:5px;"></td>
                                             </tr>
                                             <tr>
-                                                <td><strong>This supplier is VATable?:</strong></td>
+                                                <td><strong>Tax Type:</strong></td>
                                                 <td>
-                                                    <div class="radio" ng-init="hasVAT=false">
-
-                                                        <label>
-                                                            <input type="radio" ng-model="hasVAT" name="optionsRadios" id="optionsRadios2" ng-value="false">
-                                                            No
-                                                        </label>
-                                                        <label>
-                                                            <input type="radio" ng-model="hasVAT" name="optionsRadios" id="optionsRadios1" ng-value="true" checked="">
-                                                            Yes
-                                                        </label>
-                                                    </div>
+                                                    <ui-select ng-model="ctrl.requestType" theme="selectize" title="Choose type of tax" style="min-width: 140px;">
+                                                        <ui-select-match placeholder="Select type of tax"><span ng-bind="$select.selected.name"></span></ui-select-match>
+                                                        <ui-select-choices repeat="existingRequestType.name as existingRequestType in ctrl.existingRequestTypes | filter: $select.search">
+                                                            <span ng-bind-html="existingRequestType.name| highlight: $select.search"> - </span>
+                                                        </ui-select-choices>
+                                                    </ui-select>
+                                                        @*<div class="radio" ng-init="hasVAT='VATable'">
+                                                            <label>
+                                                                <input type="radio" ng-model="hasVAT" name="optionsRadios" id="optionsRadios1" ng-value="taxVatable" checked="">
+                                                                VATable
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" ng-model="hasVAT" name="optionsRadios" id="optionsRadios2" value="taxNonVatable">
+                                                                Non-VATable
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" ng-model="hasVAT" name="optionsRadios" id="optionsRadios3" value="taxZeroRated">
+                                                                Zero Rated
+                                                            </label>
+                                                        </div>*@
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -135,7 +144,7 @@
                                     <br />
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-success btn-sm" ng-click="addSupplierProvider(tinNumber,supplierName,address,contactPerson,contactNo,email,hasVAT)"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    <button class="btn btn-success btn-sm" ng-click="addSupplierProvider(tinNumber,supplierName,address,contactPerson,contactNo,email,ctrl.requestType)"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     <button class="btn btn-danger btn-sm" ng-click="closeSupplierProvider()"><i class="glyphicon glyphicon-remove"></i> Cancel</button>
                                 </div>
                             </div>
@@ -182,18 +191,23 @@
                                                 <td>{{supplierInfo.Email}}</td>
                                             </tr>
                                             <tr>
+                                                @*<td><strong>Tax Type</strong></td>
+                                                <td>:&nbsp;&nbsp;</td>
+                                                <td>{{supplierInfo.Vatable}}</td>
+                                                    @*SUPPLIER DETAILS*@
                                                 <td><strong>Tax Type</strong></td>
                                                 <td>:&nbsp;&nbsp;</td>
                                                 <td>
-                                                    <span ng-show="supplierInfo.Vatable == true">12% VAT</span>
-                                                    <span ng-hide="supplierInfo.Vatable == true">ZERO RATED</span>
+                                                    <span ng-show="ctrl.requestType == 'VATable'">12% VAT</span>
+                                                    <span ng-show="ctrl.requestType == 'Non-VATable'">Non-VAT</span>
+                                                    <span ng-show="ctrl.requestType == 'Zero Rated'">ZERO RATED</span>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     <br />
 
-                                    <!--TRY LANG PO. WAG KA PO MAG ERROR PLEASE SEARCH BUTTON-->
+                                    <!--TRY LANG PO. WAG KA PO MAG ERROR PLEASE SEARCH BUTTON$-->
                                     <div class="title_right">
                                         <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                                             <div class="input-group">
@@ -219,6 +233,7 @@
                                                 <th ng-click="predicate='ItemName'; reverse=!reverse">Item Name</th>
                                                 <th ng-click="predicate='UomDescription'; reverse=!reverse">Unit Of Measurement</th>
                                                 <th ng-click="predicate='UnitPrice'; reverse=!reverse">Unit Price</th>
+                                                <th ng-click="predicate='Options'; reverse=!reverse">Options</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -235,8 +250,10 @@
                                                 <td>
                                                     <span ng-bind="supplierItem.RoundedUnitPrice"></span>
                                                 </td>
+                                                <td id="locationOption" align="center">
+                                                    <button ng-click="removeSpecificItems(removerItem)" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i>&nbsp; Delete</button>
+                                                    </td>
                                             </tr>
-
                                             <tr ng-show="(supplierItems | filter:searchTexts).length == 0">
                                                 <td colspan="5" align="center">No results found...</td>
                                             </tr>
@@ -249,6 +266,7 @@
                                     <br/>
                                     <div class="modal-footer">
                                         <button class="btn btn-danger btn-sm" ng-click="closeSupplierInformation(supplier)"><i class="glyphicon glyphicon-remove"></i> Close</button>
+                                       
                                         <br />
                                     </div>
 
@@ -321,17 +339,23 @@
                                             <tr>
                                                 <td><strong>This supplier is VATable?:</strong></td>
                                                 <td>
-                                                    <div class="radio">
-
-                                                        <label>
-                                                            <input type="radio" ng-model="supplierDetails.Vatable" name="optionsRadios" id="optionsRadios2" ng-value="false">
-                                                            No
-                                                        </label>
+                                                    <ui-select ng-model="ctrl.requestType" theme="selectize" title="Choose type of tax" style="min-width: 140px;">
+                                                        <ui-select-match placeholder="Select type of tax"><span ng-bind="$select.selected.name"></span></ui-select-match>
+                                                        <ui-select-choices repeat="existingRequestType.name as existingRequestType in ctrl.existingRequestTypes | filter: $select.search">
+                                                            <span ng-bind-html="existingRequestType.name| highlight: $select.search"> - </span>
+                                                        </ui-select-choices>
+                                                    </ui-select>
+                                                    @*<div class="radio">
                                                         <label>
                                                             <input type="radio" ng-model="supplierDetails.Vatable" name="optionsRadios" id="optionsRadios1" ng-value="true" checked="">
-                                                            Yes
+                                                            VATable
                                                         </label>
-                                                    </div>
+                                                        <label>
+                                                            <input type="radio" ng-model="supplierDetails.Vatable" name="optionsRadios" id="optionsRadios2" ng-value="false">
+                                                            Non-VATable
+                                                        </label>
+                                                       
+                                                    </div>*@
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -355,7 +379,7 @@
                                     <h2 class="modal-title">NEW SUPPLIER ITEM</h2>
                                 </div>
                                 <div class="modal-body">
-                                    @*<button ng-click="addNewItem()" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-plus"></i>&nbsp; Add Item</button>*@
+                                    <button ng-click="addNewItem()" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-plus"></i>&nbsp; Add Item</button>
                                     <table class="table table-hover">
                                         <thead style="background:rgb(221, 221, 221)">
                                             <tr>
@@ -375,7 +399,7 @@
                                                                            on-select="setItemUOM(item,$select.selected.UnitOfMeasurement)">
                                                                     <ui-select-match placeholder="Select or search an item"><span ng-bind="$select.selected.ItemName"></span></ui-select-match>
                                                                     <ui-select-choices repeat="existingItemx.InventoryItemID as existingItemx in ctrl.existingItemsx | filter: $select.search">
-                                                                        @*<small ng-bind-html="existingItemx.InventoryItemID | highlight: $select.search"> - </small>*@
+                                                                        <small ng-bind-html="existingItemx.InventoryItemID | highlight: $select.search"> - </small>
                                                                         <span style="text-transform:capitalize;" ng-bind-html="existingItemx.ItemName |lowercase | highlight: $select.search"></span>
                                                                         <span ng-bind-html="existingItemx.UnitOfMeasurement | highlight: $select.search"></span>
                                                                     </ui-select-choices>
@@ -395,7 +419,7 @@
                                                     <input type="number" ng-model="item.UnitPrice" class="form-control" min="0" onkeypress="return isNumberKey(event)" name="Quantity">
                                                 </td>
                                                 <td class="form-group" style="vertical-align:middle">
-                                                    <button ng-click="removeItem($index)" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></button>@*ng-show="$last"*@
+                                                    <button ng-click="removeItem($index)" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></button>ng-show="$last"
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -403,7 +427,7 @@
                                     <br />
                                 </div>
                                 <div class="modal-footer">
-                                    @*<button class="btn btn-danger btn-sm" ng-click="closeAddSupplierItem()"><i class="glyphicon glyphicon-remove"></i> Close</button>*@
+                                    @*<button class="btn btn-danger btn-sm" ng-click="closeAddSupplierItem()"><i class="glyphicon glyphicon-remove"></i> Close</button>
                                     @*   <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Close</button>*@
                                     <button class="btn btn-success btn-sm" ng-click="addNewSupplierItem()"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                 </div>
