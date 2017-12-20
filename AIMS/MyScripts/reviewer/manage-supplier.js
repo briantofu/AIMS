@@ -109,7 +109,7 @@
     //Add new Supplier
     $scope.addSupplierProvider = function (tinNumber, supplierName, address, contactPerson, contactNo, email, hasVAT) {
         if ($scope.tinNumber == undefined || $scope.supplierName == undefined || $scope.address == undefined || $scope.contactPerson == undefined || $scope.contactNo == undefined || $scope.email == undefined) {
-            toastr.warning("There must be no empty fileds all are important.", "You must fill out all the fileds");
+            toastr.warning("Please input all the fields.", "You must fill out all the fields");
         } else {
             var data =
          {
