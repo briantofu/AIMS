@@ -326,24 +326,6 @@ namespace AIMS.Controllers
                 //               }).ToList();
                 //}
 
-                //using (var context = new AccountDbContext())//Use dbAccount
-                //{
-                //    var userIDs = requisition.Select(b => b.UserID);
-                //    //SELECT ALL USER FROM DbAccount
-                //    users = (from user in context.Users
-                //               where userIDs.Contains(user.UserId)
-                //               select new Account
-                //               {
-                //                   UserID = user.UserId,
-                //                   Firstname = user.Firstname,
-                //                   //Middlename = user.Middlename,
-                //                   //Lastname = user.Lastname,
-                //                   //Department = user.Department,
-                //                   //Contact = user.Contact,
-                //                   //Email = user.Email,
-                //               }).ToList();
-                //}
-
                 //Join all data (account and requisition)
 
                 requisition = (from req in requisition
