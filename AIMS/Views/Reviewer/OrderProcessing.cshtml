@@ -134,7 +134,7 @@
                                                                        ng-keyup="isSupplierExist($select.search)"
                                                                        on-select="isSupplierSelect(ctrl.SupplierID)">
                                                                 <ui-select-match placeholder="Select or search a supplier"><span ng-bind="$select.selected.SupplierName"></span></ui-select-match>
-                                                                <ui-select-choices repeat="existingSupplier.SupplierID as existingSupplier in ctrl.existingSuppliers | filter: $select.search" null-option="--No supplier--">
+                                                                <ui-select-choices repeat="existingSupplier.SupplierID as existingSupplier in ctrl.existingSuppliers | filter: $select.search" null-option="--No supplier--" required>
                                                                     @*<small ng-bind-html="existingSupplier.SupplierID| highlight: $select.search"> - </small>*@
                                                                     <span style="text-transform:capitalize;" ng-bind-html="existingSupplier.SupplierName| lowercase | highlight: $select.search"></span>
                                                                 </ui-select-choices>
@@ -142,7 +142,7 @@
                                                         </td>
                                                         <td><strong>Delivery Charge</strong></td>
                                                         <td> : &#8369;&nbsp;&nbsp;</td>
-                                                        <td><input type="number" ng-model="deliveryCharge" class="form-control" value="0" min="0" onkeypress="return isNumberKey(event)" name="Quantity"></td>
+                                                        <td><input type="number" ng-model="deliveryCharge" class="form-control" @*value="0"*@ min="0" onkeypress="return isNumberKey(event)" name="Quantity"></td>
 
                                                     </tr>
                                                     <tr>

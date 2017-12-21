@@ -22,6 +22,7 @@ namespace AIMS.Controllers
             _iFUser = new FUser();
         }
         // GET: Reviewer/InitialReview
+
         [CustomAuthorize(AllowedRoles = new string[] { "PurchasingOfficer" })]
         public ActionResult Requisition()
         {
@@ -439,7 +440,6 @@ namespace AIMS.Controllers
                                    }).ToList();
                 }
 
-                var users = _iFUser.Read();
                 //using (var context = new AccountDbContext())//Use dbAccount
                 //{
                 //    var userIDs = requisition.Select(b => b.UserID);
