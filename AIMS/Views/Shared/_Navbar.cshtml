@@ -2,24 +2,24 @@
 
 <style>
     .navbar {
-                border-bottom-color: #c05f5f  !important;
-                border-width: 0 1px 4px 1px;
-            }
-    li a:hover, .navbar-brand:hover
-            {
-                color: #2b358a !important;
-                font-weight: bold;
-            }
-    .navDiv
-            {
-                height: 90px;
-            }
+        border-bottom-color: #c05f5f !important;
+        border-width: 0 1px 4px 1px;
+    }
+
+    li a:hover, .navbar-brand:hover {
+        color: #2b358a !important;
+        font-weight: bold;
+    }
+
+    .navDiv {
+        height: 90px;
+    }
 </style>
 
 <body ng-app="myApp">
     <div class="navbar navbar-default navbar-fixed-top navDiv">
         <script type="text/javascript" src="~/MyScripts/app.js"></script><!--Angular init module-->
-       <script type="text/javascript" src="~/MyScripts/filter-actions/user-roles.js"></script><!--Select all users role-->
+        <script type="text/javascript" src="~/MyScripts/filter-actions/user-roles.js"></script><!--Select all users role-->
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -31,25 +31,45 @@
 
             <div class="navbar-collapse collapse navbar-fixed-top" ng-controller="myCtrl2" ng-init="filterActions()">
                 <ul class="nav navbar-nav">
-                  <li><a class="navbar-brand" href="/Home/LandingPage"><img src="~/Content/Images/inventory.png" width="340" height="45" /></a></li>
+                    <li><a class="navbar-brand" href="/Home/LandingPage"><img src="~/Content/Images/inventory.png" width="340" height="45" /></a></li>
                     <li ng-if="userRoles.indexOf('Receptionist') !== -1 || userRoles.indexOf('Employee') !== -1 || userRoles.indexOf('PurchasingOfficer') !== -1">
 
                         @*@if (WindowsUser.HasUserRoles(new string[] { "Receptionist" }))
-                         {*@
-                            @*<li><a href="/Home/LandingPage"><i class="fa fa-home"></i> Home </a></li>*@
-                         @*}*@
-                        @*@if (WindowsUser.HasUserRoles(new string[] { "Employee" }))
-                         {
-                            <li><a href="/Home/LandingPage"><i class="fa fa-home"></i> Home </a></li>
-                        }
-                       @if (WindowsUser.HasUserRoles(new string[] { "PurchasingOfficer" }))
-                        {*@
-                            <li><a href="/Home/LandingPage"><i class="fa fa-home"></i> Home </a></li>
+                            {*@
+                        @*<li><a href="/Home/LandingPage"><i class="fa fa-home"></i> Home </a></li>*@
                         @*}*@
+                        @*@if (WindowsUser.HasUserRoles(new string[] { "Employee" }))
+                              {
+                                 <li><a href="/Home/LandingPage"><i class="fa fa-home"></i> Home </a></li>
+                             }
+                            @if (WindowsUser.HasUserRoles(new string[] { "PurchasingOfficer" }))
+                             {*@
+                    <li><a href="/Home/LandingPage"><i class="fa fa-home"></i> Home </a></li>
+                    @*}*@
 
                     <li ng-if="userRoles.indexOf('Receptionist') !== -1 || userRoles.indexOf('Employee') !== -1 || userRoles.indexOf('PurchasingOfficer') !== -1">
                         @*@if (WindowsUser.HasUserRoles(new string[] { "Receptionist" }))
-                        {*@
+                            {*@
+                        @*<li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-archive"></i> Inventory <span class="fa fa-chevron-down"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/Inventory/Stocks">Stocks</a></li>
+                                    <li><a href="/Inventory/BeginningBalance">Beginning Balance</a></li>
+                                </ul>
+                            </li>*@
+                        @*}
+                            @if (WindowsUser.HasUserRoles(new string[] { "Employee" }))
+                            {
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-archive"></i> Inventory <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/Inventory/Stocks">Stocks</a></li>
+                                        <li><a href="/Inventory/BeginningBalance">Beginning Balance</a></li>
+                                    </ul>
+                                </li>
+                            }*@
+                        @if (WindowsUser.HasUserRoles(new string[] { "PurchasingOfficer" }))
+                        {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-archive"></i> Inventory <span class="fa fa-chevron-down"></span></a>
                             <ul class="dropdown-menu">
@@ -57,96 +77,76 @@
                                 <li><a href="/Inventory/BeginningBalance">Beginning Balance</a></li>
                             </ul>
                         </li>
-                        @*}
-                        @if (WindowsUser.HasUserRoles(new string[] { "Employee" }))
+                    }
+
+                        <li class="dropdown" ng-if="userRoles.indexOf('DepartmentHead') !== -1 || userRoles.indexOf('Employee') !== -1">
+                            @if (WindowsUser.HasUserRoles(new string[] { "Employee" }))
+                            {
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-edit"></i>Supply Request <span class="fa fa-chevron-down"></span></a>
+                            }
+                            <ul class="dropdown-menu">
+
+                                <li ng-if="userRoles.indexOf('Employee') !== -1"><a href="/Request/AddRequest">Add Request</a></li>
+                                <li ng-if="userRoles.indexOf('Employee') !== -1"><a href="/Request/CurrentRequestStatus">Current Request Status</a></li>
+
+                                @if (WindowsUser.HasUserRoles(new string[] { "DepartmentHead" }))
+                                {
+                                    <li ng-if="userRoles.indexOf('DepartmentHead') !== -1"><a href="/Request/ViewRequest">Approve Request</a></li>
+                                }
+                            </ul>
+                        </li>
+
+                        @if (WindowsUser.HasUserRoles(new string[] { "Receptionist" }))
                         {
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-archive"></i> Inventory <span class="fa fa-chevron-down"></span></a>
+                            <li class="dropdown" ng-if="userRoles.indexOf('Receptionist') !== -1">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-bag"></i> Requisition <span class="fa fa-chevron-down"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="/Inventory/Stocks">Stock</a></li>
-                                    <li><a href="/Inventory/BeginningBalance">Beginning Balance</a></li>
+
+                                    <li><a href="/Requisition/AddRequisition">Create</a></li>
+                                    <li><a href="/Requisition/AllRequisition">Status</a></li>
+                                    <li><a href="/Requisition/DeliveryAcceptance">Update</a></li>
+                                    <li><a href="/Requisition/PartialDelivery">Pending</a></li>
+                                    <li><a href="/Reviewer/PO">Completed</a></li>
+                                    <li><a href="/Request/ViewRequest">Supply Request</a></li>
+                                </ul>
+                            </li>
+                        }
+
+                        @if (WindowsUser.HasUserRoles(new string[] { "PurchasingOfficer" }))
+                        {
+                            <li ng-if="userRoles.indexOf('PurchasingOfficer') !== -1"><a href="/Location/ManageLocation"><i class="fa fa-map"></i> Location</a></li>
+                        }
+                        @if (WindowsUser.HasUserRoles(new string[] { "PurchasingOfficer" }))
+                        {
+                            <li class="dropdown" ng-if="userRoles.indexOf('PurchasingOfficer') !== -1">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cart-plus"></i> Purchase Order <span class="fa fa-chevron-down"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/Reviewer/Requisition">Accept</a></li>
+                                    <li><a href="/Reviewer/OrderProcessing">Update</a></li>
+                                    <li><a href="/Reviewer/DeliveryMonitoring">Completed</a></li>
                                 </ul>
                             </li>
                         }
                         @if (WindowsUser.HasUserRoles(new string[] { "PurchasingOfficer" }))
                         {
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-archive"></i> Inventory <span class="fa fa-chevron-down"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/Inventory/Stocks">Stock</a></li>
-                                    <li><a href="/Inventory/BeginningBalance">Beginning Balance</a></li>
-                                </ul>
-                            </li>
-                        }*@
-
-                   <li class="dropdown" ng-if="userRoles.indexOf('DepartmentHead') !== -1 || userRoles.indexOf('Employee') !== -1">
-                        @*@if (WindowsUser.HasUserRoles(new string[] { "Employee" }))
-                         {*@
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-edit"></i>Supply Request <span class="fa fa-chevron-down"></span></a>
-                         @*}*@
-                            <ul class="dropdown-menu">
-
-                               <li ng-if="userRoles.indexOf('Employee') !== -1"><a href="/Request/AddRequest">Add Request</a></li>
-                               <li ng-if="userRoles.indexOf('Employee') !== -1"><a href="/Request/CurrentRequestStatus">Current Request Status</a></li>
-                         
-                        @*@if (WindowsUser.HasUserRoles(new string[] { "DepartmentHead" }))
-                         {*@
-                             <li ng-if="userRoles.indexOf('DepartmentHead') !== -1"><a href="/Request/ViewRequest">Approve Request</a></li>
-                         @*}*@
-                           </ul>
-                  </li>
-                       
-                        @*@if (WindowsUser.HasUserRoles(new string[] { "Receptionist" }))
-                         {*@
-                          <li class="dropdown" ng-if="userRoles.indexOf('Receptionist') !== -1">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-bag"></i> Requisition <span class="fa fa-chevron-down"></span></a>
-                            <ul class="dropdown-menu">
-                       
-                                <li><a href="/Requisition/AddRequisition">Create</a></li>
-                                <li><a href="/Requisition/AllRequisition">Status</a></li>
-                                <li><a href="/Requisition/DeliveryAcceptance">Update</a></li>
-                                <li><a href="/Requisition/PartialDelivery">Pending</a></li>
-                                <li><a href="/Reviewer/PO">Completed</a></li>
-                                <li><a href="/Request/ViewRequest">Supply Request</a></li>
-                            </ul>
-                          </li>
-                         @*}*@
-
-                        @*@if (WindowsUser.HasUserRoles(new string[] { "PurchasingOfficer" }))
-                         {*@
-                            <li ng-if="userRoles.indexOf('PurchasingOfficer') !== -1"><a href="/Location/ManageLocation"><i class="fa fa-map"></i> Location</a></li>
-                         @*}*@
-                        @*@if (WindowsUser.HasUserRoles(new string[] { "PurchasingOfficer" }))
-                         {*@
-                           <li class="dropdown" ng-if="userRoles.indexOf('PurchasingOfficer') !== -1">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cart-plus"></i> Purchase Order <span class="fa fa-chevron-down"></span></a>
-                              <ul class="dropdown-menu">
-                                <li><a href="/Reviewer/Requisition">Accept</a></li>
-                                <li><a href="/Reviewer/OrderProcessing">Update</a></li>
-                                <li><a href="/Reviewer/DeliveryMonitoring">Completed</a></li>
-                              </ul>
-                          </li>
-                         @*}*@
-                        @*@if (WindowsUser.HasUserRoles(new string[] { "PurchasingOfficer" }))
-                         {*@
                             <li ng-if="userRoles.indexOf('PurchasingOfficer') !== -1"><a href="/Reviewer/ManageSupplier"><i class="fa fa-group"></i> Suppliers</a></li>
-                         @*}*@
-               
-                        @*@if (WindowsUser.HasUserRoles(new string[] { "Receptionist" }))
-                         {
-                            <li><a href="/Home/Aboutus"><i class="fa fa-user"></i> About Us</a></li>
-                         }
-                       @if (WindowsUser.HasUserRoles(new string[] { "Employee" }))
-                        {
-                            <li><a href="/Home/Aboutus"><i class="fa fa-user"></i> About Us</a></li>
-                        }*@
-                        @*@if (WindowsUser.HasUserRoles(new string[] { "PurchasingOfficer" }))
-                         {*@
-                            <li><a href="/Home/Aboutus"><i class="fa fa-user"></i> About Us</a></li>
-                            @*//}*@
+                        }
 
-                </ul>
+                        @*@if (WindowsUser.HasUserRoles(new string[] { "Receptionist" }))
+                              {
+                                 <li><a href="/Home/Aboutus"><i class="fa fa-user"></i> About Us</a></li>
+                              }
+                            @if (WindowsUser.HasUserRoles(new string[] { "Employee" }))
+                             {
+                                 <li><a href="/Home/Aboutus"><i class="fa fa-user"></i> About Us</a></li>
+                             }*@
+                        @*@if (WindowsUser.HasUserRoles(new string[] { "PurchasingOfficer" }))
+                            {*@
+                        <li><a href="/Home/Aboutus"><i class="fa fa-user"></i> About Us</a></li>
+                        @*//}*@
+
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
