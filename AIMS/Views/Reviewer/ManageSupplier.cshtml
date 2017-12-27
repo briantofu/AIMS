@@ -379,7 +379,7 @@
                                     <h2 class="modal-title">NEW SUPPLIER ITEM</h2>
                                 </div>
                                 <div class="modal-body">
-                                    <button ng-click="addNewItem()" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-plus"></i>&nbsp; Add Item</button>
+                                   
                                     <table class="table table-hover">
                                         <thead style="background:rgb(221, 221, 221)">
                                             <tr>
@@ -419,11 +419,12 @@
                                                     <input type="number" ng-model="item.UnitPrice" class="form-control" min="0" onkeypress="return isNumberKey(event)" name="Quantity">
                                                 </td>
                                                 <td class="form-group" style="vertical-align:middle">
-                                                    <button ng-click="removeItem($index)" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></button>ng-show="$last"
-                                                </td>
+                                                    <button ng-click="removeItem($index)" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></button>@*ng-show="$last"*@
+                                                </td> 
                                             </tr>
                                         </tbody>
                                     </table>
+                                                <button ng-click="addNewItem()" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-plus"></i>&nbsp; Add Item</button>
                                     <br />
                                 </div>
                                 <div class="modal-footer">
