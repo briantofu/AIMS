@@ -213,7 +213,7 @@
                                                     <td ng-disabled="item.BalanceQuantity != 0" ng-class="{red : item.DeliveredQuantity == 0}"><span ng-bind="item.UnitOfMeasurement"></span></td>
                                                     <td ng-disabled="item.BalanceQuantity != 0" ng-class="{red : item.DeliveredQuantity == 0}"><span ng-bind="item.BalanceQuantity"></span></td>
                                                     <td>
-                                                        <input ng-disabled="item.BalanceQuantity <= item.DeliveredQuantity" type="number" ng-model="item.DeliveredQuantity" class="form-control" min="1" clear-input onkeypress="return isNumberKey(event)" name="Quantity" clearable>
+                                                        <input ng-disabled="item.BalanceQuantity == 0" type="number" ng-model="item.DeliveredQuantity" class="form-control" min="1" clear-input onkeypress="return isNumberKey(event)" name="Quantity" clearable>
                                                     </td>
                                                 </tr>
                                             </tbody>
