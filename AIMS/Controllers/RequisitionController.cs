@@ -250,6 +250,50 @@ namespace AIMS.Controllers
             return Json(pages);
         }
 
+        public JsonResult LoadDeliveredPages(Page page)
+            //For loading Delivery Section of Requesition
+        {
+            int totalpages = 0;
+            var totalpositions = 0;
+
+            using (var context = new InventoryDbContext())
+            {
+                totalpositions = context.Requisition.Where(req => (req.Status == "Delivered" )).Count();
+            }
+
+            if (totalpositions % page.itemPerPage != 0)
+            {
+                totalpages = (totalpositions / page.itemPerPage) + 1;
+            }
+            else
+            {
+                totalpages = (totalpositions / page.itemPerPage);
+            }
+            List<Page> pages = new List<Page>();
+            for (int x = 1; x <= totalpages; x++)
+            {
+                if (x == page.PageNumber)
+                {
+                    pages.Add(
+                    new Page
+                    {
+                        PageNumber = x,
+                        PageStatus = true
+                    });
+                }
+                else
+                {
+                    pages.Add(
+                    new Page
+                    {
+                        PageNumber = x,
+                        PageStatus = false
+                    });
+                }
+            }
+            return Json(pages);
+        }
+
         //=====LOAD DATA=====//
         public JsonResult LoadPageData(Page page)
         {
@@ -262,7 +306,7 @@ namespace AIMS.Controllers
                 {
                     requisition = (from req in context.Requisition
                                    join loc in context.Location on req.LocationId equals loc.LocationId
-                                   //where (req.Status != "Approved" && req.Status != "Declined")
+                                   
                                    select new Requisition
                                    {
                                        RequisitionID = req.RequisitionId,
@@ -335,6 +379,90 @@ namespace AIMS.Controllers
             }
         }
 
+        public JsonResult LoadPageDeliveredData(Page page)
+        {
+            int beginning = page.itemPerPage * (page.PageNumber - 1);
+            //List<Account> account = new List<Account>();//account = Account model
+            List<Requisition> requisition = new List<Requisition>();//requisitions = Requisitions model
+            try
+            {
+                using (var context = new InventoryDbContext())//Use dbInventory
+                {
+                    requisition = (from req in context.Requisition
+                                   join loc in context.Location on req.LocationId equals loc.LocationId
+                                   //where (req.Status != "Approved" && req.Status != "Declined")
+                                   where (req.Status == "Delivered")
+                                   select new Requisition
+                                   {
+                                       RequisitionID = req.RequisitionId,
+                                       SpecialInstruction = req.SpecialInstruction,
+                                       RequisitionDate = req.RequisitionDate,
+                                       RequiredDate = req.RequiredDate,
+                                       RequisitionType = req.RequisitionType,
+                                       Status = req.Status,
+                                       Reason = req.ReasonForDeclined,
+                                       SupplierID = req.SupplierId,
+
+                                       LocationID = loc.LocationId,
+                                       LocationName = loc.LocationName,
+
+                                       UserID = req.UserId.Value,
+
+                                   }).ToList();
+                }
+
+                var users = _iFUser.Read();
+                //using (var context = new AccountDbContext())//Use dbAccount
+                //{
+                //    var userIDs = requisition.Select(b => b.UserID);
+                //    //SELECT ALL USER FROM DbAccount
+                //    account = (from user in context.Users
+                //               where userIDs.Contains(user.UserId)
+                //               select new Account
+                //               {
+                //                   UserID = user.UserId,
+                //                   Firstname = user.Firstname,
+                //                   Middlename = user.Middlename,
+                //                   Lastname = user.Lastname,
+                //                   Department = user.Department,
+                //                   Contact = user.Contact,
+                //                   Email = user.Email,
+                //               }).ToList();
+                //}
+
+                //Join all data (account and requisition)
+                requisition = (from req in requisition
+                               join acc in users
+                                    on req.UserID equals acc.UserId
+                               select new Requisition
+                               {
+                                   RequisitionID = req.RequisitionID,
+
+                                   Firstname = acc.Username,
+                                   //Middlename = acc.Middlename,
+                                   //Lastname = acc.Lastname,
+                                   //Department = acc.Department,
+                                   //Contact = acc.Contact,
+                                   //Email = acc.Email,
+
+                                   SpecialInstruction = req.SpecialInstruction,
+                                   RequisitionDateString = String.Format("{0: MMMM dd, yyyy}", req.RequisitionDate),
+                                   RequiredDateString = String.Format("{0: MMMM dd, yyyy}", req.RequiredDate),
+                                   RequisitionType = req.RequisitionType,
+                                   Status = req.Status,
+                                   SupplierID = req.SupplierID,
+                                   Reason = req.Reason,
+
+                                   LocationID = req.LocationID,
+                                   LocationName = req.LocationName
+                               }).OrderBy(e => e.RequisitionID).Skip(beginning).Take(page.itemPerPage).ToList().ToList();
+                return Json(requisition);//Return data as json
+            }
+            catch (Exception ex)
+            {
+                return Json(ex);
+            }
+        }
         //VIEW PURCHASE ORDER
         public JsonResult ViewPurchaseOrder(Requisition requisition)
 

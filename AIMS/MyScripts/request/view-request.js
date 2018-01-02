@@ -39,6 +39,7 @@
                 function successCallback(response) {
                     $scope.initialize();
                     //$scope.requestItems = response.data;
+                    toastr.success("You've decline the requisition.", "Request Declined"),
                     $("#declineModal").modal("hide");
                 },
                 function errorCallback(response) {
@@ -60,6 +61,7 @@
                 function successCallback(response) {
                     $scope.initialize();
                     $scope.requestItems = response.data;
+                    toastr.success("You've successfully sent your request. Check you approval.", "Request Sent"),
                     $("#viewModal").modal("hide");
                 },
                 function errorCallback(response) {

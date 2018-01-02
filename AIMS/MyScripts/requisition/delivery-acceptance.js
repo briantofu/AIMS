@@ -135,7 +135,7 @@
 
         if (isValid) {
             var conf = confirm('Are you sure to submit this requsition?');
-            
+
             if ($scope.deliveryType == 'Delivered') {
                 if (conf) {
 
@@ -163,33 +163,33 @@
                     );
                 }
             } else {
-                
-                if ($scope.deliveryType == 'PartialDelivery') {
-                  
-                        var acceptconf = confirm('Are you sure to submit this requsition?');
-                        var data = {
-                            requisitionID: requisitionId,
-                            Status: "Partial Delivery",
-                            RequisitionItems: $scope.requisitionItems,
-                            DeliveryDate: requiredDate,
-                            SupplierInvoiceNo: supplierInvoiceNo,
-                            DeliveryReceiptNo: deliveryReceiptNo,
-                            SupplierID: supplierId,
 
-                        };
-                        $http.post("/Requisition/DeliverRequisition", data).then(
-                            function successCallback(response) {
-                                $scope.initialize();
-                                $scope.requisitionItems = response.data;
-                                toastr.success("You've successfully send your requisition.", "Requisition Sent"),
-                                    $("#viewModal").modal("hide");
-                            },
-                            function errorCallback(response) {
-                            }
-                        );
-                    }
+                if ($scope.deliveryType == 'PartialDelivery') {
+
+                    var acceptconf = confirm('Are you sure to submit this requsition?');
+                    var data = {
+                        requisitionID: requisitionId,
+                        Status: "Partial Delivery",
+                        RequisitionItems: $scope.requisitionItems,
+                        DeliveryDate: requiredDate,
+                        SupplierInvoiceNo: supplierInvoiceNo,
+                        DeliveryReceiptNo: deliveryReceiptNo,
+                        SupplierID: supplierId,
+
+                    };
+                    $http.post("/Requisition/DeliverRequisition", data).then(
+                        function successCallback(response) {
+                            $scope.initialize();
+                            $scope.requisitionItems = response.data;
+                            toastr.success("You've successfully send your requisition.", "Requisition Sent"),
+                                $("#viewModal").modal("hide");
+                        },
+                        function errorCallback(response) {
+                        }
+                    );
                 }
-            
+            }
+
         } else {
             toastr.warning("Please fill out all fields.", "Data can't be empty");
         }

@@ -354,6 +354,7 @@
     <Content Include="MyScripts\request\current-request-status.js" />
     <Content Include="MyScripts\requisition\all-requisition.js" />
     <Content Include="MyScripts\requisition\partial-delivery.js" />
+    <Content Include="MyScripts\requisition\po.js" />
     <Content Include="MyScripts\reviewer\declined-review.js" />
     <Content Include="MyScripts\reviewer\delivery-monitoring.js" />
     <Content Include="MyScripts\location\manage-location.js" />

@@ -60,7 +60,7 @@
                     if (response.data.length === 0) {
                         $scope.items = [{ Quantity: 0, Description: "" }];
                         $scope.specialInstruction = '';
-                        alert("Your request has been sent.");
+                        toastr.success("You've successfully sent your request.", "Request Sent"),
                         $scope.initialize();
                     }
                 },
@@ -185,7 +185,7 @@
 
     //add new item in inventory to database
     $scope.addInventoryItem = function (newItemName, unitOfMeasurement) {
-        alert("New item successfully added...");
+        toastr.success("You've successfully add an item.", "Item added");
         var data = {
             newItemName: newItemName,
             unitOfMeasurement: unitOfMeasurement

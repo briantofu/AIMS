@@ -458,6 +458,7 @@ namespace AIMS.Controllers
                 //               }).ToList();
                 //}
 
+                var users = _iFUser.Read();
                 //Join all data (account and requisition)
 
                 requisition = (from req in requisition
@@ -467,12 +468,12 @@ namespace AIMS.Controllers
                                {
                                    RequisitionID = req.RequisitionID,
 
-                                   Firstname = acc.Firstname,
-                                   Middlename = acc.Middlename,
-                                   Lastname = acc.Lastname,
-                                   Department = acc.Department,
-                                   Contact = acc.Contact,
-                                   Email = acc.Email,
+                                   Firstname = acc.Username,
+                                   //Middlename = acc.Middlename,
+                                   //Lastname = acc.Lastname,
+                                   //Department = acc.Department,
+                                   //Contact = acc.Contact,
+                                   //Email = acc.Email,
 
                                    PartialDeliveryID = req.PartialDeliveryID,
                                    DeliveryDateString = String.Format("{0: MMMM dd, yyyy}", req.DeliveryDate),
