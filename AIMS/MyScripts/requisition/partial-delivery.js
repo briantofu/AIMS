@@ -134,35 +134,39 @@
                 isValid = $scope.requisitionItems[i].BalanceQuantity >= $scope.requisitionItems[i].DeliveredQuantity;
                 if (!isValid) break;
             }
-            if (!isValid) toastr.warning("Please input valid delivered quantity.", "Invalid input");
-           
+            if (!isValid) {
+                toastr.warning("The quantity that you've entered was greater or less than the Item Quantity.", "Cannot Delivered");
+
+            }
             //added confirmation dialog
-            var con = confirm('Are you sure to submit this updated requsition?'); 
+            if (isValid) {
+                var con = confirm('Are you sure to submit this updated requsition?');
 
-            if (con) {
-       
-                var data =
-                    {
-                        requisitionID: requisitionId,
-                        Status: "Partial Delivery",
-                        RequisitionItems: $scope.requisitionItems,
-                        DeliveryDate: requiredDate,
-                        SupplierInvoiceNo: supplierInvoiceNo,
-                        SupplierID: supplierId,
-                        DeliveryReceiptNo: deliveryReceiptNo
-                    };
-                $http.post("/Requisition/DeliverRequisition", data).then(
-                    function successCallback(response) {
-                        $scope.initialize();
-                        $scope.requisitionItems = response.data;
-                        //added toastr success dialog
-                        toastr.success("You've successfully sent your updated requisition.", "Requisition Sent"),
-                            $("#viewModal").modal("hide");
-                    },
-                    function errorCallback(response) {
+                if (con) {
 
-                    }
-                );
+                    var data =
+                        {
+                            requisitionID: requisitionId,
+                            Status: "Partial Delivery",
+                            RequisitionItems: $scope.requisitionItems,
+                            DeliveryDate: requiredDate,
+                            SupplierInvoiceNo: supplierInvoiceNo,
+                            SupplierID: supplierId,
+                            DeliveryReceiptNo: deliveryReceiptNo
+                        };
+                    $http.post("/Requisition/DeliverRequisition", data).then(
+                        function successCallback(response) {
+                            $scope.initialize();
+                            $scope.requisitionItems = response.data;
+                            //added toastr success dialog
+                            toastr.success("You've successfully sent your updated requisition.", "Requisition Sent"),
+                                $("#viewModal").modal("hide");
+                        },
+                        function errorCallback(response) {
+
+                        }
+                    );
+                }
             }
         }
         else {

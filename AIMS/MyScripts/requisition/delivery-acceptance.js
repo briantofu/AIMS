@@ -131,13 +131,21 @@
         //    toastr.warning("Please fill out all data.", "Could not be delivered.");
         //}
 
-
+        //if (isValid) {
+        //    for (var i = 0; i < $scope.requisitionItems.length; i++) {
+        //        isValid = $scope.requisitionItems[i].BalanceQuantity >= $scope.requisitionItems[i].DeliveredQuantity;
+        //        if (!isValid) break;
+        //    }
+        //    if (!isValid) {
+        //        toastr.warning("The quantity that you've entered was greater or less than the Item Quantity.", "Cannot Delivered")
+        //    }
 
         if (isValid) {
             var conf = confirm('Are you sure to submit this requsition?');
 
-            if ($scope.deliveryType == 'Delivered') {
-                if (conf) {
+            if (conf) {
+                if ($scope.deliveryType == 'Delivered') {
+
 
 
                     var data = {
@@ -155,33 +163,7 @@
 
                             $scope.initialize();
                             $scope.requisitionItems = response.data;
-                            toastr.success("You've successfully send your requisition.", "Requisition Sent"),
-                                $("#viewModal").modal("hide");
-                        },
-                        function errorCallback(response) {
-                        }
-                    );
-                }
-            } else {
-
-                if ($scope.deliveryType == 'PartialDelivery') {
-
-                    var acceptconf = confirm('Are you sure to submit this requsition?');
-                    var data = {
-                        requisitionID: requisitionId,
-                        Status: "Partial Delivery",
-                        RequisitionItems: $scope.requisitionItems,
-                        DeliveryDate: requiredDate,
-                        SupplierInvoiceNo: supplierInvoiceNo,
-                        DeliveryReceiptNo: deliveryReceiptNo,
-                        SupplierID: supplierId,
-
-                    };
-                    $http.post("/Requisition/DeliverRequisition", data).then(
-                        function successCallback(response) {
-                            $scope.initialize();
-                            $scope.requisitionItems = response.data;
-                            toastr.success("You've successfully send your requisition.", "Requisition Sent"),
+                            toastr.success("You've successfully sent your requisition.", "Requisition Sent"),
                                 $("#viewModal").modal("hide");
                         },
                         function errorCallback(response) {
@@ -189,12 +171,53 @@
                     );
                 }
             }
-
-        } else {
-            toastr.warning("Please fill out all fields.", "Data can't be empty");
         }
+                if (isValid) {
+                    for (var i = 0; i < $scope.requisitionItems.length; i++) {
+                        isValid = $scope.requisitionItems[i].Quantity >= $scope.requisitionItems[i].DeliveredQuantity;
+                        if (!isValid) break;
+                    }
+                    if (!isValid) {
+                        toastr.warning("The quantity that you've entered was greater or less than the Item Quantity.", "Cannot Delivered");
+                    }
 
-    }
+                    if (isValid)
+                    {
+                    var acceptconf = confirm('Are you sure to submit this requsition?');
+                    if (acceptconf) {
+                    if ($scope.deliveryType == 'PartialDelivery') {
+
+                        
+                      
+                            var data = {
+                                requisitionID: requisitionId,
+                                Status: "Partial Delivery",
+                                RequisitionItems: $scope.requisitionItems,
+                                DeliveryDate: requiredDate,
+                                SupplierInvoiceNo: supplierInvoiceNo,
+                                DeliveryReceiptNo: deliveryReceiptNo,
+                                SupplierID: supplierId,
+
+                            };
+                            $http.post("/Requisition/DeliverRequisition", data).then(
+                                function successCallback(response) {
+                                    $scope.initialize();
+                                    $scope.requisitionItems = response.data;
+                                    toastr.success("You've successfully send your requisition.", "Requisition Sent"),
+                                        $("#viewModal").modal("hide");
+                                },
+                                function errorCallback(response) {
+                                }
+                            );
+                        }
+                    }
+                }
+            } else {
+                toastr.warning("Please fill out all fields.", "Data can't be empty");
+            }
+
+        }
+    
     $scope.isSupplierSelect = function (supplierId) {
 
         $scope.hasSupplier = true;
