@@ -2,12 +2,6 @@
     var vm = this;
     $scope.isItemExist;
     
-
-    vm.existingRequestTypes = [
-        { name: 'VATable' },
-        { name: 'Non-VATable' },
-        { name: 'Zero Rated'}
-    ];
     $scope.initialize = function () {
         $scope.page;
         $scope.loadpage(1, true);
@@ -117,7 +111,7 @@
         $("#provideSupplierModal").modal("hide");
     }
     //Add new Supplier
-    $scope.addSupplierProvider = function (tinNumber, supplierName, address, contactPerson, contactNo, email, requestType) {
+    $scope.addSupplierProvider = function (tinNumber, supplierName, address, contactPerson, contactNo, email, hasVAT, holdingTax) {
         if ($scope.tinNumber === undefined || $scope.supplierName === undefined || $scope.address === undefined || $scope.contactPerson === undefined || $scope.contactNo === undefined || $scope.email === undefined) {
             toastr.warning("There must be no empty fileds all are important.", "You must fill out all the fileds");
         } else {
@@ -129,7 +123,9 @@
              ContactPerson: contactPerson,
              ContactNo: contactNo,
              Email: email,
-             Vatable: requestType
+             Vatable: hasVAT,
+             WithholdingTax: holdingTax
+
              //requisitionID: $scope.requisition.RequisitionID
          };
             $http.post("/Reviewer/AddSupplier", data).then(
