@@ -854,7 +854,8 @@ namespace AIMS.Controllers
                                     ContactNo = supp.ContactNo,
                                     Email = supp.Email,
                                     TinNumber = supp.TinNumber,
-                                    Vatable = supp.Vatable
+                                    Vatable = supp.Vatable,
+                                    WholdingTax = supp.WholdingTax //column of Wholding Tax in supplier
                                 }).OrderBy(e => e.SupplierID).Skip(beginning).Take(page.itemPerPage).ToList();
                     return Json(supplier);
                 }
@@ -962,7 +963,8 @@ namespace AIMS.Controllers
                                                                    UnitPrice = a.UnitPrice,
                                                                    InventoryItemID = a.InventoryId
                                                                }).ToList(),
-                                               Vatable = supp.Vatable
+                                               Vatable = supp.Vatable,
+                                               WholdingTax = supp.WholdingTax
                                            }).ToList();
                 }
                 return Json(supplierInformation);
@@ -1095,7 +1097,8 @@ namespace AIMS.Controllers
                                 ContactPerson = supplier.ContactPerson,
                                 ContactNo = supplier.ContactNo,
                                 Email = supplier.Email,
-                                Vatable = supplier.Vatable
+                                Vatable = supplier.Vatable,
+                                WholdingTax = supplier.WholdingTax //column of Wholding Tax in supplier
                             };
                             context.Supplier.Add(addSupplier);
                             context.SaveChanges();
@@ -1276,6 +1279,7 @@ namespace AIMS.Controllers
                     tblSupplier.ContactPerson = supplier.ContactPerson;
                     tblSupplier.Email = supplier.Email;
                     tblSupplier.Vatable = supplier.Vatable;
+                    tblSupplier.WholdingTax = supplier.WholdingTax;
                     context.SaveChanges();//update requiredDate from tblRequisition
                 }
             }

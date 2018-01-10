@@ -124,7 +124,7 @@
              ContactNo: contactNo,
              Email: email,
              Vatable: hasVAT,
-             WithholdingTax: holdingTax
+             WholdingTax: holdingTax
 
              //requisitionID: $scope.requisition.RequisitionID
          };
