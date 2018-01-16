@@ -36,6 +36,7 @@ namespace AIMS.Models
         public DateTime? CreatedDate { get; internal set; }
         public double DeliveryCharges { get; internal set; }
         public DateTime DeliveryDate { get; internal set; }
+        //public string WholdingTax { get; set; }
     }
 
 }

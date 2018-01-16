@@ -111,7 +111,7 @@
         $("#provideSupplierModal").modal("hide");
     }
     //Add new Supplier
-    $scope.addSupplierProvider = function (tinNumber, supplierName, address, contactPerson, contactNo, email, hasVAT, holdingTax) {
+    $scope.addSupplierProvider = function (tinNumber, supplierName, address, contactPerson, contactNo, email, hasVAT, wholdingTax) {
         if ($scope.tinNumber === undefined || $scope.supplierName === undefined || $scope.address === undefined || $scope.contactPerson === undefined || $scope.contactNo === undefined || $scope.email === undefined) {
             toastr.warning("There must be no empty fileds all are important.", "You must fill out all the fileds");
         } else {
@@ -124,7 +124,7 @@
              ContactNo: contactNo,
              Email: email,
              Vatable: hasVAT,
-             WholdingTax: holdingTax
+             WholdingTax: wholdingTax
 
              //requisitionID: $scope.requisition.RequisitionID
          };

@@ -747,7 +747,7 @@ namespace AIMS.Controllers
                                          SupplierAddress = supp.Address,
                                          ContactPerson = supp.ContactPerson,
                                          ContactNo = supp.ContactNo,
-                                         Email = supp.Email,
+                                         Email = supp.Email, 
                                          RequisitionItems = (from req in context.Requisition
                                                              join reqItem in context.RequisitionItem on req.RequisitionId equals reqItem.RequisitionId
                                                              join inv in context.InventoryItem on reqItem.InventoryItemId equals inv.InventoryItemId
