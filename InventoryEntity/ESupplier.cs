@@ -21,6 +21,7 @@ namespace InventoryEntity
         public string Email { get; set; }
         [StringLength(150)]
         public string TinNumber { get; set; }
+        [StringLength(150)]
         public string WholdingTax { get; set; }
         public bool Vatable { get; set; }
     }

@@ -18,5 +18,7 @@ namespace InventoryEntity
         public double UnitPrice { get; set; }
         public int Quantity { get; set; }
         public int PurchaseOrderId { get; set; }
+        //public string WholdingTax { get; set; }
+       
     }
 }

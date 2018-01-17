@@ -373,6 +373,7 @@
                                 totalPurchase = total;
                             }
                         }
+                        
                         <table style="font-size:10px;">
                             <tr>
                                 <td align="center">TOTAL</td>
@@ -387,6 +388,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td align="center">w/holding Tax</td>
+                                <td align="right">
+                                      @String.Format("{0:n}", (Model.WholdingTax))% <!--babaguhin-->
+                                </td>
+                            </tr>
+                            <tr>
                                 <td align="center">TOTAL PURCHASE</td>
                                 <td align="right">
                                     P @String.Format("{0:n}", totalPurchase)<!--babaguhin-->
@@ -398,12 +405,6 @@
                                     P @String.Format("{0:n}", Model.DeliveryCharge)<!--babaguhin-->
                                 </td>
                             </tr>
-                            @*<tr>
-                                <td align="center">W/holding Tax </td>
-                                <td align="right">
-                                    P @String.Format("{0:n}", Model.Delivery)babaguhin
-                                </td>
-                            </tr>*@
                             @*<tr>
                                     <td align="center">OTHERS</td>
                                     <td  align="right">100</td>
