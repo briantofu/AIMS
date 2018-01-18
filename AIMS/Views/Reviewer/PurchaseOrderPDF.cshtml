@@ -273,6 +273,7 @@
                 double total = 0;
                 double totalWithVat = 0;
                 double totalPurchase = 0;
+                double compwith = 0;
                 int counter = 0;
             }
             <!--ITEMS-->
@@ -320,46 +321,46 @@
                 <tr class="item-footer">
                     <td width="52%">
                         <p align="justify">
-                        <table style="font-size:10px;">
-                            
-                            <tr>
-                                <td>
-                                    1. Please send two copies of your invoice
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    2. Enter this order in accordance with the price, terms and delivery method, and specification
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    listed above
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    3. Please notify us immediately if you are unable to deliver / ship as specified
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    4. Send all the correspondence to Anderson Group Business Holdings Limited Philippines
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    5. For clarifications on this P.O., please contact Catherine Villavelez at (02) 556 5199  /
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    (0917) 568 4322 or email catherinev@andersongroup.uk.com
-                                </td>
-                            </tr>
-                          
-                        </table>
-                            </p>
+                            <table style="font-size:10px;">
+
+                                <tr>
+                                    <td>
+                                        1. Please send two copies of your invoice
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        2. Enter this order in accordance with the price, terms and delivery method, and specification
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        listed above
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        3. Please notify us immediately if you are unable to deliver / ship as specified
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        4. Send all the correspondence to Anderson Group Business Holdings Limited Philippines
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        5. For clarifications on this P.O., please contact Catherine Villavelez at (02) 556 5199  /
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        (0917) 568 4322 or email catherinev@andersongroup.uk.com
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </p>
                     </td>
                     <td width="31%">
                         @{
@@ -387,34 +388,45 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td align="center">TOTAL PURCHASE</td>
-                                <td align="right">
-                                    P @String.Format("{0:n}", totalPurchase)<!--babaguhin-->
-                                </td>
-                            </tr>
-                            <tr>
-                                <td align="center">DELIVERY CHARGES </td>
-                                <td align="right">
-                                    P @String.Format("{0:n}", Model.DeliveryCharge)<!--babaguhin-->
-                                </td>
-                            </tr>
-                            @*<tr>
-                                <td align="center">W/holding Tax </td>
-                                <td align="right">
-                                    P @String.Format("{0:n}", Model.Delivery)babaguhin
-                                </td>
-                            </tr>*@
-                            @*<tr>
-                                    <td align="center">OTHERS</td>
-                                    <td  align="right">100</td>
-                                </tr>*@
-                            <tr>
-                                <td align="center"><strong> GRAND TOTAL</strong></td>
-                                <td align="right">
-                                    <strong> P @String.Format("{0:n}", (Model.DeliveryCharge + totalPurchase))</strong><!--babaguhin-->
-                                </td>
-                            </tr>
-                        </table>
+                            
+                            <td align="center">W/HOLDING TAX</td>
+                            
+                            <td align="right">
+                                                                    @String.Format("{0:n}", (compwith = Model.WholdingTax * .1))% <!--babaguhin-->
+                                
+                            </td>
+                            
+                </tr>
+                <tr>
+                    <td align="center">TOTAL PURCHASE</td>
+                    <td align="right">
+                        P @String.Format("{0:n}", totalPurchase)<!--babaguhin-->
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">DELIVERY CHARGES </td>
+                    <td align="right">
+                        P @String.Format("{0:n}", Model.DeliveryCharge)<!--babaguhin-->
+                    </td>
+                </tr>
+                @*<tr>
+                <td align="center">W/holding Tax </td>
+                <td align="right">
+                    P @String.Format("{0:n}", Model.WholdingTax)
+                </td>
+            </tr>*@
+                @*<tr>
+                <td align="center">OTHERS</td>
+                <td  align="right">100</td>
+            </tr>*@
+                            
+                <tr>
+                    <td align="center"><strong> GRAND TOTAL</strong></td>
+                    <td align="right">
+                        <strong> P @String.Format("{0:n}", (Model.DeliveryCharge + totalPurchase + compwith))</strong><!--babaguhin-->
+                    </td>
+                </tr>
+            </table>
                     </td>
                 </tr>
 

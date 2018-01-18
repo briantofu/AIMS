@@ -15,7 +15,7 @@ namespace AIMS.Models
         public string ContactNo { get; set; }
         public string Email { get; set; }
         public bool Vatable { get; set; }
-        public string WholdingTax { get; set; } //db column (get, set) in supplier
+        public double WholdingTax { get; set; } //db column (get, set) in supplier
 
         public List<SupplierInventoryItem> supplierItemList { get; set; }
         public List<RequisitionItem> RequisitionItem { get; set; }

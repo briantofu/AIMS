@@ -133,7 +133,7 @@
                         $scope.supplierID = "";
                         $("#confirmModal").modal("hide");
                         $('#instruction').val('');
-                        toastr.success("You've susccessfull send your requisition.", "Requisition Sent");
+                        toastr.success("You've successfully sent your requisition.", "Requisition Sent");
                     }
                 },
 

@@ -407,6 +407,7 @@
                 ContactNo: $scope.supplierx[0].ContactNo,
                 SupplierEmail: $scope.supplierx[0].Email,
                 Vatable: $scope.supplierx[0].Vatable,
+                WholdingTax: $scope.supplierx[0].WholdingTax,
                 RequisitionID: $scope.requisition.RequisitionID,
                 LocationName: $scope.requisition.LocationName,
                 LocationAddress: $scope.requisition.LocationAddress,
