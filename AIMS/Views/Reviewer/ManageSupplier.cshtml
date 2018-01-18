@@ -125,7 +125,7 @@
                                                     </ui-select>*@
                                                         <div class="radio" ng-init="hasVAT=false">
                                                             <label>
-                                                                <input type="radio" ng-model="hasVAT" name="optionsRadios" id="optionsRadios1" ng-value="true" checked="">
+                                                                <input type="radio" ng-model="hasVAT" name="optionsRadios" id="optionsRadios1" ng-value="true" checked="" ng-disabled="wholdingTax">
                                                                 VATable
                                                             </label>
                                                             <label>
@@ -137,7 +137,8 @@
                                             </tr>
                                             <tr>
                                                 <td><strong>W/ Holding Tax:</strong></td>
-                                                <td><input ng-model="holdingTax" type="number" class="form-control" id="newItem" placeholder="Enter w/holding tax" style="width:155px;height:35px;margin-bottom:5px;"></td>
+                                                <td ng-show="hasVAT==false">
+                                                <td><input ng-model="wholdingTax" type="number" class="form-control" id="newItem" placeholder="Enter w/holding tax" style="width:155px;height:35px;margin-bottom:5px;"></td>
                                             </tr>
                                         </tbody>
                                     </table>
