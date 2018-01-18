@@ -125,7 +125,7 @@
                                                     </ui-select>*@
                                                         <div class="radio" ng-init="hasVAT=false">
                                                             <label>
-                                                                <input type="radio" ng-model="hasVAT" name="optionsRadios" id="optionsRadios1" ng-value="true" checked="">
+                                                                <input type="radio" ng-model="hasVAT" name="optionsRadios" id="optionsRadios1" ng-value="true" checked="" ng-disabled="wholdingTax">
                                                                 VATable
                                                             </label>
                                                             <label>
@@ -137,14 +137,15 @@
                                             </tr>
                                             <tr>
                                                 <td><strong>W/ Holding Tax:</strong></td>
-                                                <td><input ng-model="holdingTax" type="number" class="form-control" id="newItem" placeholder="Enter w/holding tax" style="width:155px;height:35px;margin-bottom:5px;"></td>
+                                                <td ng-show="hasVAT==false">
+                                                <td><input ng-model="wholdingTax" type="number" class="form-control" id="newItem" placeholder="Enter w/holding tax" style="width:155px;height:35px;margin-bottom:5px;"></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     <br />
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-success btn-sm" ng-click="addSupplierProvider(tinNumber,supplierName,address,contactPerson,contactNo,email,hasVAT,holdingTax)"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    <button class="btn btn-success btn-sm" ng-click="addSupplierProvider(tinNumber,supplierName,address,contactPerson,contactNo,email,hasVAT,wholdingTax)"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     <button class="btn btn-danger btn-sm" ng-click="closeSupplierProvider()"><i class="glyphicon glyphicon-remove"></i> Cancel</button>
                                 </div>
                             </div>
@@ -205,7 +206,7 @@
                                             <tr>
                                                 <td><strong>W/holding Tax</strong></td>
                                                 <td>:&nbsp;&nbsp;</td>
-                                                <td>{{supplierInfo.WholdingTax}}</td>
+                                                <td>{{supplierInfo.WholdingTax}}%</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -237,7 +238,7 @@
                                                 <th ng-click="predicate='ItemName'; reverse=!reverse">Item Name</th>
                                                 <th ng-click="predicate='UomDescription'; reverse=!reverse">Unit Of Measurement</th>
                                                 <th ng-click="predicate='UnitPrice'; reverse=!reverse">Unit Price</th>
-                                                <th ng-click="predicate='Options'; reverse=!reverse">Options</th>
+                                               
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -254,9 +255,7 @@
                                                 <td>
                                                     <span ng-bind="supplierItem.RoundedUnitPrice"></span>
                                                 </td>
-                                                <td id="locationOption" align="center">
-                                                    <button ng-click="removeSpecificItems(removerItem)" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i>&nbsp; Delete</button>
-                                                    </td>
+                                              
                                             </tr>
                                             <tr ng-show="(supplierItems | filter:searchTexts).length == 0">
                                                 <td colspan="5" align="center">No results found...</td>
@@ -364,7 +363,7 @@
                                             </tr>
                                             <tr>
                                                 <td><strong>W/ Holding Tax:</strong></td>
-                                                <td><input ng-model="supplierDetails.WithholdingTax" type="number" class="form-control" id="newItem" placeholder="Enter w/holding tax" style="width:155px;height:35px;margin-bottom:5px;"></td>
+                                                <td><input ng-model="supplierDetails.WholdingTax" type="number" class="form-control" id="newItem" placeholder="Enter w/holding tax" style="width:155px;height:35px;margin-bottom:5px;"></td>
                                             </tr>
                                         </tbody>
                                     </table>

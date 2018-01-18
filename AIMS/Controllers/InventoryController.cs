@@ -107,6 +107,7 @@ namespace AIMS.Controllers
                           join requestedQty in computeRequestedQuantity on inv.InventoryItemId equals requestedQty.InventoryItemID into joined2
                           from requestedQtyj in joined2.DefaultIfEmpty()
 
+                          
                           select new Stocks
                           {
                               InventoryItemID = inv.InventoryItemId,

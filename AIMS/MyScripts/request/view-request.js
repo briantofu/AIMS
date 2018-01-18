@@ -27,7 +27,7 @@
     }
     //Reject request
     $scope.declineFunction = function (requestId, reasonForDeclining) {
-        var declineConfirm = confirm("Decline this request?");
+        var declineConfirm = confirm("Are you sure you want to decline the request?");
         if (declineConfirm) {
             var data =
                       {
@@ -50,7 +50,7 @@
     }
     //Accept request
     $scope.acceptFunction = function (requestId) {
-        var acceptConfirm = confirm("Accept this request?");
+        var acceptConfirm = confirm("Are you sure you want to accept the request?");
         if (acceptConfirm) {
             var data =
           {
@@ -61,7 +61,7 @@
                 function successCallback(response) {
                     $scope.initialize();
                     $scope.requestItems = response.data;
-                    toastr.success("You've successfully sent your request. Check you approval.", "Request Sent"),
+                    toastr.success("You've successfully sent your request. Please check you approval.", "Request Sent"),
                     $("#viewModal").modal("hide");
                 },
                 function errorCallback(response) {

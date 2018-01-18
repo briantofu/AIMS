@@ -45,7 +45,7 @@
             }
         }
         if (validation) {
-            var confirmRequest = confirm('Submit your request?');
+            var confirmRequest = confirm('Are you sure to submit your request?');
             if (confirmRequest) {
                 var data = {
                     //RequiredDate: fRequiredDate,
@@ -69,7 +69,7 @@
                 });
             }
         } else {
-            alert("Please fill out all fields.");
+            toastr.warning("Please fill out all fields.", "Data can't be empty");
         }
 
     }
