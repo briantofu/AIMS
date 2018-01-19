@@ -117,27 +117,26 @@
                                             <tr>
                                                 <td><strong>Tax Type:</strong></td>
                                                 <td>
-                                                    @*<ui-select ng-model="ctrl.requestType" theme="selectize" title="Choose type of tax" style="min-width: 140px;">
-                                                        <ui-select-match placeholder="Select type of tax"><span ng-bind="$select.selected.name"></span></ui-select-match>
-                                                        <ui-select-choices repeat="existingRequestType.name as existingRequestType in ctrl.existingRequestTypes | filter: $select.search">
-                                                            <span ng-bind-html="existingRequestType.name| highlight: $select.search"> - </span>
+                                                    <ui-select ng-model="ctrl.hasVAT" theme="selectize" title="Choose tax type" style="min-width: 140px;">
+                                                        <ui-select-match placeholder="Select tax type"><span ng-bind="$select.selected.name"></span></ui-select-match>
+                                                        <ui-select-choices repeat="existingHasVAT.name as existingHasVAT in ctrl.existingHasVATs | filter: $select.search">
+                                                            <span ng-bind-html="existingHasVAT.name| highlight: $select.search"> - </span>
                                                         </ui-select-choices>
-                                                    </ui-select>*@
-                                                        <div class="radio" ng-init="hasVAT=false">
+                                                    </ui-select>
+                                                        @*<div class="radio" ng-init="hasVAT=false">
                                                             <label>
-                                                                <input type="radio" ng-model="hasVAT" name="optionsRadios" id="optionsRadios1" ng-value="true" checked="" ng-disabled="wholdingTax">
+                                                                <input type="radio" ng-model="hasVAT" name="optionsRadios" id="optionsRadios1" ng-value="true" checked="" >
                                                                 VATable
                                                             </label>
                                                             <label>
                                                                 <input type="radio" ng-model="hasVAT" name="optionsRadios" id="optionsRadios2" value="false">
                                                                 Non-VATable
                                                             </label>
-                                                        </div>
+                                                        </div>*@
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td><strong>W/ Holding Tax:</strong></td>
-                                                <td ng-show="hasVAT==false">
                                                 <td><input ng-model="wholdingTax" type="number" class="form-control" id="newItem" placeholder="Enter w/holding tax" style="width:155px;height:35px;margin-bottom:5px;"></td>
                                             </tr>
                                         </tbody>
@@ -145,7 +144,7 @@
                                     <br />
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-success btn-sm" ng-click="addSupplierProvider(tinNumber,supplierName,address,contactPerson,contactNo,email,hasVAT,wholdingTax)"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    <button class="btn btn-success btn-sm" ng-click="addSupplierProvider(tinNumber,supplierName,address,contactPerson,contactNo,email,ctrl.hasVAT,wholdingTax)"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     <button class="btn btn-danger btn-sm" ng-click="closeSupplierProvider()"><i class="glyphicon glyphicon-remove"></i> Cancel</button>
                                 </div>
                             </div>
@@ -192,16 +191,16 @@
                                                 <td>{{supplierInfo.Email}}</td>
                                             </tr>
                                             <tr>
-                                                @*<td><strong>Tax Type</strong></td>
+                                                <td><strong>Tax Type</strong></td>
                                                 <td>:&nbsp;&nbsp;</td>
                                                 <td>{{supplierInfo.Vatable}}</td>
-                                                    @*SUPPLIER DETAILS*@
-                                                <td><strong>Tax Type</strong></td>
+                                                    @*SUPPLIER DETAILS
+                                                @*<td><strong>Tax Type</strong></td>
                                                 <td>:&nbsp;&nbsp;</td>
                                                 <td>
                                                     <span ng-show="supplierInfo.Vatable == true">12% VAT</span>
                                                     <span ng-hide="supplierInfo.Vatable == true">Non-VAT</span>                                                
-                                                </td>
+                                                </td>*@
                                             </tr>
                                             <tr>
                                                 <td><strong>W/holding Tax</strong></td>
@@ -344,13 +343,13 @@
                                             <tr>
                                                 <td><strong>This supplier is VATable?:</strong></td>
                                                 <td>
-                                                    @*<ui-select ng-model="ctrl.requestType" theme="selectize" title="Choose type of tax" style="min-width: 140px;">
-                <ui-select-match placeholder="Select type of tax"><span ng-bind="$select.selected.name"></span></ui-select-match>
-                <ui-select-choices repeat="existingRequestType.name as existingRequestType in ctrl.existingRequestTypes | filter: $select.search">
-                    <span ng-bind-html="existingRequestType.name| highlight: $select.search"> - </span>
-                </ui-select-choices>
-            </ui-select>*@
-                                                    <div class="radio">
+                                                    <ui-select ng-model="supplierDetails.Vatable" theme="selectize" title="Choose type of requisition" style="min-width: 140px;">
+                                                        <ui-select-match placeholder="Select tax Type"><span ng-bind="$select.selected.name"></span></ui-select-match>
+                                                        <ui-select-choices repeat="existingHasVAT.name as existingHasVAT in ctrl.existingHasVATs | filter: $select.search">
+                                                            <span ng-bind-html="existingHasVAT.name| highlight: $select.search"> - </span>
+                                                        </ui-select-choices> 
+                                                    </ui-select>
+                                                    @*<div class="radio">
                                                         <label>
                                                             <input type="radio" ng-model="supplierDetails.Vatable" name="optionsRadios" id="optionsRadios1" ng-value="true" checked="">
                                                             VATable
@@ -360,7 +359,7 @@
                                                             Non-VATable
                                                         </label>
 
-                                                    </div>
+                                                    </div>*@
                                                 </td>
                                             </tr>
                                             <tr>

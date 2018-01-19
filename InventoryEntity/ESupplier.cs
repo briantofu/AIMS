@@ -23,6 +23,7 @@ namespace InventoryEntity
         public string TinNumber { get; set; }
         [StringLength(150)]
         public string WholdingTax { get; set; }
-        public bool Vatable { get; set; }
+        [StringLength(150)]
+        public string Vatable { get; set; }
     }
 }

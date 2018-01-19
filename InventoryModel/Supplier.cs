@@ -14,7 +14,7 @@ namespace AIMS.Models
         public string ContactPerson { get; set; }
         public string ContactNo { get; set; }
         public string Email { get; set; }
-        public bool Vatable { get; set; }
+        public string Vatable { get; set; }
         public string WholdingTax { get; set; } //db column (get, set) in supplier
 
         public List<SupplierInventoryItem> supplierItemList { get; set; }
