@@ -54,9 +54,10 @@
             height: 20px;
         }
 
-        .underlined-text{
-            text-decoration:underline;
-        } /*Underlined Text Added*/
+        .underlined-text {
+            text-decoration: underline;
+        }
+        /*Underlined Text Added*/
         .item-table tr td {
             font-size: 12px !important;
             border-left: 1px;
@@ -101,11 +102,11 @@
         }
 
         hr {
-    border: none;
-    height: 1px;
-    color: #333; 
-    background-color: #333; 
-}
+            border: none;
+            height: 1px;
+            color: #333;
+            background-color: #333;
+        }
         /*table {
             border: 1px solid black;
         }*/
@@ -190,7 +191,7 @@
                             </tr>
                             <tr>
                                 <td></td>
-                                <td >
+                                <td>
                                     Supplier <!--Babaguhin-->
                                 </td>
                             </tr>
@@ -273,7 +274,7 @@
                 double total = 0;
                 double totalWithVat = 0;
                 double totalPurchase = 0;
-                double compwith = 0;
+                double totalwholdingtax = 0;
                 int counter = 0;
             }
             <!--ITEMS-->
@@ -294,24 +295,24 @@
                             <td align="center">@item.UnitOfMeasurement</td>
                             <td align="center">@item.ItemName</td>
                             @{
-                        if (counter == 0)
-                        {
-                            <td align="center">P @item.RoundedUnitPrice </td>
-                                <td align="center">P @item.LineTotal</td>
-                        }
-                        else
-                        {
-                            <td align="center">@item.RoundedUnitPrice</td><!--Replaced alignment-->
-                                <td align="center">@item.LineTotal</td><!--Replaced alignment-->
-                        }
-                        counter++;
+                                if (counter == 0)
+                                {
+                                    <td align="center">P @item.RoundedUnitPrice </td>
+                                    <td align="center">P @item.LineTotal</td>
+                                }
+                                else
+                                {
+                                    <td align="center">@item.RoundedUnitPrice</td><!--Replaced alignment-->
+                                    <td align="center">@item.LineTotal</td><!--Replaced alignment-->
+                                }
+                                counter++;
                             }
                         </tr>
-                    }
-                    total += Double.Parse(item.LineTotal);
-                }
+                                    }
+                                    total += Double.Parse(item.LineTotal);
+                                }
             </table>
-           
+
             <!--COMPUTATION-->
             <!-- Spacing -->
             <br />
@@ -364,7 +365,7 @@
                     </td>
                     <td width="31%">
                         @{
-                            if (Model.Vatable)
+                            if (Model.Vatable == "Vatable") 
                             {
                                 totalWithVat = (total / 1.12) * .12;
                                 totalPurchase = total + totalWithVat;
@@ -374,11 +375,18 @@
                                 totalPurchase = total;
                             }
                         }
+                     
                         <table style="font-size:10px;">
                             <tr>
                                 <td align="center">TOTAL</td>
                                 <td align="right">
                                     P @String.Format("{0:n}", total) <!--babaguhin-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">Tax Type</td>
+                                <td align="right">
+                                    @String.Format("{0:n}", Model.Vatable)<!--babaguhin-->
                                 </td>
                             </tr>
                             <tr>
@@ -388,45 +396,41 @@
                                 </td>
                             </tr>
                             <tr>
-                            
-                            <td align="center">W/HOLDING TAX</td>
-                            
-                            <td align="right">
-                                                                    @String.Format("{0:n}", (compwith = Model.WholdingTax * .1))% <!--babaguhin-->
-                                
-                            </td>
-                            
-                </tr>
-                <tr>
-                    <td align="center">TOTAL PURCHASE</td>
-                    <td align="right">
-                        P @String.Format("{0:n}", totalPurchase)<!--babaguhin-->
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center">DELIVERY CHARGES </td>
-                    <td align="right">
-                        P @String.Format("{0:n}", Model.DeliveryCharge)<!--babaguhin-->
-                    </td>
-                </tr>
-                @*<tr>
-                <td align="center">W/holding Tax </td>
-                <td align="right">
-                    P @String.Format("{0:n}", Model.WholdingTax)
-                </td>
-            </tr>*@
-                @*<tr>
-                <td align="center">OTHERS</td>
-                <td  align="right">100</td>
-            </tr>*@
-                            
-                <tr>
-                    <td align="center"><strong> GRAND TOTAL</strong></td>
-                    <td align="right">
-                        <strong> P @String.Format("{0:n}", (Model.DeliveryCharge + totalPurchase + compwith))</strong><!--babaguhin-->
-                    </td>
-                </tr>
-            </table>
+                                <td align="center">WITH HOLDING TAX </td>
+                                <td align="right">
+
+                                     @String.Format("{0:n}", (totalwholdingtax = Model.WholdingTax * .1 )) % <!--converting percentage to decimal(w/holdingtax)-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">TOTAL PURCHASE</td>
+                                <td align="right">
+                                    P @String.Format("{0:n}", totalPurchase)<!--babaguhin-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">DELIVERY CHARGES </td>
+                                <td align="right">
+                                    P @String.Format("{0:n}", Model.DeliveryCharge)<!--babaguhin-->
+                                </td>
+                            </tr>
+                            @*<tr>
+                                    <td align="center">W/holding Tax </td>
+                                    <td align="right">
+                                        P @String.Format("{0:n}", Model.Delivery)babaguhin
+                                    </td>
+                                </tr>*@
+                            @*<tr>
+                                    <td align="center">OTHERS</td>
+                                    <td  align="right">100</td>
+                                </tr>*@
+                            <tr>
+                                <td align="center"><strong> GRAND TOTAL</strong></td>
+                                <td align="right">
+                                    <strong> P @String.Format("{0:n}", (Model.DeliveryCharge + totalPurchase + totalwholdingtax))</strong><!--babaguhin-->
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
 
@@ -462,7 +466,7 @@
                                     <strong>Administrative Assistant </strong><!--Babaguhin-->
                                 </td>
                             </tr>
-                            
+
                         </table>
                     </td>
                     <td>
@@ -487,7 +491,7 @@
                                     <strong>Country Director</strong><!--Babaguhin-->
                                 </td>
                             </tr>
-                            
+
                         </table>
                     </td>
                 </tr>
@@ -495,8 +499,9 @@
         </div>
     </div>
 
-    <hr/>
-    <table style="font-size:11px;" align="center"> <!--Revamped the footer in PDF with Location and Telephone Number Update-->
+    <hr />
+    <table style="font-size:11px;" align="center">
+        <!--Revamped the footer in PDF with Location and Telephone Number Update-->
         <tr>
             <td align="center">
                 BGC Branch: Ecotower Building Unit 1504, 32nd Street corner 9th avenue Bonifacio Global City, Taguig City Philippines

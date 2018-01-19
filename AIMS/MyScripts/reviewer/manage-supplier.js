@@ -1,6 +1,8 @@
 ﻿app.controller("myCtrl", function ($scope, $http) {
     var vm = this;
     $scope.isItemExist;
+
+    
     
     $scope.initialize = function () {
         $scope.page;
@@ -10,6 +12,11 @@
             UnitPrice: 0
         }];//Initialize default item/
     }
+    vm.existingHasVATs = [
+        { name: 'Vatable' },
+        { name: 'Non-Vatable' },
+        { name: 'Zero Rated'}
+    ];
     $scope.pageChange = function (page) {
         $scope.page = page;
         $scope.loadpage(page.PageNumber, page.PageStatus);

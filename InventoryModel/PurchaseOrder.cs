@@ -14,7 +14,7 @@ namespace AIMS.Models
         public string ContactPerson { get; set; }
         public string ContactNo { get; set; }
         public string SupplierEmail { get; set; }
-        public bool Vatable { get; set; }
+        public string Vatable { get; set; }
         public double WholdingTax { get; set; }
         public double DeliveryCharge { get; set; }
         public string LocationAddress { get; set; }
