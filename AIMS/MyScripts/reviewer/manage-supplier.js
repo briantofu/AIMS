@@ -122,35 +122,38 @@
         if ($scope.tinNumber === undefined || $scope.supplierName === undefined || $scope.address === undefined || $scope.contactPerson === undefined || $scope.contactNo === undefined || $scope.email === undefined) {
             toastr.warning("There must be no empty fileds all are important.", "You must fill out all the fileds");
         } else {
-            var data =
-         {
-             TinNumber: tinNumber,
-             SupplierName: supplierName,
-             Address: address,
-             ContactPerson: contactPerson,
-             ContactNo: contactNo,
-             Email: email,
-             Vatable: hasVAT,
-             WholdingTax: wholdingTax
+            var conf = confirm("Are you sure you want to add this supplier?")
 
-             //requisitionID: $scope.requisition.RequisitionID
-         };
-            $http.post("/Reviewer/AddSupplier", data).then(
-                function successCallback(response) {
-                    $scope.supplier = response.data;
-                    //$scope.requisition.SupplierID = $scope.supplier.SupplierId;
-                    //$scope.hasSupplier = true;
-                    $scope.initialize();
-                    toastr.success("You've successfully created a new supplier.", "Supplier successfully added");
-                    $("#provideSupplierModal").modal("hide");
-                },
-                function errorCallback(response) {
+            if (conf) {
+                var data =
+                    {
+                        TinNumber: tinNumber,
+                        SupplierName: supplierName,
+                        Address: address,
+                        ContactPerson: contactPerson,
+                        ContactNo: contactNo,
+                        Email: email,
+                        Vatable: hasVAT,
+                        WholdingTax: wholdingTax
 
-                }
-            );
+                        //requisitionID: $scope.requisition.RequisitionID
+                    };
+                $http.post("/Reviewer/AddSupplier", data).then(
+                    function successCallback(response) {
+                        $scope.supplier = response.data;
+                        //$scope.requisition.SupplierID = $scope.supplier.SupplierId;
+                        //$scope.hasSupplier = true;
+                        $scope.initialize();
+                        toastr.success("You've successfully created a new supplier.", "Supplier successfully added");
+                        $("#provideSupplierModal").modal("hide");
+                    },
+                    function errorCallback(response) {
+
+                    }
+                );
+            }
         }
     }
-
     //Update SUpplier's Item Unit Price
     $scope.updateUnitPrice = function (updateUnitPriceItems) {
         var addItemConfirm = confirm('Are you sure about the item\'s unit price?');

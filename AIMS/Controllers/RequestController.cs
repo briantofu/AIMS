@@ -21,7 +21,7 @@ namespace AIMS.Controllers
         }
         // GET: Request
 
-        [CustomAuthorize(AllowedRoles = new string[] { "Receptionist" })]
+        [CustomAuthorize(AllowedRoles = new string[] { "DepartmentHead" })]
         public ActionResult ViewRequest()
         {
             return View();

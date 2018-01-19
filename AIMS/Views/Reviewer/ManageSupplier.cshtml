@@ -237,7 +237,7 @@
                                                 <th ng-click="predicate='ItemName'; reverse=!reverse">Item Name</th>
                                                 <th ng-click="predicate='UomDescription'; reverse=!reverse">Unit Of Measurement</th>
                                                 <th ng-click="predicate='UnitPrice'; reverse=!reverse">Unit Price</th>
-                                                <th ng-click="predicate='Options'; reverse=!reverse">Options</th>
+                                               
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -254,9 +254,7 @@
                                                 <td>
                                                     <span ng-bind="supplierItem.RoundedUnitPrice"></span>
                                                 </td>
-                                                <td id="locationOption" align="center">
-                                                    <button ng-click="removeSpecificItems(removerItem)" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i>&nbsp; Delete</button>
-                                                    </td>
+                                              
                                             </tr>
                                             <tr ng-show="(supplierItems | filter:searchTexts).length == 0">
                                                 <td colspan="5" align="center">No results found...</td>
