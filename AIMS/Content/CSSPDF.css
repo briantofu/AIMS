@@ -1,0 +1,97 @@
+﻿body {
+    font-size: 15px !important;
+    font-family: Calibri;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.bordered-table tr td {
+    margin: 5px;
+    padding: 2px;
+    border: 1px solid black;
+    height: 20px;
+}
+
+.bordered-table tr th {
+    font-size: 13px !important;
+    border: 1px solid black;
+    height: 25px;
+}
+
+.table-purchase-order tr td {
+    margin: 5px;
+    padding: 2px;
+    border: 1px solid black;
+    height: 22px;
+}
+
+.no-table-border tr td {
+    margin: 5px;
+    border: 1px solid white;
+}
+
+.item-table tr th {
+    font-size: 13px !important;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    height: 20px;
+}
+
+.underlined-text {
+    text-decoration: underline;
+}
+/*Underlined Text Added*/
+.item-table tr td {
+    font-size: 12px !important;
+    border-left: 1px;
+    border-bottom: 0px;
+    height: 20px;
+}
+
+.item-footer tr td {
+    height: 20px;
+}
+
+.item-table {
+    border: 1px solid black;
+}
+
+.vat-table {
+    border-top: 0px;
+    border-bottom: 1px;
+    border-left: 1px;
+    border-right: 1px;
+}
+
+.information-table {
+    border-top: 0px;
+    border-bottom: 1px;
+    border-left: 1px;
+    border-right: 1px;
+}
+
+    .information-table tr td {
+        border-left: 1px;
+        font-size: 12px !important;
+    }
+
+.tabel-width {
+    width: 100%;
+    height: 1000px;
+}
+
+.font-size {
+    font-size: 12px;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    color: #333;
+    background-color: #333;
+}
+/*table {
+            border: 1px solid black;
+        }*/

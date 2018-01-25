@@ -49,7 +49,7 @@
                                             <span ng-bind="location.LocationAddress"></span>
                                         </td>
                                         <td>
-                                            <button ng-click="showEditLocation(location)" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-pencil"></i>Update </button>
+                                            <button ng-click="showEditLocation(location)" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-pencil"></i> Update </button>
                                         </td>
                                     </tr>
                                     <tr ng-show="(locations | filter:searchText).length == 0">
@@ -128,7 +128,7 @@
                                                 <br />
                                             </div>
                                             <div class="modal-footer">
-                                                <button class="btn btn-primary btn-sm" ng-disabled="!editForm.newLocationName.$valid" ng-click="editLocation(locationCopy.LocationID)"><i class="glyphicon glyphicon-pencil"></i>Update</button>
+                                                <button class="btn btn-primary btn-sm" ng-disabled="!editForm.newLocationName.$valid" ng-click="editLocation(locationCopy.LocationID)"><i class="glyphicon glyphicon-pencil"></i> Update</button>
                                                 <button class="btn btn-danger btn-sm" ng-click="closeEditLocationModal()"><i class="glyphicon glyphicon-remove"></i>Cancel</button>
                                             </div>
                                         </div>
