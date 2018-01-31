@@ -18,6 +18,7 @@ namespace AIMS.Models
         public string ItemName { get; set; }
         public int TotalStock { get; set; }
         public int RequestedQuantity { get; set; }
+        public string NewItemLimit { get; set; }
         public string UnitOfDescription { get; set; }
         public int RemainingQuantity
         {
