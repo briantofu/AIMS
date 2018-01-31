@@ -99,7 +99,7 @@
         //}
 
         var validation = true;
-        validation = (locationID != null && requiredDate != undefined   );
+        validation = (locationID != null && requiredDate != undefined && );
 
         if (!validation) {
 
@@ -109,8 +109,6 @@
                 validation = (item['Quantity'] != 0 && item['InventoryItemID'] != undefined);
             }
         }
-        
-    
         if (validation) {
             var conf = confirm('Are you sure to submit this requsition?');
             if (conf) {
@@ -136,35 +134,36 @@
                         toastr.success("You've successfully sent your requisition.", "Requisition Sent");
                     }
                 },
-
-              
                 function errorCallback(response) {
-
                 });
             }
         } else {
             toastr.warning("Please fill out all fields.","Data can't be empty");
         }
-         
-        
     }
     //add new item in inventory to database
-    $scope.addInventoryItem = function (newItemName, unitOfMeasurementID) {
+    $scope.addInventoryItem = function (newItemName, unitOfMeasurementID, newItemCode, newItemLimit) {
         var addItemConfirm = confirm('Are you sure to add this new item?');
         if (addItemConfirm) {
             var data = {
                 newItemName: newItemName,
-                unitOfMeasurementID: (unitOfMeasurementID == null ? 0 : unitOfMeasurementID)
+                unitOfMeasurementID: (unitOfMeasurementID == null ? 0 : unitOfMeasurementID),
+                newItemCode: newItemCode,
+                newItemLimit: newItemLimit
             };
             $http.post('/Requisition/AddNewItem', data)
                 .then(
             function successCallback(response) {
                 if (response.data == "ItemExist") {
                     $scope.newItemName = '';
+                    $scope.newItemCode = '';
+                    $scope.newItemLimit = '';
                     toastr.warning("There must be no the same item it must be unique.", "Item is already Exists");
                     //$scope.ctrl.forNewItem = [];
                 } else {
                     $scope.newItemName = '';
+                    $scope.newItemCode = '';
+                    $scope.newItemLimit = '';
                     $scope.initialize();
                     $("#addItemModal").modal("hide");
                     toastr.success("You've successfully added a new item/s in the inventory", "New item created");

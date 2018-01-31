@@ -236,6 +236,7 @@ namespace AIMS.Controllers
                                   {
                                       InventoryItemID = invItem.InventoryItemId,
                                       ItemName = invItem.ItemName,
+                                      ItemLimit = invItem.ItemLimit,
                                       UnitOfMeasurementID = uom.UnitOfMeasurementId,
                                       UnitDescription = uom.Description
                                   };

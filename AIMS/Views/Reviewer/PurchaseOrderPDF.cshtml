@@ -207,6 +207,12 @@
                                     <span style="color:blue;text-decoration: underline;">@Model.SupplierEmail </span><!--babaguhin -->
                                 </td>
                             </tr>
+                            <tr>
+                                <td><strong>Tax Type:</strong></td>
+                                <td>
+                                  @Model.Vatable<!--babaguhin -->
+                                </td>
+                            </tr>
                         </table>
                     </td>
                     <td width="40%">
@@ -312,7 +318,6 @@
                                     total += Double.Parse(item.LineTotal);
                                 }
             </table>
-
             <!--COMPUTATION-->
             <!-- Spacing -->
             <br />
@@ -365,7 +370,7 @@
                     </td>
                     <td width="31%">
                         @{
-                            if (Model.Vatable == "Vatable") 
+                            if (Model.Vatable == "Vatable")
                             {
                                 totalWithVat = (total / 1.12) * .12;
                                 totalPurchase = total + totalWithVat;
@@ -375,7 +380,7 @@
                                 totalPurchase = total;
                             }
                         }
-                     
+
                         <table style="font-size:10px;">
                             <tr>
                                 <td align="center">TOTAL</td>
@@ -383,12 +388,12 @@
                                     P @String.Format("{0:n}", total) <!--babaguhin-->
                                 </td>
                             </tr>
-                            <tr>
+                            @*<tr>
                                 <td align="center">Tax Type</td>
                                 <td align="right">
-                                    @String.Format("{0:n}", Model.Vatable)<!--babaguhin-->
+                                    @String.Format("{0:n}", Model.Vatable)
                                 </td>
-                            </tr>
+                            </tr>*@
                             <tr>
                                 <td align="center">12% VAT (inclusive)</td>
                                 <td align="right">
@@ -399,7 +404,7 @@
                                 <td align="center">WITH HOLDING TAX </td>
                                 <td align="right">
 
-                                     @String.Format("{0:n}", (totalwholdingtax = Model.WholdingTax * .1 )) % <!--converting percentage to decimal(w/holdingtax)-->
+                                    @String.Format("{0:n}", (totalwholdingtax = Model.WholdingTax * .1)) % <!--converting percentage to decimal(w/holdingtax)-->
                                 </td>
                             </tr>
                             <tr>
@@ -415,15 +420,15 @@
                                 </td>
                             </tr>
                             @*<tr>
-                                    <td align="center">W/holding Tax </td>
-                                    <td align="right">
-                                        P @String.Format("{0:n}", Model.Delivery)babaguhin
-                                    </td>
-                                </tr>*@
+                                <td align="center">W/holding Tax </td>
+                                <td align="right">
+                                    P @String.Format("{0:n}", Model.Delivery)babaguhin
+                                </td>
+                            </tr>*@
                             @*<tr>
-                                    <td align="center">OTHERS</td>
-                                    <td  align="right">100</td>
-                                </tr>*@
+                                <td align="center">OTHERS</td>
+                                <td  align="right">100</td>
+                            </tr>*@
                             <tr>
                                 <td align="center"><strong> GRAND TOTAL</strong></td>
                                 <td align="right">
@@ -436,6 +441,7 @@
 
             </table>
         </div>
+
         <br />
         <div>
             <br />
