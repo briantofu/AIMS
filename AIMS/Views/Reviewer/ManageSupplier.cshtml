@@ -171,7 +171,7 @@
                                                 <td>{{supplierInfo.TinNumber}}</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>Addres:</strong></td>
+                                                <td><strong>Address:</strong></td>
                                                 <td>:&nbsp;&nbsp;</td>
                                                 <td>{{supplierInfo.Address}}</td>
                                             </tr>
@@ -194,13 +194,13 @@
                                                 <td><strong>Tax Type</strong></td>
                                                 <td>:&nbsp;&nbsp;</td>
                                                 <td>{{supplierInfo.Vatable}}</td>
-                                                    @*SUPPLIER DETAILS
-                                                @*<td><strong>Tax Type</strong></td>
-                                                <td>:&nbsp;&nbsp;</td>
-                                                <td>
-                                                    <span ng-show="supplierInfo.Vatable == true">12% VAT</span>
-                                                    <span ng-hide="supplierInfo.Vatable == true">Non-VAT</span>                                                
-                                                </td>*@
+                                                @*SUPPLIER DETAILS
+                    @*<td><strong>Tax Type</strong></td>
+                    <td>:&nbsp;&nbsp;</td>
+                    <td>
+                        <span ng-show="supplierInfo.Vatable == true">12% VAT</span>
+                        <span ng-hide="supplierInfo.Vatable == true">Non-VAT</span>
+                    </td>*@
                                             </tr>
                                             <tr>
                                                 <td><strong>W/holding Tax</strong></td>
@@ -237,7 +237,7 @@
                                                 <th ng-click="predicate='ItemName'; reverse=!reverse">Item Name</th>
                                                 <th ng-click="predicate='UomDescription'; reverse=!reverse">Unit Of Measurement</th>
                                                 <th ng-click="predicate='UnitPrice'; reverse=!reverse">Unit Price</th>
-                                               
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -254,7 +254,7 @@
                                                 <td>
                                                     <span ng-bind="supplierItem.RoundedUnitPrice"></span>
                                                 </td>
-                                              
+
                                             </tr>
                                             <tr ng-show="(supplierItems | filter:searchTexts).length == 0">
                                                 <td colspan="5" align="center">No results found...</td>
@@ -262,17 +262,19 @@
                                         </tbody>
                                     </table>
                                     <br />
-                                        @Html.Partial("~/Views/Shared/_Pagination.cshtml")
-                                    <br/>
-                                    <br/>
-                                    <br/>
+                                    @Html.Partial("~/Views/Shared/_Pagination.cshtml")
+                                    <br />
+                                    <br />
+                                    <br />
                                     <div class="modal-footer">
-                                        <button class="btn btn-danger btn-sm" ng-click="closeSupplierInformation(supplier)"><i class="glyphicon glyphicon-remove"></i> Close</button>
-                                       
-                                        <br />
-                                    </div>
 
+
+                                        <br />
+
+                                    </div>
+                                    <button class="btn btn-danger btn-sm" ng-click="closeSupplierInformation(supplier)"><i class="glyphicon glyphicon-remove"></i> Close</button>
                                 </div>
+                                
                             </div>
 
                         </div>
@@ -339,7 +341,7 @@
                                                 <td><input ng-model="supplierDetails.Email" type="email" class="form-control" id="newItem" placeholder="Enter email" style="width:300px;height:35px;margin-bottom:5px;"></td>
                                             </tr>
                                             <tr>
-                                                <td><strong>This supplier is VATable?:</strong></td>
+                                                <td><strong>Type of Tax:</strong></td>
                                                 <td>
                                                     <ui-select ng-model="supplierDetails.Vatable" theme="selectize" title="Choose type of requisition" style="min-width: 140px;">
                                                         <ui-select-match placeholder="Select tax Type"><span ng-bind="$select.selected.name"></span></ui-select-match>
