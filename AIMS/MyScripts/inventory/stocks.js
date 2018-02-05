@@ -26,6 +26,7 @@
         $http.post('/Inventory/LoadPages', data).then(
         function successCallback(response) {
             $scope.pages = response.data;
+            
             if (!$scope.page) {
                 $scope.page = $scope.pages[Object.keys($scope.pages)[0]];
             }

@@ -311,6 +311,15 @@
                                     }
                                     total += Double.Parse(item.LineTotal);
                                 }
+
+            </table>
+            <table "font-size bordered-table">
+                <tr>
+                    <td align="center">12% VAT (inclusive)</td>
+                    <td align="right">
+                        P @String.Format("{0:n}", totalWithVat)<!--babaguhin-->
+                    </td>
+                </tr>
             </table>
 
             <!--COMPUTATION-->
@@ -386,12 +395,7 @@
                                 </td>
                             </tr>
                             
-                            <tr>
-                                <td align="center">12% VAT (inclusive)</td>
-                                <td align="right">
-                                    P @String.Format("{0:n}", totalWithVat)<!--babaguhin-->
-                                </td>
-                            </tr>
+                            
                             <tr>
                                 <td align="center">WITH HOLDING TAX </td>
                                 <td align="right">

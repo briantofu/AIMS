@@ -1277,6 +1277,7 @@ namespace AIMS.Controllers
                     tblSupplier.SupplierName = supplier.SupplierName;
                     tblSupplier.Address = supplier.Address;
                     tblSupplier.ContactPerson = supplier.ContactPerson;
+                    tblSupplier.ContactNo = supplier.ContactNo;
                     tblSupplier.Email = supplier.Email;
                     tblSupplier.Vatable = supplier.Vatable;
                     tblSupplier.WholdingTax = supplier.WholdingTax;
