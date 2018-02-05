@@ -242,13 +242,14 @@
         $("#addItemModal").modal("hide");
     }
     //add new item in inventory to database
-    $scope.addInventoryItem = function (newItemName, unitOfMeasurementID, newItemCode) {
+    $scope.addInventoryItem = function (newItemName, unitOfMeasurementID, newItemCode, newItemLimit) {
         var addItemConfirm = confirm('Are you sure to add this new item?');
         if (addItemConfirm) {
             var data = {
                 newItemName: newItemName,
                 newItemCode: newItemCode,
-                unitOfMeasurementID: (unitOfMeasurementID === null ? 0 : unitOfMeasurementID)
+                unitOfMeasurementID: (unitOfMeasurementID === null ? 0 : unitOfMeasurementID),
+                newItemLimit: newItemLimit
             };
             $http.post('/Requisition/AddNewItem', data)
                 .then(
@@ -256,11 +257,13 @@
                 if (response.data === "ItemExist") {
                     $scope.newItemName = '';
                     $scope.newItemCode = '';
+                    $scope.newItemLimit = '';
                     toastr.warning("There must be no the same item it must be unique.", "Item is already Exists");
                     //$scope.ctrl.forNewItem = [];
                 } else {
                     $scope.newItemName = '';
                     $scope.newItemCode = '';
+                    $scope.newItemLimit = '';
                     $scope.initialize();
                     $("#addItemModal").modal("hide");
 
