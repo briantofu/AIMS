@@ -137,7 +137,102 @@ namespace AIMS.Controllers
                 return Json(ex.ToString());
             }
         }
-        
+
+        public JsonResult AllAcceptDecline()
+        {
+            try
+            {
+                //List<Account> account = new List<Account>();//account = Account model
+                List<Request> requests = new List<Request>();//requests = Requests model
+
+                using (var context = new InventoryDbContext())//Use DbInventory
+                {
+                    //SELECT ALL REQUEST FROM DbInventory
+                    requests = (from req in context.Request
+                                join loc in context.Location
+                                  on req.LocationId equals loc.LocationId
+                                select new Request
+                                {
+                                    RequestID = req.RequestId,
+                                    SpecialInstruction = req.SpecialInstruction,
+                                    RequisitionDate = req.RequestDate,
+                                    RequiredDate = req.RequiredDate,
+                                    RequisitionType = req.RequisitionType,
+                                    Status = req.Status,
+                                    LocationID = loc.LocationId,
+                                    LocationName = loc.LocationName,
+                                    UserID = req.UserId
+                                }).ToList();
+
+                }
+                var users = _iFUser.Read();
+
+                //using (var context = new AccountDbContext())//Use dbAccount
+                //{
+                //    var userIDs = requests.Select(b => b.UserID);
+
+                //    //SELECT ALL USER FROM DbAccount
+                //    account = (from user in context.Users
+                //               where userIDs.Contains(user.UserId)
+                //               select new Account
+                //               {
+                //                   UserID = user.UserId,
+                //                   Firstname = user.Firstname,
+                //                   Middlename = user.Middlename,
+                //                   Lastname = user.Lastname,
+                //                   Department = user.Department,
+                //                   Contact = user.Contact,
+                //                   Email = user.Email,
+                //               }).ToList();
+                //}
+
+                //    //SELECT ALL USER FROM DbAccount
+                //    account = (from user in context.Users
+                //               where userIDs.Contains(user.UserId)
+                //               select new Account
+                //               {
+                //                   UserID = user.UserId,
+                //                   Firstname = user.Firstname,
+                //                   Middlename = user.Middlename,
+                //                   Lastname = user.Lastname,
+                //                   Department = user.Department,
+                //                   Contact = user.Contact,
+                //                   Email = user.Email,
+                //               }).ToList();
+                //}
+
+                //JOIN TABLE USER AND TABLE REQUEST
+                requests = (from req in requests
+                            join acc in users
+                              on req.UserID equals acc.UserId
+                            where req.Status != "Pending"
+                            select new Request
+                            {
+                                RequestID = req.RequestID,
+
+                                Firstname = acc.Username,
+                                //Middlename = acc.Middlename,
+                                //Lastname = acc.Lastname,
+                                //Department = acc.Department,
+                                //Contact = acc.Contact,
+                                //Email = acc.Email,
+
+                                SpecialInstruction = req.SpecialInstruction,
+                                RequisitionDateString = req.RequisitionDate.ToString(),
+                                RequiredDateString = req.RequiredDate.ToString(),
+                                RequisitionType = req.RequisitionType,
+                                Status = req.Status,
+
+                                LocationID = req.LocationID,
+                                LocationName = req.LocationName
+                            }).ToList();
+                return Json(requests);//Return as json
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.ToString());
+            }
+        }
         //GET ALL REQUEST
         public JsonResult AllRequest()
         {
@@ -236,6 +331,7 @@ namespace AIMS.Controllers
                                   {
                                       InventoryItemID = invItem.InventoryItemId,
                                       ItemName = invItem.ItemName,
+                                      ItemLimit = invItem.ItemLimit,
                                       UnitOfMeasurementID = uom.UnitOfMeasurementId,
                                       UnitDescription = uom.Description
                                   };

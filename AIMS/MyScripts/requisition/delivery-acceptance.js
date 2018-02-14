@@ -178,7 +178,7 @@
                         if (!isValid) break;
                     }
                     if (!isValid) {
-                     
+                        toastr.warning("The quantity that you've entered was greater or less than the Item Quantity.", "Cannot Delivered");
                     }
 
                     if (isValid)

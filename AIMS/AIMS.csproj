@@ -143,6 +143,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\CSSPDF.css" />
     <Content Include="Content\Images\AIMSLOGO.png" />
     <Content Include="Content\Images\AndersonLogo.png" />
     <Content Include="Content\Images\footer.jpg" />
@@ -352,6 +353,7 @@
     <Content Include="MyScripts\filter-actions\user-roles.js" />
     <Content Include="MyScripts\others\date-functions.js" />
     <Content Include="MyScripts\request\current-request-status.js" />
+    <Content Include="MyScripts\request\current-request.js" />
     <Content Include="MyScripts\requisition\all-requisition.js" />
     <Content Include="MyScripts\requisition\partial-delivery.js" />
     <Content Include="MyScripts\requisition\po.js" />

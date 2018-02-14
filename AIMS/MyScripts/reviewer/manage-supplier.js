@@ -1,6 +1,8 @@
 ﻿app.controller("myCtrl", function ($scope, $http) {
     var vm = this;
     $scope.isItemExist;
+
+    
     
     $scope.initialize = function () {
         $scope.page;
@@ -10,6 +12,11 @@
             UnitPrice: 0
         }];//Initialize default item/
     }
+    vm.existingHasVATs = [
+        { name: 'Vatable' },
+        { name: 'Non-Vatable' },
+        { name: 'Zero Rated'}
+    ];
     $scope.pageChange = function (page) {
         $scope.page = page;
         $scope.loadpage(page.PageNumber, page.PageStatus);
@@ -235,13 +242,14 @@
         $("#addItemModal").modal("hide");
     }
     //add new item in inventory to database
-    $scope.addInventoryItem = function (newItemName, unitOfMeasurementID, newItemCode) {
+    $scope.addInventoryItem = function (newItemName, unitOfMeasurementID, newItemCode, newItemLimit) {
         var addItemConfirm = confirm('Are you sure to add this new item?');
         if (addItemConfirm) {
             var data = {
                 newItemName: newItemName,
                 newItemCode: newItemCode,
-                unitOfMeasurementID: (unitOfMeasurementID === null ? 0 : unitOfMeasurementID)
+                unitOfMeasurementID: (unitOfMeasurementID === null ? 0 : unitOfMeasurementID),
+                newItemLimit: newItemLimit
             };
             $http.post('/Requisition/AddNewItem', data)
                 .then(
@@ -249,11 +257,13 @@
                 if (response.data === "ItemExist") {
                     $scope.newItemName = '';
                     $scope.newItemCode = '';
+                    $scope.newItemLimit = '';
                     toastr.warning("There must be no the same item it must be unique.", "Item is already Exists");
                     //$scope.ctrl.forNewItem = [];
                 } else {
                     $scope.newItemName = '';
                     $scope.newItemCode = '';
+                    $scope.newItemLimit = '';
                     $scope.initialize();
                     $("#addItemModal").modal("hide");
 

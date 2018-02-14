@@ -16,7 +16,7 @@
         </div>
         <!-- Quantity Monitoring -->
         <div>
-            <p><b>Label</b></p>
+            <p><b>LEGEND</b></p>
             <p><span class="badge bg-blue">&nbsp</span><small><small>&nbsp;&nbsp; Items whose quantity are more than 10 </small></small></p>
             <p><span class="badge bg-red">&nbsp</span><small><small>&nbsp;&nbsp; Items whose quantity are less than 10 </small></small></p>
         </div>
@@ -40,9 +40,10 @@
                             <table class="table table-bordered table-hover" id="tableid">
                                 <thead class="t">
                                     <tr>
-                                        <th ng-click="predicate='InventoryItemID'; reverse=!reverse">Beginning Balance ID<br><br></th>
-                                        <th ng-click="predicate='InventoryItemIDn'; reverse=!reverse">Inventory Item Id<br><br></th>
-                                        <th ng-click="predicate='RemainingQuantity'; reverse=!reverse">Quantity<br><br></th>
+                                        <th ng-click="predicate='InventoryItemID'; reverse=!reverse">Beginning Balance ID</th>
+                                        <th ng-click="predicate='InventoryItemIDn'; reverse=!reverse">Inventory Item Id</th>
+                                        <th ng-click="predicate='RemainingQuantity'; reverse=!reverse">Quantity</th>
+                                        <th ng-click="predicate= 'UpdatedDate'; reverse=!reverse">Inventory Updated Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
