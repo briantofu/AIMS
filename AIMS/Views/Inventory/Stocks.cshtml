@@ -55,7 +55,7 @@
                                                 <th ng-click="predicate='ItemName'; reverse=!reverse">Item Name<br><br></th>
                                                 <th ng-click="predicate='ItemLimit'; reverse=!reverse">Item Limit<br><br></th>
                                                 <th ng-click="predicate='TotalStock'; reverse=!reverse">Total Purchased<br>Quantity</th>
-                                                <th ng-click="predicate='InventoryItemID'; reverse=!reverse">Beginning Balance ID<br><br></th>
+                                                @*<th ng-click="predicate='InventoryItemID'; reverse=!reverse">Beginning Balance ID<br><br></th>*@
                                                 <th ng-click="predicate='RequestedQuantity'; reverse=!reverse">Total Requested<br>Quantity</th>
                                                 <th ng-click="predicate='RemainingQuantity'; reverse=!reverse">Remaining Quantity<br><br></th>
                                             </tr>
@@ -74,15 +74,15 @@
                                                 <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
                                                     <span ng-bind="item.ItemName"></span>
                                                 </td>
-                                                <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
+                                                <td @*ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'*@>
                                                     <span ng-bind="item.ItemLimit"></span>
                                                 </td>
                                                 <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
                                                     <span ng-bind="item.TotalStock"></span>
                                                 </td>
-                                                <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
+                                                @*<td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
                                                     <span ng-bind="item.InventoryItemID"></span>
-                                                </td>
+                                                </td>*@
                                                 <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
                                                     <span ng-bind="item.RequestedQuantity"></span>
                                                 </td>

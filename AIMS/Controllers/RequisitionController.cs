@@ -73,9 +73,8 @@ namespace AIMS.Controllers
                                          {
                                              InventoryItemID = invItem.InventoryItemId,
                                              ItemName = invItem.ItemName,
-                                             NewItemLimit = invItem.ItemLimit,
-                                             ItemCode = invItem.ItemCode,
                                              ItemLimit = invItem.ItemLimit,
+                                             ItemCode = invItem.ItemCode,
                                              UnitOfMeasurementID = uom.UnitOfMeasurementId,
                                              UnitDescription = uom.Description
                                          };
@@ -86,6 +85,7 @@ namespace AIMS.Controllers
                             InventoryItemID = allItem.InventoryItemID,
                             ItemName = allItem.ItemName,
                             ItemCode = allItem.ItemCode,
+                            ItemLimit = allItem.ItemLimit,
                             UnitOfMeasurement = new UnitOfMeasurement
                             {
                                 UnitOfMeasurementID = allItem.UnitOfMeasurementID,
@@ -149,6 +149,7 @@ namespace AIMS.Controllers
                                                 InventoryItemID = invItem.InventoryItemId,
                                                 ItemName = invItem.ItemName,
                                                 ItemCode = invItem.ItemCode,
+                                                ItemLimit = invItem.ItemLimit,
                                                 UnitOfMeasurementID = uom.UnitOfMeasurementId,
                                                 UnitDescription = uom.Description,
                                                 SupplierID = suppInvItem.SupplierId
@@ -160,6 +161,7 @@ namespace AIMS.Controllers
                             InventoryItemID = dbs.InventoryItemID,
                             ItemName = dbs.ItemName,
                             ItemCode = dbs.ItemCode,
+                            ItemLimit = dbs.ItemLimit,
                             UnitOfMeasurement = new UnitOfMeasurement
                             {
                                 UnitOfMeasurementID = dbs.UnitOfMeasurementID,

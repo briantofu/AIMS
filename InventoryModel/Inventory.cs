@@ -18,8 +18,9 @@ namespace AIMS.Models
         public string ItemName { get; set; }
         public int TotalStock { get; set; }
         public int RequestedQuantity { get; set; }
-        public string NewItemLimit { get; set; }
+        public string ItemLimit { get; set; }
         public string UnitOfDescription { get; set; }
+        public DateTime? LastRequestedDate { get; set; }        public string LastRequestedDateString => (LastRequestedDate.Value == default(DateTime)) ?            "No Transaction yet" :LastRequestedDate.Value.ToString("MMMM dd, yyyy");
         public int RemainingQuantity
         {
             get

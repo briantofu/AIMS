@@ -142,12 +142,8 @@
 
         if (isValid) {
             var conf = confirm('Are you sure to submit this requsition?');
-
             if (conf) {
                 if ($scope.deliveryType == 'Delivered') {
-
-
-
                     var data = {
                         RequisitionID: requisitionId,
                         Status: "Delivered",
@@ -171,24 +167,21 @@
                     );
                 }
             }
-        }
-                if (isValid) {
-                    for (var i = 0; i < $scope.requisitionItems.length; i++) {
-                        isValid = $scope.requisitionItems[i].Quantity >= $scope.requisitionItems[i].DeliveredQuantity;
-                        if (!isValid) break;
-                    }
-                    if (!isValid) {
-                        toastr.warning("The quantity that you've entered was greater or less than the Item Quantity.", "Cannot Delivered");
-                    }
+        //}
+        //        if (isValid) {
+        //            for (var i = 0; i < $scope.requisitionItems.length; i++) {
+        //                isValid = $scope.requisitionItems[i].Quantity >= $scope.requisitionItems[i].DeliveredQuantity;
+        //                if (!isValid) break;
+        //            }
+        //            if (!isValid) {
+        //                toastr.warning("The quantity that you've entered was greater or less than the Item Quantity.", "Cannot Delivered");
+        //            }
 
                     if (isValid)
                     {
                     var acceptconf = confirm('Are you sure to submit this requsition?');
                     if (acceptconf) {
-                    if ($scope.deliveryType == 'PartialDelivery') {
-
-                        
-                      
+                    if ($scope.deliveryType == 'PartialDelivery') {                 
                             var data = {
                                 requisitionID: requisitionId,
                                 Status: "Partial Delivery",

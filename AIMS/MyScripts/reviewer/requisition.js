@@ -110,14 +110,15 @@
 
     //Accept requisition
     $scope.acceptFunction = function (requisitionID, requisitionItems) {
+
         var declineConfirm = confirm('Are you sure to accept this requisition?');
         if (declineConfirm) {
             var data =
-        {
-            requisitionID: requisitionID,
-            requisitionItems: requisitionItems,
-            Status: "For Purchasing"
-        };
+                {
+                    requisitionID: requisitionID,
+                    requisitionItems: requisitionItems,
+                    Status: "For Purchasing"
+                };
             $http.post("/Reviewer/AcceptRequisition", data).then(
                 function successCallback(response) {
                     $scope.initialize();
@@ -129,7 +130,7 @@
                 }
             );
         }
-    
+
     }
 
     //Display supplier info modal

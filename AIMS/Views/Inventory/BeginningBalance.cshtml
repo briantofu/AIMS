@@ -57,6 +57,9 @@
                                         <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
                                             <span ng-bind="item.RemainingQuantity"></span>
                                         </td>
+                                        <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
+                                            <span ng-bind="item.LastRequestedDateString"></span>
+                                        </td>
                                     </tr>
                                     <tr ng-show="(itemStocks | filter:searchText).length == 0">
                                         <td colspan="6" id="locationAction" align="center">No results found...</td>
