@@ -16,7 +16,6 @@
             {
                 requestID: request.RequestID
             };
-
         $http.post("/Request/RequestItem", data).then(
             function successCallback(response) {
                 $scope.requestItems = response.data;
