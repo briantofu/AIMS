@@ -58,7 +58,7 @@
                                               
                                                 <th ng-click="predicate='RequestedQuantity'; reverse=!reverse">Total Requested<br>Quantity</th>
                                                 <th ng-click="predicate='RemainingQuantity'; reverse=!reverse">Remaining Quantity<br><br></th>
-
+                                                @*<th ng-click="predicate='RequisitionDate'; reverse=!reverse">Date of Last Transaction<br><br></th>*@
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -87,9 +87,9 @@
                                                 <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
                                                     <span ng-bind="item.RemainingQuantity"></span>
                                                 </td>
-                                                @*<td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
+                                                <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
                                                     <span ng-bind="item.RequisitionDate"></span>
-                                                </td>*@
+                                                </td>
                                             </tr>
                                             <tr ng-show="(itemStocks | filter:searchText).length == 0">
                                                 <td colspan="7" id="locationAction" align="center">No results found...</td>
