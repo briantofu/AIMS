@@ -48,7 +48,7 @@
                                         <th ng-click="predicate='RemainingQuantity'; reverse=!reverse">Ending Balance</th>
                                         <th ng-click="predicate= 'UpdatedDate'; reverse=!reverse">Inventory Updated Date</th>
                                     </tr>
-                                </thead>
+                                </thead> 
                                 <tbody>
                                     <tr ng-repeat="item in itemStocks | orderBy:predicate:reverse | filter: searchText">
                                         <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
