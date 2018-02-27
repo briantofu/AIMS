@@ -73,7 +73,6 @@ namespace AIMS.Controllers
                                          {
                                              InventoryItemID = invItem.InventoryItemId,
                                              ItemName = invItem.ItemName,
-                                             ItemLimit = invItem.ItemLimit,
                                              ItemCode = invItem.ItemCode,
                                              UnitOfMeasurementID = uom.UnitOfMeasurementId,
                                              UnitDescription = uom.Description
@@ -85,7 +84,6 @@ namespace AIMS.Controllers
                             InventoryItemID = allItem.InventoryItemID,
                             ItemName = allItem.ItemName,
                             ItemCode = allItem.ItemCode,
-                            ItemLimit = allItem.ItemLimit,
                             UnitOfMeasurement = new UnitOfMeasurement
                             {
                                 UnitOfMeasurementID = allItem.UnitOfMeasurementID,
@@ -149,7 +147,6 @@ namespace AIMS.Controllers
                                                 InventoryItemID = invItem.InventoryItemId,
                                                 ItemName = invItem.ItemName,
                                                 ItemCode = invItem.ItemCode,
-                                                ItemLimit = invItem.ItemLimit,
                                                 UnitOfMeasurementID = uom.UnitOfMeasurementId,
                                                 UnitDescription = uom.Description,
                                                 SupplierID = suppInvItem.SupplierId
@@ -161,7 +158,6 @@ namespace AIMS.Controllers
                             InventoryItemID = dbs.InventoryItemID,
                             ItemName = dbs.ItemName,
                             ItemCode = dbs.ItemCode,
-                            ItemLimit = dbs.ItemLimit,
                             UnitOfMeasurement = new UnitOfMeasurement
                             {
                                 UnitOfMeasurementID = dbs.UnitOfMeasurementID,
@@ -940,14 +936,14 @@ namespace AIMS.Controllers
 
         //----------------------------------- ADD NEW ITEM ---------------------------------------
         [HttpPost]
-        public JsonResult AddNewItem(string newItemName, int unitOfMeasurementID, string newItemCode, string newItemLimit)//, int supplierID  //Add new item
+        public JsonResult AddNewItem(string newItemName, int unitOfMeasurementID, string newItemCode)//, int supplierID  //Add new item
         {
             try
             {
 
                 using (var context = new InventoryDbContext())
                 {
-                    var tblInventoryItem = context.InventoryItem.FirstOrDefault(a => (a.ItemName.ToLower() == newItemName.ToLower() && a.ItemCode.ToLower() == newItemCode.ToLower() && a.UnitOfMeasurementId == unitOfMeasurementID && a.ItemLimit.ToLower() == newItemLimit.ToLower()));
+                    var tblInventoryItem = context.InventoryItem.FirstOrDefault(a => (a.ItemName.ToLower() == newItemName.ToLower() && a.ItemCode.ToLower() == newItemCode.ToLower() && a.UnitOfMeasurementId == unitOfMeasurementID));
                     if (tblInventoryItem == null)
                     {
                         //string name;
@@ -964,7 +960,6 @@ namespace AIMS.Controllers
                             ItemName = newItemName,
                             UnitOfMeasurementId = unitOfMeasurementID,
                             ItemCode = newItemCode,
-                            ItemLimit = newItemLimit
                         };
                         context.InventoryItem.Add(eInventoryItem);
                         context.SaveChanges();

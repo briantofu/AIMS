@@ -15,7 +15,6 @@ namespace AIMS.Models
         public string  Description { get; set; }
         public string ItemCode { get; set; }
         public string NewItemCode { get; set; }
-        public string ItemLimit { get; set; }
 
         public int LocationID { get; set; }
         public string Name { get; set; }

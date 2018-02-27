@@ -49,6 +49,7 @@
         }
 
     }
+    
     //Accept request
     $scope.acceptFunction = function (requestId) {
         var acceptConfirm = confirm("Are you sure you want to accept the request?");

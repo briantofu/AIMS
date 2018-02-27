@@ -21,8 +21,7 @@ namespace InventoryEntity
         [StringLength(150)]
         public string ItemCode { get; set; }
 
-        [StringLength(150)]
-        public string ItemLimit { get; set; }
+
     }
 }
 

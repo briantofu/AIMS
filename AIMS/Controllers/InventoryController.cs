@@ -113,7 +113,6 @@ namespace AIMS.Controllers
                           {
                               InventoryItemID = inv.InventoryItemId,
                               ItemName = inv.ItemName,
-                              ItemLimit = inv.ItemLimit,
                               UnitOfDescription = uom.Description,
                               ItemCode = inv.ItemCode,
                               TotalStock = remainingQtyj == null ? 0 : remainingQtyj.RemainingQuantity,
