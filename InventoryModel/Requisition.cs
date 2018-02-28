@@ -19,6 +19,7 @@ namespace AIMS.Models
         public string RequisitionType { get; set; }
         public string SpecialInstruction { get; set; }
         public string Status {get; set; }
+  
         public string Reason { get; set; }
         public int LocationID { get; set; }
         public double DeliveryCharges { get; set; }

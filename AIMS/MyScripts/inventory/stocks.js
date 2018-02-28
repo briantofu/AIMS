@@ -35,4 +35,9 @@
         });
     }
 
+    $scope.validation = function (inventoryItemId, itemName, totalStock, requestedQuantity, newItemLimit) {
+        var isValid;
+
+
+    }
 });

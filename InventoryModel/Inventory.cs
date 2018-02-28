@@ -29,7 +29,7 @@ namespace AIMS.Models
             LastRequestedDate.Value.ToString("MMMM dd, yyyy");
 
         public string LastRequestedName { get; set; }
-        [Range(0, Int32.MaxValue, ErrorMessage = "Value should be greater than or equal to 1")]
+      
         public int RemainingQuantity
         {
             get

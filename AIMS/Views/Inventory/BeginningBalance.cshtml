@@ -43,7 +43,7 @@
                                         <th ng-click="predicate='InventoryItemID'; reverse=!reverse">Beginning Balance ID</th>
                                         <th ng-click="predicate='InventoryItemIDn'; reverse=!reverse">Inventory Item Id</th>
                                         <th ng-click="predicate='RemainingQuantity'; reverse=!reverse">Quantity</th>
-                                        <th ng-click="predicate= 'UpdatedDate'; reverse=!reverse">Inventory Updated Date</th>
+                                        <th ng-click="predicate='RequisitionDate'; reverse=!reverse">Date of Last Transaction<br><br></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -56,6 +56,9 @@
                                         </td>
                                         <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
                                             <span ng-bind="item.RemainingQuantity"></span>
+                                        </td>
+                                        <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
+                                            <span ng-bind="item.LastRequestedDateString"></span>
                                         </td>
                                     </tr>
                                     <tr ng-show="(itemStocks | filter:searchText).length == 0">
