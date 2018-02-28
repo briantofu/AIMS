@@ -11,70 +11,70 @@
         UnitOfMeasurement: "Select from items",
     }];//Initialize default item
     vm.existingRequestTypes = [
-      { name: 'Purchase' },
-      { name: 'Lease' }
+        { name: 'Purchase' },
+        { name: 'Lease' }
     ];
     //Display all existing item in inventory
     $scope.initialize = function () {
         $http.post('/Requisition/AllItem')
             .then(
-        function successCallback(response) {
-            $scope.existingItem = response.data;
-            vm.existingItemsx = [];//initialize  array of InventoryItem
-            vm.existingUOMsx = [];//initialize array of UnitOfMeasurement(UOM)
-            $scope.ctrl.forNewItem = [];
-            vm.existingLocations = [];//initialize array of Location
-            //vm.existingSuppliers = [{ SupplierName: 'No Supplier', SupplierID: 0 }];//initialize array of Suppliers
-            //$scope.loadSupplier();
-            $scope.loadLocation();
-            //$scope.setItemViaSupplier($scope.supplierIDChoice);
-            for (var i in $scope.existingItem) {
-                var item = $scope.existingItem[i];
-                vm.existingItemsx.push({ ItemName: '' + item['ItemName'], InventoryItemID: item['InventoryItemID'], UnitOfMeasurement: item.UnitOfMeasurement['Description'] });
-            }
-        },
-        function errorCallback(response) {
+            function successCallback(response) {
+                $scope.existingItem = response.data;
+                vm.existingItemsx = [];//initialize  array of InventoryItem
+                vm.existingUOMsx = [];//initialize array of UnitOfMeasurement(UOM)
+                $scope.ctrl.forNewItem = [];
+                vm.existingLocations = [];//initialize array of Location
+                //vm.existingSuppliers = [{ SupplierName: 'No Supplier', SupplierID: 0 }];//initialize array of Suppliers
+                //$scope.loadSupplier();
+                $scope.loadLocation();
+                //$scope.setItemViaSupplier($scope.supplierIDChoice);
+                for (var i in $scope.existingItem) {
+                    var item = $scope.existingItem[i];
+                    vm.existingItemsx.push({ ItemName: '' + item['ItemName'], InventoryItemID: item['InventoryItemID'], UnitOfMeasurement: item.UnitOfMeasurement['Description'] });
+                }
+            },
+            function errorCallback(response) {
 
-        });
+            });
     }
     //Display all existing location
     $scope.loadLocation = function () {
         $http.post('/Requisition/DisplayLocation')
-           .then(
-       function successCallback(response) {
-           $scope.locationData = response.data;
-           for (var i in $scope.locationData) {
-               var loc = $scope.locationData[i];
-               vm.existingLocations.push({
-                   LocationID: loc['LocationID'],
-                   LocationName: '' + loc['LocationName']
-               });
-           }
-       },
-       function errorCallback(response) {
-       });
+            .then(
+            function successCallback(response) {
+                $scope.locationData = response.data;
+                for (var i in $scope.locationData) {
+                    var loc = $scope.locationData[i];
+                    vm.existingLocations.push({
+                        LocationID: loc['LocationID'],
+                        LocationName: '' + loc['LocationName']
+                    });
+                }
+            },
+            function errorCallback(response) {
+            });
     }
     //For reload all item again
     $scope.reloadAllItem = function () {
         $http.post('/Requisition/AllItem')
-           .then(
-       function successCallback(response) {
-           $scope.existingItem = response.data;
-           $scope.ctrl.forNewItem = [];
-           vm.existingItemsx = [];
-           for (var i in $scope.existingItem) {
-               var item = $scope.existingItem[i];
-               vm.existingItemsx.push({
-                   ItemName: '' + item['ItemName'],
-                   InventoryItemID: item['InventoryItemID'],
-                   UnitOfMeasurement: item.UnitOfMeasurement['Description'],
-                   UnitOfMeasurementID: item.UnitOfMeasurement['UnitOfMeasurementID']
-               });
-           }
-       },
-       function errorCallback(response) {
+            .then(
+            function successCallback(response) {
+                $scope.existingItem = response.data;
+                $scope.ctrl.forNewItem = [];
+                vm.existingItemsx = [];
+                for (var i in $scope.existingItem) {
+                    var item = $scope.existingItem[i];
+                    vm.existingItemsx.push({
+                        ItemName: '' + item['ItemName'],
+                        InventoryItemID: item['InventoryItemID'],
+                        UnitOfMeasurement: item.UnitOfMeasurement['Description'],
+                        UnitOfMeasurementID: item.UnitOfMeasurement['UnitOfMeasurementID']
+                    });
+                }
+            },
+            function errorCallback(response) {
 
-       });
+            });
     }
     //Add new item
     $scope.addNewItem = function () {
@@ -99,7 +99,7 @@
         //}
 
         var validation = true;
-        validation = (locationID != null && requiredDate != undefined && );
+        validation = (locationID != null && requiredDate != undefined);
 
         if (!validation) {
 
@@ -110,7 +110,7 @@
             }
         }
         if (validation) {
-            var conf = confirm('Are you sure to submit this requsition?');
+            var conf = confirm('Are you sure to submit this requisition?');
             if (conf) {
                 var data = {
                     //RequisitionDate: requisitionDate,
@@ -124,56 +124,50 @@
                 };
                 $http.post('/Requisition/AddRequisitionItem', data)
                     .then(
-                function successCallback(response) {
-                    if (response.data.length === 0) {
-                        $scope.items = [{ Quantity: 1, Description: "", UnitPrice: 0 }];
-                        $scope.initialize();
-                        $scope.supplierID = "";
-                        $("#confirmModal").modal("hide");
-                        $('#instruction').val('');
-                        toastr.success("You've successfully sent your requisition.", "Requisition Sent");
-                    }
-                },
-                function errorCallback(response) {
-                });
+                    function successCallback(response) {
+                        if (response.data.length === 0) {
+                            $scope.items = [{ Quantity: 1, Description: "", UnitPrice: 0 }];
+                            $scope.initialize();
+                            $scope.supplierID = "";
+                            $("#confirmModal").modal("hide");
+                            $('#instruction').val('');
+                            toastr.success("You've successfully sent your requisition.", "Requisition Sent");
+                        }
+                    },
+                    function errorCallback(response) {
+                    });
             }
         } else {
-            toastr.warning("Please fill out all fields.","Data can't be empty");
+            toastr.warning("Please fill out all fields.", "Data can't be empty");
         }
     }
     //add new item in inventory to database
-    $scope.addInventoryItem = function (newItemName, unitOfMeasurementID, newItemCode, newItemLimit) {
+    $scope.addInventoryItem = function (newItemName, unitOfMeasurementID) {
         var addItemConfirm = confirm('Are you sure to add this new item?');
         if (addItemConfirm) {
             var data = {
                 newItemName: newItemName,
-                unitOfMeasurementID: (unitOfMeasurementID == null ? 0 : unitOfMeasurementID),
-                newItemCode: newItemCode,
-                newItemLimit: newItemLimit
+                unitOfMeasurementID: (unitOfMeasurementID == null ? 0 : unitOfMeasurementID)
             };
             $http.post('/Requisition/AddNewItem', data)
                 .then(
-            function successCallback(response) {
-                if (response.data == "ItemExist") {
-                    $scope.newItemName = '';
-                    $scope.newItemCode = '';
-                    $scope.newItemLimit = '';
-                    toastr.warning("There must be no the same item it must be unique.", "Item is already Exists");
-                    //$scope.ctrl.forNewItem = [];
-                } else {
-                    $scope.newItemName = '';
-                    $scope.newItemCode = '';
-                    $scope.newItemLimit = '';
-                    $scope.initialize();
-                    $("#addItemModal").modal("hide");
-                    toastr.success("You've successfully added a new item/s in the inventory", "New item created");
-                    //$scope.custom = true;
-                    //$scope.toggleText = "Existing Item"
-                    //$scope.toggleStyle = "btn btn-primary"
-                }
-            },
-            function errorCallback(response) {
-            });
+                function successCallback(response) {
+                    if (response.data == "ItemExist") {
+                        $scope.newItemName = '';
+                        toastr.warning("There must be no the same item it must be unique.", "Item is already Exists");
+                        //$scope.ctrl.forNewItem = [];
+                    } else {
+                        $scope.newItemName = '';
+                        $scope.initialize();
+                        $("#addItemModal").modal("hide");
+                        toastr.success("You've successfully added a new item/s in the inventory", "New item created");
+                        //$scope.custom = true;
+                        //$scope.toggleText = "Existing Item"
+                        //$scope.toggleStyle = "btn btn-primary"
+                    }
+                },
+                function errorCallback(response) {
+                });
         }
     }
     //Add new Unit of Measurement to database
@@ -184,26 +178,26 @@
         };
         $http.post('/Requisition/AddNewUnitOfMeasurement', data)
             .then(
-        function successCallback(response) {
-            if (response.data.length === 0) {
-                $http.post('/Requisition/AllUnitOfMeasurement')//gett all existing UnitOfMeasurement(UOM)
-                    .then(
-                    function successCallback(response) {
-                        $scope.existingUOM = response.data;
-                        for (var i in $scope.existingUOM) {
-                            var uom = $scope.existingUOM[i];
-                            vm.existingUOMsx.push({ UnitOfMeasurementID: '' + uom['UnitOfMeasurementID'], Description: uom['Description'] });
-                        }
-                    },
-                function errorCallback(response) {
+            function successCallback(response) {
+                if (response.data.length === 0) {
+                    $http.post('/Requisition/AllUnitOfMeasurement')//gett all existing UnitOfMeasurement(UOM)
+                        .then(
+                        function successCallback(response) {
+                            $scope.existingUOM = response.data;
+                            for (var i in $scope.existingUOM) {
+                                var uom = $scope.existingUOM[i];
+                                vm.existingUOMsx.push({ UnitOfMeasurementID: '' + uom['UnitOfMeasurementID'], Description: uom['Description'] });
+                            }
+                        },
+                        function errorCallback(response) {
 
-                });
-                toastr.success("You've successfully added a new unit of description.", "New Unit of Description is added");
-            }
-        },
-        function errorCallback(response) {
+                        });
+                    toastr.success("You've successfully added a new unit of description.", "New Unit of Description is added");
+                }
+            },
+            function errorCallback(response) {
 
-        });
+            });
     }
     //Check if item is existing
     function itemExists(item) {
@@ -245,18 +239,18 @@
         $scope.reloadAllItem();
         $("#addItemModal").modal("show");
         $http.post('/Requisition/AllUnitOfMeasurement')//gett all existing UnitOfMeasurement(UOM)
-             .then(
-         function successCallback(response) {
-             $scope.existingUOM = response.data;
-             vm.existingUOMsx = []
-             for (var i in $scope.existingUOM) {
-                 var uom = $scope.existingUOM[i];
-                 vm.existingUOMsx.push({ UnitOfMeasurementID: '' + uom['UnitOfMeasurementID'], Description: uom['Description'] });
-             }
-         },
-         function errorCallback(response) {
+            .then(
+            function successCallback(response) {
+                $scope.existingUOM = response.data;
+                vm.existingUOMsx = []
+                for (var i in $scope.existingUOM) {
+                    var uom = $scope.existingUOM[i];
+                    vm.existingUOMsx.push({ UnitOfMeasurementID: '' + uom['UnitOfMeasurementID'], Description: uom['Description'] });
+                }
+            },
+            function errorCallback(response) {
 
-         });
+            });
 
     }
     //Function to close add new item modal
@@ -355,7 +349,7 @@
     // Disable weekend selection
     function disabled(data) {
         var date = data.date,
-          mode = data.mode;
+            mode = data.mode;
         return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
     }
     $scope.toggleMin = function () {
@@ -384,18 +378,18 @@
     var afterTomorrow = new Date();
     afterTomorrow.setDate(tomorrow.getDate() + 1);
     $scope.events = [
-      {
-          date: tomorrow,
-          status: 'full'
-      },
-      {
-          date: afterTomorrow,
-          status: 'partially'
-      }
+        {
+            date: tomorrow,
+            status: 'full'
+        },
+        {
+            date: afterTomorrow,
+            status: 'partially'
+        }
     ];
     function getDayClass(data) {
         var date = data.date,
-          mode = data.mode;
+            mode = data.mode;
         if (mode === 'day') {
             var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
 

@@ -50,14 +50,11 @@
                                         <thead class="t">
                                             <tr>
                                                 <th ng-click="predicate='InventoryItemID'; reverse=!reverse">Item No.<br><br></th>
-                                                <th ng-click="predicate='ItemCode'; reverse=!reverse">Item Code<br><br></th>
-                                                <th ng-click="predicate='UnitOfDescription'; reverse=!reverse">Unit Of Description<br><br></th>
                                                 <th ng-click="predicate='ItemName'; reverse=!reverse">Item Name<br><br></th>
-                                                <th ng-click="predicate='ItemLimit'; reverse=!reverse">Item Limit<br><br></th>
-                                                <th ng-click="predicate='TotalStock'; reverse=!reverse">Total Purchased<br>Quantity</th>
-                                              
-                                                <th ng-click="predicate='RequestedQuantity'; reverse=!reverse">Total Requested<br>Quantity</th>
-                                                <th ng-click="predicate='RemainingQuantity'; reverse=!reverse">Remaining Quantity<br><br></th>
+                                                <th ng-click="predicate='ItemCode'; reverse=!reverse">Item Description<br><br></th>
+                                                <th ng-click="predicate='UnitOfDescription'; reverse=!reverse">Unit Of Description<br><br></th>
+                                                @*<th ng-click="predicate='TotalStock'; reverse=!reverse">Total Purchased<br>Quantity</th>*@
+                                                <th ng-click="predicate='RemainingQuantity'; reverse=!reverse">Total Remaining<br>Quantity<br></th>
                                                 @*<th ng-click="predicate='RequisitionDate'; reverse=!reverse">Date of Last Transaction<br><br></th>*@
                                             </tr>
                                         </thead>
@@ -67,28 +64,19 @@
                                                     <span ng-bind="item.InventoryItemID"></span>
                                                 </td>
                                                 <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
-                                                    <span ng-bind="item.ItemCode"></span>
+                                                    <span ng-bind="item.ItemName"></span>
+                                                </td>
+                                                <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
+                                                    <span ng-bind="inv.Description"></span>
                                                 </td>
                                                 <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
                                                     <span ng-bind="item.UnitOfDescription"></span>
                                                 </td>
-                                                <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
-                                                    <span ng-bind="item.ItemName"></span>
-                                                </td>
-                                                <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
-                                                    <span ng-bind="item.ItemLimit"></span>
-                                                </td>
-                                                <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
+                                                @*<td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
                                                     <span ng-bind="item.TotalStock"></span>
-                                                </td>
-                                                <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
-                                                    <span ng-bind="item.RequestedQuantity"></span>
-                                                </td>
+                                                </td>*@
                                                 <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
                                                     <span ng-bind="item.RemainingQuantity"></span>
-                                                </td>
-                                                <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
-                                                    <span ng-bind="item.RequisitionDate"></span>
                                                 </td>
                                             </tr>
                                             <tr ng-show="(itemStocks | filter:searchText).length == 0">

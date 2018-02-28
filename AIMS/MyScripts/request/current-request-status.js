@@ -16,6 +16,7 @@
             {
                 requestID: request.RequestID
             };
+
         $http.post("/Request/RequestItem", data).then(
             function successCallback(response) {
                 $scope.requestItems = response.data;
@@ -48,6 +49,7 @@
         }
 
     }
+    
     //Accept request
     $scope.acceptFunction = function (requestId) {
         var acceptConfirm = confirm("Are you sure you want to accept the request?");
