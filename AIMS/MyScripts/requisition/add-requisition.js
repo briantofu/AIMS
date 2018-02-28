@@ -109,10 +109,8 @@
                 validation = (item['Quantity'] != 0 && item['InventoryItemID'] != undefined);
             }
         }
-
-
         if (validation) {
-            var conf = confirm('Are you sure to submit this requsition?');
+            var conf = confirm('Are you sure to submit this requisition?');
             if (conf) {
                 var data = {
                     //RequisitionDate: requisitionDate,
@@ -136,17 +134,12 @@
                             toastr.success("You've successfully sent your requisition.", "Requisition Sent");
                         }
                     },
-
-
                     function errorCallback(response) {
-
                     });
             }
         } else {
             toastr.warning("Please fill out all fields.", "Data can't be empty");
         }
-
-
     }
     //add new item in inventory to database
     $scope.addInventoryItem = function (newItemName, unitOfMeasurementID) {

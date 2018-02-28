@@ -331,7 +331,6 @@ namespace AIMS.Controllers
                                   {
                                       InventoryItemID = invItem.InventoryItemId,
                                       ItemName = invItem.ItemName,
-                                      ItemLimit = invItem.ItemLimit,
                                       UnitOfMeasurementID = uom.UnitOfMeasurementId,
                                       UnitDescription = uom.Description
                                   };
@@ -377,7 +376,6 @@ namespace AIMS.Controllers
                                           ItemName = inv.ItemName,
                                           UnitDescription = uom.Description,
                                           Quantity = reqItem.Quantity,
-                                          ItemDescription = reqItem.Description,
                                           SpecialInstruction = req.SpecialInstruction
                                       };
                     requestItem = displayItem.Select(
@@ -387,7 +385,6 @@ namespace AIMS.Controllers
                             ItemName = ri.ItemName,
                             UnitOfMeasurement = ri.UnitDescription,
                             Quantity = ri.Quantity,
-                            Description = ri.ItemDescription
                         }).ToList();
                 }
 
