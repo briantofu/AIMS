@@ -251,14 +251,14 @@ namespace AIMS.Controllers
         }
 
         public JsonResult LoadDeliveredPages(Page page)
-            //For loading Delivery Section of Requesition
+        //For loading Delivery Section of Requesition
         {
             int totalpages = 0;
             var totalpositions = 0;
 
             using (var context = new InventoryDbContext())
             {
-                totalpositions = context.Requisition.Where(req => (req.Status == "Delivered" )).Count();
+                totalpositions = context.Requisition.Where(req => (req.Status == "Delivered")).Count();
             }
 
             if (totalpositions % page.itemPerPage != 0)
@@ -306,7 +306,7 @@ namespace AIMS.Controllers
                 {
                     requisition = (from req in context.Requisition
                                    join loc in context.Location on req.LocationId equals loc.LocationId
-                                   
+
                                    select new Requisition
                                    {
                                        RequisitionID = req.RequisitionId,
@@ -747,7 +747,7 @@ namespace AIMS.Controllers
                                          SupplierAddress = supp.Address,
                                          ContactPerson = supp.ContactPerson,
                                          ContactNo = supp.ContactNo,
-                                         Email = supp.Email, 
+                                         Email = supp.Email,
                                          RequisitionItems = (from req in context.Requisition
                                                              join reqItem in context.RequisitionItem on req.RequisitionId equals reqItem.RequisitionId
                                                              join inv in context.InventoryItem on reqItem.InventoryItemId equals inv.InventoryItemId
@@ -959,7 +959,7 @@ namespace AIMS.Controllers
                         {
                             ItemName = newItemName,
                             UnitOfMeasurementId = unitOfMeasurementID,
-                            ItemCode = newItemCode,
+                            ItemCode = newItemCode
                         };
                         context.InventoryItem.Add(eInventoryItem);
                         context.SaveChanges();
@@ -1006,7 +1006,7 @@ namespace AIMS.Controllers
                 //Use for selecting dbInventory
                 using (var context = new InventoryDbContext())
                 {
-                   
+
                     //Insert into tblRequisition
                     ERequisition eRequisiiton = new ERequisition()
                     {
