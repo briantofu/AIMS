@@ -99,6 +99,7 @@ namespace AIMS.Controllers
                                                    QuantityRequest = grouped.Sum(a => (a.invItemj == null ? 0 : a.invItemj.Quantity)),
                                                    Status = (grouped.FirstOrDefault().reqj == null) ? string.Empty : grouped.FirstOrDefault().reqj.Status,
                                                    LastRequestedDate = (grouped.FirstOrDefault().reqj == null) ? default(DateTime) : grouped.Max(a => a.reqj.RequestDate)
+
                                                };
                 stocks = (from inv in context.InventoryItem
                           join uom in context.UnitOfMeasurement on inv.UnitOfMeasurementId equals uom.UnitOfMeasurementId
@@ -108,7 +109,7 @@ namespace AIMS.Controllers
                           join requestedQty in computeRequestedQuantity on inv.InventoryItemId equals requestedQty.InventoryItemID into joined2
                           from requestedQtyj in joined2.DefaultIfEmpty()
 
-                          
+
                           select new Stocks
                           {
                               InventoryItemID = inv.InventoryItemId,
@@ -117,7 +118,8 @@ namespace AIMS.Controllers
                               ItemCode = inv.ItemCode,
                               TotalStock = remainingQtyj == null ? 0 : remainingQtyj.RemainingQuantity,
                               RequestedQuantity = requestedQtyj == null ? 0 : requestedQtyj.QuantityRequest,
-                              LastRequestedDate = requestedQtyj.LastRequestedDate,
+                              LastRequestedDate = requestedQtyj.LastRequestedDate
+
                           }).OrderBy(e => e.InventoryItemID).Skip(beginning).Take(page.itemPerPage).ToList().ToList();
             }
             return Json(stocks);
@@ -198,4 +200,4 @@ namespace AIMS.Controllers
         //    }
         //}
     }
-}   
+}

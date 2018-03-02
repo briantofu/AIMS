@@ -30,6 +30,7 @@ namespace InventoryEntity
 
         public int LocationId { get; set; }
 
+
         public int SupplierId { get; set; }
 
         public int? UserId { get; set; }
