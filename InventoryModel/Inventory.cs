@@ -12,6 +12,7 @@ namespace AIMS.Models
         public string ItemName { get; set; }
         public string Location { get; set; }
         public int Quantity { get; set; }
+
     }
     public class Stocks
     {
@@ -38,5 +39,6 @@ namespace AIMS.Models
             }
         }
         public string ItemCode { get; set; }
+        public string ItemBegBal { get; set; }
     }
 }

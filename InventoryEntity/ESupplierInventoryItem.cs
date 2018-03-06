@@ -17,6 +17,8 @@ namespace InventoryEntity
 
         public double UnitPrice { get; set; }
 
+        //public string ItemBegBal { get; set; }
+
 
     }
 }

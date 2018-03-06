@@ -17,6 +17,7 @@ namespace InventoryEntity
         public string Description { get; set; }
         public double UnitPrice { get; set; }
         public int Quantity { get; set; }
+        public string ItemBegBal { get; set; }
         public int PurchaseOrderId { get; set; }
         //public string WholdingTax { get; set; }
        
