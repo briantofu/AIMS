@@ -37,6 +37,6 @@ namespace AIMS.Models
                 return (TotalStock - RequestedQuantity);
             }
         }
-        public string ItemCode { get; set; }
+        public string ItemDescription { get; set; }
     }
 }

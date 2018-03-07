@@ -13,8 +13,8 @@ namespace AIMS.Models
         public string NewItemName { get; set; }
         public int UnitOfMeasurementID{ get; set; }
         public string  Description { get; set; }
-        public string ItemCode { get; set; }
-        public string NewItemCode { get; set; }
+        public string ItemDescription { get; set; }
+        public string NewItemDescription { get; set; }
 
         public int LocationID { get; set; }
         public string Name { get; set; }

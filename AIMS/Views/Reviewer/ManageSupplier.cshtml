@@ -505,7 +505,7 @@
                                             <label>Item Name</label>
                                             <input ng-model="newItemName" type="text" class="form-control" id="newItemName" name="newItemName" placeholder="New item name" style="width:300px;height:35px;margin-bottom:30px;" >
                                             <label>Item Description</label>
-                                            <input ng-model="newItemCode" type="text" class="form-control" id="newItemCode" name="newItemCode" placeholder="New item code" style="width:300px;height:35px;margin-bottom:30px;" >
+                                            <input ng-model="newItemDescription" type="text" class="form-control" id="newItemDescription" name="newItemDescription" placeholder="New item description" style="width:300px;height:35px;margin-bottom:30px;" >
                                         </div>
                                         <label>Unit of Measurement</label>
                                         <table>
@@ -535,7 +535,7 @@
                                         </table>
                                     </div>
                                     <div class="modal-footer">
-                                       <button class="btn btn-success btn-sm" ng-disabled="!addItemForm.newItemName.$valid" ng-click="addInventoryItem(newItemName,ctrl.UnitOfmeasurementID,newItemCode)"><i class="glyphicon glyphicon-ok"></i>Add</button>
+                                       <button class="btn btn-success btn-sm" ng-disabled="!addItemForm.newItemName.$valid" ng-click="addInventoryItem(newItemName,ctrl.UnitOfmeasurementID,newItemDescription)"><i class="glyphicon glyphicon-ok"></i>Add</button>
                                         <button class="btn btn-danger btn-sm" ng-click="closeAddItemModal()"><i class="glyphicon glyphicon-remove"></i>Cancel</button>
                                     </div>
                                 </div>
