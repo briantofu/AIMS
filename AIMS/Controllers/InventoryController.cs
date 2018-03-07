@@ -115,7 +115,8 @@ namespace AIMS.Controllers
                               InventoryItemID = inv.InventoryItemId,
                               ItemName = inv.ItemName,
                               UnitOfDescription = uom.Description,
-                              ItemDescription = inv.ItemDescription,
+                              ItemCode = inv.ItemCode,
+                              ItemBegBal = inv.ItemBegBal,
                               TotalStock = remainingQtyj == null ? 0 : remainingQtyj.RemainingQuantity,
                               RequestedQuantity = requestedQtyj == null ? 0 : requestedQtyj.QuantityRequest,
                               LastRequestedDate = requestedQtyj.LastRequestedDate

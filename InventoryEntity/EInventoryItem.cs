@@ -21,6 +21,8 @@ namespace InventoryEntity
         [StringLength(150)]
         public string ItemDescription { get; set; }
 
+        public string ItemBegBal { get; set; }
+
 
     }
 }
