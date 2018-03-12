@@ -47,13 +47,12 @@
                                         <th ng-click="predicate='TotalStock'; reverse=!reverse">Total Purchased<br>Quantity</th>
                                         <th ng-click="predicate='RequestedQuantity'; reverse=!reverse">Pull-out<br>Quantity</th>
                                         <th ng-click="predicate='RemainingQuantity'; reverse=!reverse">Ending Balance</th>
-
                                     </tr>
                                 </thead> 
                                 <tbody>
                                     <tr ng-repeat="item in itemStocks | orderBy:predicate:reverse | filter: searchText">
                                         <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
-                                            <span ng-bind="item.InventoryItemID"></span>
+                                             <span ng-bind="item.InventoryItemID"></span>
                                         </td>
                                         <td ng-class='{red : item.RemainingQuantity <=10, blue: item.RemainingQuantity > 10}'>
                                             <span ng-bind="item.ItemName"></span> 
