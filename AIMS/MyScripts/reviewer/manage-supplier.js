@@ -210,7 +210,7 @@
                    $scope.initialize();
                    toastr.success("You've successfully updated the details of the supplier.", "Supplier details is now updated");
                    $("#updateSupplierDetailsModal").modal("hide");
-               },
+                 },
                function errorCallback(response) {
 
                }

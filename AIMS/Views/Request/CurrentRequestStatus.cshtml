@@ -72,7 +72,6 @@
                                         <td id="locationAction" align="center">
                                             <button ng-click="showViewModal(request)" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-eye-open"></i> View</button>
                                         </td>
-
                                     </tr>
                                     <tr ng-show="(requests | filter:searchText).length == 0">
                                         <td colspan="9" id="locationAction" align="center">No results found...</td>
@@ -119,8 +118,8 @@
                                                         <td> : &nbsp;&nbsp;</td>
                                                         <td ng-bind="request.RequisitionDateString">&nbsp;&nbsp;</td>
 
-                                                        <td><strong>&nbsp;&nbsp;&nbsp;&nbsp;Required Date </strong></td>
-                                                        <td> : </td>
+                                                        <td><strong>&nbsp;&nbsp;&nbsp;&nbsp;Required Date </strong></td>        
+                                                        <td> : </td> 
                                                         <td>
                                                             &nbsp;&nbsp;<span ng-bind="request.RequiredDateString"></span>
                                                         </td>
@@ -162,13 +161,11 @@
                                                         <td>
                                                             <span ng-bind="item.Description"></span>
                                                         </td>
-
                                                 </tbody>
-                                            </table>
-
+                                            </table>    
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i>&nbsp;Close</button>
                                         </div>
                                     </div>
                                 </div>
